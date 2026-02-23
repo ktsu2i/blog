@@ -19,18 +19,22 @@ export function PostCard({ post }: { post: Post }) {
       <CardHeader>
         <div className="flex items-center gap-2">
           <time className="text-sm text-muted-foreground">{formattedDate}</time>
-          {post.source === "zenn" ? (
+          {post.source === "local" && <Badge>Local</Badge>}
+          {post.source === "zenn" && (
             <Badge variant="secondary" className="text-blue-600 dark:text-blue-400">
               Zenn
             </Badge>
-          ) : (
-            <Badge>Local</Badge>
+          )}
+          {post.source === "bengo4" && (
+            <Badge variant="secondary" className="text-green-600 dark:text-green-400">
+              Bengo4
+            </Badge>
           )}
         </div>
         <CardTitle className="text-lg">
           <span className="flex items-center gap-1">
             {post.title}
-            {post.type === "zenn" && (
+            {post.type !== "local" && (
               <ExternalLinkIcon className="size-4 text-muted-foreground" />
             )}
           </span>

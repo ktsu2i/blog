@@ -1,5 +1,5 @@
 // 投稿のソース種別
-export type PostSource = "local" | "zenn";
+export type PostSource = "local" | "zenn" | "bengo4";
 
 // 統一投稿型（ローカル記事・外部記事共通）
 export interface Post {

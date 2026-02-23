@@ -43,16 +43,26 @@ export function PostFilter({ posts }: { posts: Post[] }) {
   return (
     <div className="space-y-6">
       <div className="flex flex-wrap items-center gap-2">
-        {(["all", "local", "zenn"] as const).map((source) => (
-          <Button
-            key={source}
-            variant={sourceFilter === source ? "default" : "outline"}
-            size="sm"
-            onClick={() => setSourceFilter(source)}
-          >
-            {source === "all" ? "All" : source === "local" ? "Local" : "Zenn"}
-          </Button>
-        ))}
+        {(["all", "local", "zenn", "bengo4"] as const).map((source) => {
+          const label =
+            source === "all"
+              ? "All"
+              : source === "local"
+                ? "Local"
+                : source === "zenn"
+                  ? "Zenn"
+                  : "Bengo4";
+          return (
+            <Button
+              key={source}
+              variant={sourceFilter === source ? "default" : "outline"}
+              size="sm"
+              onClick={() => setSourceFilter(source)}
+            >
+              {label}
+            </Button>
+          );
+        })}
       </div>
 
       {allTags.length > 0 && (

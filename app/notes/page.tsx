@@ -9,21 +9,21 @@ export const metadata: Metadata = {
 
 export default async function NotesPage() {
   const posts = await listAllPosts();
-  const zennPosts = posts.filter((p) => p.source === "zenn");
+  const externalPosts = posts.filter((p) => p.source !== "local");
 
   return (
     <div className="space-y-6">
       <div>
         <h1 className="text-3xl font-bold tracking-tight">Notes</h1>
         <p className="mt-2 text-muted-foreground">
-          Zenn に投稿した外部記事の一覧です。
+          外部メディアに投稿した記事の一覧です。
         </p>
       </div>
       <div className="space-y-4">
-        {zennPosts.map((post) => (
+        {externalPosts.map((post) => (
           <PostCard key={post.id} post={post} />
         ))}
-        {zennPosts.length === 0 && (
+        {externalPosts.length === 0 && (
           <p className="text-muted-foreground">記事がありません。</p>
         )}
       </div>
