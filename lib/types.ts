@@ -13,6 +13,7 @@ export interface Post {
   slug?: string; // local 用
   url?: string; // external 用
   draft?: boolean; // local 用
+  ogImage?: string; // OG画像URL
 }
 
 // ローカル記事の frontmatter 型

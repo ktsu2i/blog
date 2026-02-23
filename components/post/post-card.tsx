@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { format } from "date-fns";
 import { ExternalLinkIcon } from "lucide-react";
 import {
@@ -15,7 +16,18 @@ export function PostCard({ post }: { post: Post }) {
   const formattedDate = format(new Date(post.date), "yyyy年M月d日");
 
   const content = (
-    <Card className="transition-colors hover:bg-accent/50">
+    <Card className="overflow-hidden transition-colors hover:bg-accent/50">
+      {post.ogImage && (
+        <div className="relative aspect-40/21">
+          <Image
+            src={post.ogImage}
+            alt=""
+            fill
+            className="object-cover"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          />
+        </div>
+      )}
       <CardHeader>
         <div className="flex items-center gap-2">
           <time className="text-sm text-muted-foreground">{formattedDate}</time>

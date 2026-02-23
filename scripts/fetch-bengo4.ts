@@ -6,15 +6,29 @@ import type { Post } from "../lib/types";
 const FEED_URL = "https://creators.bengo4.com/feed";
 const AUTHOR = "ktsu2i";
 
+async function fetchOgImage(url: string): Promise<string | undefined> {
+  try {
+    const res = await fetch(url);
+    const html = await res.text();
+    const match = html.match(
+      /<meta[^>]+property=["']og:image["'][^>]+content=["']([^"']+)["']/
+    );
+    return match?.[1];
+  } catch {
+    return undefined;
+  }
+}
+
 async function main() {
   const parser = new Parser();
   const feed = await parser.parseURL(FEED_URL);
 
-  const posts: Post[] = (feed.items ?? [])
-    .filter((item) => {
-      return item.author === AUTHOR;
-    })
-    .map((item) => {
+  const items = (feed.items ?? []).filter((item) => {
+    return item.author === AUTHOR;
+  });
+
+  const posts: Post[] = await Promise.all(
+    items.map(async (item) => {
       const urlPath = item.link
         ? new URL(item.link).pathname.replace(/\//g, "-").replace(/^-/, "")
         : item.guid ?? "";
@@ -24,6 +38,10 @@ async function main() {
         : "";
 
       const tags: string[] = item.categories ?? [];
+
+      const ogImage = item.link
+        ? await fetchOgImage(item.link)
+        : undefined;
 
       return {
         id: `bengo4-${urlPath}`,
@@ -36,8 +54,10 @@ async function main() {
         tags,
         description,
         url: item.link ?? "",
+        ...(ogImage ? { ogImage } : {}),
       };
-    });
+    })
+  );
 
   const outputDir = path.join(process.cwd(), "content/generated");
   const outputPath = path.join(outputDir, "bengo4.json");

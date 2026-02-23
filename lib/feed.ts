@@ -4,7 +4,10 @@ import { listBengo4Posts } from "./bengo4";
 import type { Post } from "./types";
 
 export async function listAllPosts(): Promise<Post[]> {
-  const local = await listLocalPosts();
+  const local = (await listLocalPosts()).map((post) => ({
+    ...post,
+    ogImage: `/blog/${post.slug}/opengraph-image`,
+  }));
   const zenn = listZennPosts();
   const bengo4 = listBengo4Posts();
   const all = [...local, ...zenn, ...bengo4];
