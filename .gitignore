@@ -34,9 +34,6 @@ yarn-error.log*
 .env*
 !.env.example
 
-# build-generated content
-content/generated/
-
 # vercel
 .vercel
 
