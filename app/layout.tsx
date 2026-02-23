@@ -14,12 +14,32 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const siteUrl = process.env.SITE_URL || "https://example.com";
+
 export const metadata: Metadata = {
   title: {
     template: "%s | ktsu2i.dev",
     default: "ktsu2i.dev",
   },
   description: "ktsu2i のブログ & ポートフォリオサイト",
+  openGraph: {
+    title: "ktsu2i.dev",
+    description: "ktsu2i のブログ & ポートフォリオサイト",
+    url: siteUrl,
+    siteName: "ktsu2i.dev",
+    locale: "ja_JP",
+    type: "website",
+  },
+  twitter: {
+    card: "summary",
+    title: "ktsu2i.dev",
+    description: "ktsu2i のブログ & ポートフォリオサイト",
+  },
+  alternates: {
+    types: {
+      "application/rss+xml": `${siteUrl}/feed.xml`,
+    },
+  },
 };
 
 export default function RootLayout({
