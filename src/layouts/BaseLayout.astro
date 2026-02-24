@@ -49,6 +49,15 @@ const pageTitle = title ? `${title} | ktsu2i.dev` : "ktsu2i.dev";
     <meta name="twitter:description" content={description} />
     {ogImage && <meta name="twitter:image" content={`${siteUrl}${ogImage}`} />}
     <link rel="alternate" type="application/rss+xml" href={`${siteUrl}/feed.xml`} title="ktsu2i.dev" />
+    <script is:inline>
+      (function () {
+        const stored = localStorage.getItem("theme");
+        const dark =
+          stored === "dark" ||
+          (!stored && window.matchMedia("(prefers-color-scheme: dark)").matches);
+        document.documentElement.classList.toggle("dark", dark);
+      })();
+    </script>
   </head>
   <body class="font-sans antialiased">
     <Header />
