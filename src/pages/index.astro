@@ -4,7 +4,7 @@ import PostCard from "../components/post/PostCard.astro";
 import { listAllPosts } from "../lib/feed";
 
 const posts = await listAllPosts();
-const recent = posts.slice(0, 5);
+const recent = posts.slice(0, 4);
 ---
 
 <BaseLayout>
@@ -33,7 +33,7 @@ const recent = posts.slice(0, 5);
 
     <section class="space-y-6">
       <h2 class="text-2xl font-bold tracking-tight">最新の投稿</h2>
-      <div class="space-y-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         {recent.map((post) => (
           <PostCard post={post} />
         ))}
