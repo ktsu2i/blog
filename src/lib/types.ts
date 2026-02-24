@@ -48,10 +48,13 @@ export interface Project {
 }
 
 // 経歴型
-export interface CareerEntry {
+export type CareerEntry = {
   id: string;
-  company: string;
-  role: string;
   period: string;
   description: string;
-}
+  tags?: string[];
+  current?: boolean;
+} & (
+  | { type: "work" | "internship"; company: string; role: string }
+  | { type: "education"; university: string; major: string }
+);
