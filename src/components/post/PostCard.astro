@@ -16,9 +16,9 @@ const isExternal = post.type !== "local";
   href={href}
   target={isExternal ? "_blank" : undefined}
   rel={isExternal ? "noopener noreferrer" : undefined}
-  class="block"
+  class="block h-full"
 >
-  <div class="bg-card text-card-foreground flex flex-col gap-6 rounded-xl border py-6 shadow-sm overflow-hidden transition-colors hover:bg-accent/50">
+  <div class="bg-card text-card-foreground flex h-full flex-col gap-6 rounded-xl border py-6 shadow-sm overflow-hidden transition-colors hover:bg-accent/50">
     {post.ogImage && (
       <div class="relative aspect-40/21 px-0 -mt-6">
         <img
@@ -57,7 +57,7 @@ const isExternal = post.type !== "local";
         </span>
       </div>
     </div>
-    <div class="px-6">
+    <div class="mt-auto px-6">
       <div class="text-muted-foreground text-sm line-clamp-2">
         {post.description}
       </div>
