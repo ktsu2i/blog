@@ -67,7 +67,7 @@ function PostCard({ post }: { post: Post }) {
                   strokeWidth="2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  className="inline-block size-4 text-muted-foreground align-text-bottom"
+                  className="ml-1 inline-block size-4 text-muted-foreground align-text-bottom"
                 >
                   <path d="M15 3h6v6" />
                   <path d="M10 14 21 3" />
