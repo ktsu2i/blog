@@ -15,7 +15,6 @@ const navItems = [
   { href: "/blog", label: "Blog" },
   { href: "/talks", label: "Talks" },
   { href: "/about", label: "About" },
-  { href: "/career", label: "Career" },
 ];
 
 export default function MobileNav() {
