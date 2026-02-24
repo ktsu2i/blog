@@ -12,7 +12,7 @@ const formattedDate = format(new Date(talk.date), "yyyy年M月d日");
 
 <div class="bg-card text-card-foreground flex flex-col gap-6 rounded-xl border py-6 shadow-sm">
   <div class="grid auto-rows-min grid-rows-[auto_auto] items-start gap-2 px-6">
-    <div class="leading-none font-semibold text-lg">{talk.title}</div>
+    <div class="leading-snug font-semibold text-lg line-clamp-2 min-h-[2.75em]">{talk.title}</div>
     <div class="text-muted-foreground text-sm">
       {talk.event} / {formattedDate}
     </div>
