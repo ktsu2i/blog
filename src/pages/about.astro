@@ -1,0 +1,81 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const techStack = [
+  "TypeScript",
+  "Go",
+  "React",
+  "Astro",
+  "Tailwind CSS",
+  "Node.js",
+  "PostgreSQL",
+  "Docker",
+  "Git",
+];
+---
+
+<BaseLayout title="About" description="自己紹介">
+  <div class="space-y-8">
+    <div>
+      <h1 class="text-3xl font-bold tracking-tight">About</h1>
+    </div>
+
+    <div class="flex flex-col items-start gap-8 sm:flex-row">
+      <div class="size-32 shrink-0 rounded-full bg-muted"></div>
+      <div class="space-y-4">
+        <h2 class="text-xl font-semibold">ktsu2i</h2>
+        <p class="leading-relaxed text-muted-foreground">
+          ソフトウェアエンジニア。Web 開発を中心に活動しています。
+          プレースホルダーのテキストです。実際の自己紹介に置き換えてください。
+        </p>
+      </div>
+    </div>
+
+    <section class="space-y-4">
+      <h2 class="text-xl font-semibold">Tech Stack</h2>
+      <div class="flex flex-wrap gap-2">
+        {techStack.map((tech) => (
+          <span class="inline-flex items-center justify-center rounded-full bg-secondary text-secondary-foreground px-2 py-0.5 text-xs font-medium">
+            {tech}
+          </span>
+        ))}
+      </div>
+    </section>
+
+    <section class="space-y-4">
+      <h2 class="text-xl font-semibold">Links</h2>
+      <ul class="space-y-2 text-muted-foreground">
+        <li>
+          <a
+            href="https://github.com/ktsu2i"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="hover:text-foreground transition-colors"
+          >
+            GitHub
+          </a>
+        </li>
+        <li>
+          <a
+            href="https://x.com/ktsu2i"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="hover:text-foreground transition-colors"
+          >
+            X (Twitter)
+          </a>
+        </li>
+        <li>
+          <a
+            href="https://zenn.dev/ktsu2i"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="hover:text-foreground transition-colors"
+          >
+            Zenn
+          </a>
+        </li>
+      </ul>
+    </section>
+  </div>
+</BaseLayout>

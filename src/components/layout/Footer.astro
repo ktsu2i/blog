@@ -1,0 +1,48 @@
+---
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="border-t">
+  <div class="mx-auto max-w-4xl px-6 py-8">
+    <div class="flex flex-col items-center gap-4 sm:flex-row sm:justify-between">
+      <div class="flex items-center gap-4 text-sm text-muted-foreground">
+        <a
+          href="https://github.com/ktsu2i"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="hover:text-foreground transition-colors"
+        >
+          GitHub
+        </a>
+        <span class="h-4 w-px shrink-0 bg-border" aria-hidden="true"></span>
+        <a
+          href="https://x.com/ktsu2i"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="hover:text-foreground transition-colors"
+        >
+          X
+        </a>
+        <span class="h-4 w-px shrink-0 bg-border" aria-hidden="true"></span>
+        <a
+          href="https://zenn.dev/ktsu2i"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="hover:text-foreground transition-colors"
+        >
+          Zenn
+        </a>
+        <span class="h-4 w-px shrink-0 bg-border" aria-hidden="true"></span>
+        <a
+          href="/feed.xml"
+          class="hover:text-foreground transition-colors"
+        >
+          RSS
+        </a>
+      </div>
+      <p class="text-sm text-muted-foreground">
+        &copy; {currentYear} ktsu2i.dev
+      </p>
+    </div>
+  </div>
+</footer>
