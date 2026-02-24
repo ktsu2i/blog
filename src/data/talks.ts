@@ -8,7 +8,7 @@ export const talks: Talk[] = [
     date: "2026-02-21",
     speakerdeckUrl: "https://speakerdeck.com/bengo4com/20260221-cloudsign-go-concerence-mini-2026-in-sendai",
     embedUrl: "https://speakerdeck.com/player/caad8d737da64cecacbeff26a5f0b343?title=false",
-    description: "2026年2月21日(土)「Go Concerence mini 2026 in Sendai」における、クラウドサインのエンジニア筒井の登壇資料です。",
+    description: "静的解析ツール capslock と Claude Code Action を組み合わせて、Go パッケージのサプライチェーン攻撃対策を自動化する方法について発表しました。",
   },
   {
     id: "cloudsign-coefl-go-benkyokai-2-tsutsui",
@@ -17,6 +17,6 @@ export const talks: Talk[] = [
     date: "2025-08-22",
     speakerdeckUrl: "https://speakerdeck.com/bengo4com/20250822-cloudsign-coefl-go-jp2-tsutsui",
     embedUrl: "https://speakerdeck.com/player/41bd3405621a4598963d5753725494d0?title=false",
-    description: "2025年8月22日(金)開催、「COEFL Go-JP #2」で登壇した、弁護士ドットコム株式会社 クラウドサイン エンジニア の筒井 海人 が登壇した際の資料です。",
+    description: "Go におけるガベージコレクターの挙動やアルゴリズムに関して発表しました。",
   },
 ];
