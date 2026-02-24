@@ -53,7 +53,7 @@ function PostCard({ post }: { post: Post }) {
               </Badge>
             )}
           </div>
-          <div className="leading-none font-semibold text-lg line-clamp-2">
+          <div className="leading-snug font-semibold text-lg line-clamp-2">
             <span className="inline">
               {post.title}
               {isExternal && (
