@@ -19,6 +19,7 @@ export async function listLocalPosts(): Promise<Post[]> {
       tags: entry.data.tags,
       description: entry.data.description,
       draft: entry.data.draft,
+      ogImage: `/og/${entry.id}.png`,
     }));
 
   posts.sort(

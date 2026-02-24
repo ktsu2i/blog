@@ -21,6 +21,7 @@ const formattedDate = format(new Date(post.data.date), "yyyy年M月d日");
   description={post.data.description}
   ogType="article"
   publishedTime={post.data.date}
+  ogImage={`/og/${post.id}.png`}
 >
   <article class="space-y-8">
     <header class="space-y-4">
