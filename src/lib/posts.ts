@@ -1,0 +1,29 @@
+import { getCollection } from "astro:content";
+import type { Post } from "./types";
+
+export async function listLocalPosts(): Promise<Post[]> {
+  const entries = await getCollection("posts");
+
+  const posts: Post[] = entries
+    .filter((entry) => {
+      if (entry.data.draft && import.meta.env.PROD) return false;
+      return true;
+    })
+    .map((entry) => ({
+      id: entry.id,
+      type: "local" as const,
+      source: "local" as const,
+      slug: entry.id,
+      title: entry.data.title,
+      date: entry.data.date,
+      tags: entry.data.tags,
+      description: entry.data.description,
+      draft: entry.data.draft,
+    }));
+
+  posts.sort(
+    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+  );
+
+  return posts;
+}

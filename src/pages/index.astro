@@ -1,0 +1,50 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PostCard from "../components/post/PostCard.astro";
+import { listAllPosts } from "../lib/feed";
+
+const posts = await listAllPosts();
+const recent = posts.slice(0, 5);
+---
+
+<BaseLayout>
+  <div class="space-y-12">
+    <section class="space-y-4 py-8">
+      <h1 class="text-3xl font-bold tracking-tight">ktsu2i.dev</h1>
+      <p class="text-lg leading-relaxed text-muted-foreground">
+        ソフトウェアエンジニアのブログ & ポートフォリオサイトです。
+        技術記事や登壇情報、プロジェクトについて発信しています。
+      </p>
+      <div class="flex gap-3">
+        <a
+          href="/blog"
+          class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all bg-primary text-primary-foreground hover:bg-primary/90 h-9 px-4 py-2"
+        >
+          ブログを見る
+        </a>
+        <a
+          href="/about"
+          class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2"
+        >
+          About
+        </a>
+      </div>
+    </section>
+
+    <section class="space-y-6">
+      <h2 class="text-2xl font-bold tracking-tight">最新の投稿</h2>
+      <div class="space-y-4">
+        {recent.map((post) => (
+          <PostCard post={post} />
+        ))}
+      </div>
+      <a
+        href="/blog"
+        class="inline-flex items-center gap-1 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+      >
+        全記事を見る
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </a>
+    </section>
+  </div>
+</BaseLayout>
