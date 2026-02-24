@@ -12,7 +12,7 @@ import { talks } from "../data/talks";
         カンファレンスやミートアップでの登壇・発表一覧です。
       </p>
     </div>
-    <div class="space-y-6">
+    <div class="grid gap-4 md:grid-cols-2">
       {talks.map((talk) => (
         <TalkCard talk={talk} />
       ))}
