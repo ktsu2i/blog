@@ -7,6 +7,8 @@ const GEIST_SANS_BOLD = fs.readFileSync(
   path.resolve("node_modules/@fontsource/geist-sans/files/geist-sans-latin-700-normal.woff")
 );
 
+const AVATAR_BASE64 = `data:image/png;base64,${fs.readFileSync(path.resolve("public/avatar.png")).toString("base64")}`;
+
 let notoSansJPBold: ArrayBuffer | null = null;
 
 async function loadNotoSansJP(): Promise<ArrayBuffer> {
@@ -27,8 +29,10 @@ async function loadNotoSansJP(): Promise<ArrayBuffer> {
 export async function generateOgImage(title: string): Promise<Buffer> {
   const notoFont = await loadNotoSansJP();
   const lines = title.split("\n");
+  const fontSize = title.replace(/\n/g, "").length > 30 ? 44 : 52;
 
   const svg = await satori(
+    // @ts-expect-error -- satori virtual DOM
     {
       type: "div",
       props: {
@@ -36,63 +40,146 @@ export async function generateOgImage(title: string): Promise<Buffer> {
           width: "100%",
           height: "100%",
           display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-between",
-          padding: "60px",
           backgroundColor: "#0a0a0a",
+          position: "relative",
+          overflow: "hidden",
         },
         children: [
+          // Background glow (top-right)
+          {
+            type: "div",
+            props: {
+              style: {
+                position: "absolute",
+                top: "-120px",
+                right: "-120px",
+                width: "500px",
+                height: "500px",
+                borderRadius: "50%",
+                background: "radial-gradient(circle, rgba(59,130,246,0.25), transparent 70%)",
+              },
+            },
+          },
+          // Background glow (bottom-left)
+          {
+            type: "div",
+            props: {
+              style: {
+                position: "absolute",
+                bottom: "-200px",
+                left: "-100px",
+                width: "400px",
+                height: "400px",
+                borderRadius: "50%",
+                background: "radial-gradient(circle, rgba(59,130,246,0.18), transparent 70%)",
+              },
+            },
+          },
+          // Content
           {
             type: "div",
             props: {
               style: {
                 display: "flex",
                 flexDirection: "column",
-                justifyContent: "center",
-                flexGrow: 1,
+                justifyContent: "space-between",
+                width: "100%",
+                height: "100%",
+                padding: "60px 72px",
               },
               children: [
+                // Title
                 {
                   type: "div",
                   props: {
                     style: {
                       display: "flex",
                       flexDirection: "column",
-                      fontSize: title.replace(/\n/g, "").length > 30 ? 48 : 56,
-                      fontWeight: 700,
-                      color: "#ffffff",
-                      lineHeight: 1.4,
-                      wordBreak: "break-word",
+                      justifyContent: "center",
+                      flexGrow: 1,
                     },
-                    children: lines.length > 1
-                      ? lines.map((line) => ({
-                          type: "div",
-                          props: { children: line },
-                        }))
-                      : title,
+                    children: {
+                      type: "div",
+                      props: {
+                        style: {
+                          display: "flex",
+                          flexDirection: "column",
+                          fontSize,
+                          fontWeight: 700,
+                          color: "#f0f0f0",
+                          lineHeight: 1.5,
+                          wordBreak: "break-word",
+                          letterSpacing: "-0.025em",
+                        },
+                        children:
+                          lines.length > 1
+                            ? lines.map((line) => ({
+                                type: "div",
+                                props: { children: line },
+                              }))
+                            : title,
+                      },
+                    },
                   },
                 },
-              ],
-            },
-          },
-          {
-            type: "div",
-            props: {
-              style: {
-                display: "flex",
-                justifyContent: "flex-end",
-                alignItems: "center",
-              },
-              children: [
+                // Bottom bar
                 {
                   type: "div",
                   props: {
                     style: {
-                      fontSize: 28,
-                      fontWeight: 700,
-                      color: "#a1a1aa",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      paddingTop: 24,
                     },
-                    children: "ktsu2i.dev",
+                    children: [
+                      // Author
+                      {
+                        type: "div",
+                        props: {
+                          style: {
+                            display: "flex",
+                            alignItems: "center",
+                          },
+                          children: [
+                            {
+                              type: "img",
+                              props: {
+                                src: AVATAR_BASE64,
+                                width: 72,
+                                height: 72,
+                                style: {
+                                  borderRadius: "50%",
+                                },
+                              },
+                            },
+                            {
+                              type: "div",
+                              props: {
+                                style: {
+                                  fontSize: 34,
+                                  fontWeight: 700,
+                                  color: "#e5e5e5",
+                                  marginLeft: 18,
+                                },
+                                children: "Kaito Tsutsui",
+                              },
+                            },
+                          ],
+                        },
+                      },
+                      // Domain
+                      {
+                        type: "div",
+                        props: {
+                          style: {
+                            fontSize: 32,
+                            color: "#e5e5e5",
+                          },
+                          children: "ktsu2i.dev",
+                        },
+                      },
+                    ],
                   },
                 },
               ],
