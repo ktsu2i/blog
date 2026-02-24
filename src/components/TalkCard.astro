@@ -13,12 +13,12 @@ const formattedDate = format(new Date(talk.date), "yyyy年M月d日");
 <div class="bg-card text-card-foreground flex flex-col gap-6 rounded-xl border py-6 shadow-sm">
   <div class="grid auto-rows-min grid-rows-[auto_auto] items-start gap-2 px-6">
     <div class="leading-snug font-semibold text-lg line-clamp-2 min-h-[2.75em]">{talk.title}</div>
-    <div class="text-muted-foreground text-sm">
+    <div class="text-muted-foreground text-sm truncate">
       {talk.event} / {formattedDate}
     </div>
   </div>
   <div class="px-6 space-y-4">
-    <p class="text-sm text-muted-foreground">{talk.description}</p>
+    <p class="text-sm text-muted-foreground line-clamp-3 min-h-15">{talk.description}</p>
     <div class="aspect-video w-full overflow-hidden rounded-lg border">
       <iframe
         src={talk.embedUrl}
