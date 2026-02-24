@@ -26,6 +26,7 @@ async function loadNotoSansJP(): Promise<ArrayBuffer> {
 
 export async function generateOgImage(title: string): Promise<Buffer> {
   const notoFont = await loadNotoSansJP();
+  const lines = title.split("\n");
 
   const svg = await satori(
     {
@@ -55,13 +56,20 @@ export async function generateOgImage(title: string): Promise<Buffer> {
                   type: "div",
                   props: {
                     style: {
-                      fontSize: title.length > 30 ? 48 : 56,
+                      display: "flex",
+                      flexDirection: "column",
+                      fontSize: title.replace(/\n/g, "").length > 30 ? 48 : 56,
                       fontWeight: 700,
                       color: "#ffffff",
                       lineHeight: 1.4,
                       wordBreak: "break-word",
                     },
-                    children: title,
+                    children: lines.length > 1
+                      ? lines.map((line) => ({
+                          type: "div",
+                          props: { children: line },
+                        }))
+                      : title,
                   },
                 },
               ],
