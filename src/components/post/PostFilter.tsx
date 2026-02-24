@@ -17,9 +17,9 @@ function PostCard({ post }: { post: Post }) {
       href={href}
       target={isExternal ? "_blank" : undefined}
       rel={isExternal ? "noopener noreferrer" : undefined}
-      className="block"
+      className="block h-full"
     >
-      <div className="bg-card text-card-foreground flex flex-col gap-6 rounded-xl border py-6 shadow-sm overflow-hidden transition-colors hover:bg-accent/50">
+      <div className="bg-card text-card-foreground flex h-full flex-col gap-6 rounded-xl border py-6 shadow-sm overflow-hidden transition-colors hover:bg-accent/50">
         {post.ogImage && (
           <div className="relative aspect-40/21 px-0 -mt-6">
             <img
@@ -53,8 +53,8 @@ function PostCard({ post }: { post: Post }) {
               </Badge>
             )}
           </div>
-          <div className="leading-none font-semibold text-lg">
-            <span className="flex items-center gap-1">
+          <div className="leading-none font-semibold text-lg line-clamp-2">
+            <span className="inline">
               {post.title}
               {isExternal && (
                 <svg
@@ -67,7 +67,7 @@ function PostCard({ post }: { post: Post }) {
                   strokeWidth="2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  className="size-4 text-muted-foreground"
+                  className="inline-block size-4 text-muted-foreground align-text-bottom"
                 >
                   <path d="M15 3h6v6" />
                   <path d="M10 14 21 3" />
@@ -77,7 +77,7 @@ function PostCard({ post }: { post: Post }) {
             </span>
           </div>
         </div>
-        <div className="px-6">
+        <div className="mt-auto px-6">
           <div className="text-muted-foreground text-sm line-clamp-2">
             {post.description}
           </div>
@@ -172,7 +172,7 @@ export default function PostFilter({ posts }: { posts: Post[] }) {
         {filtered.length} 件の記事
       </p>
 
-      <div className="space-y-4">
+      <div className="grid gap-4 md:grid-cols-2">
         {filtered.map((post) => (
           <PostCard key={post.id} post={post} />
         ))}
