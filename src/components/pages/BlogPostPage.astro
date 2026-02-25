@@ -1,0 +1,48 @@
+---
+import { getCollection, render } from "astro:content";
+import { format } from "date-fns";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import {
+  type Locale,
+  defaultLocale,
+  useTranslations,
+} from "../../i18n/config";
+
+interface Props {
+  post: any;
+}
+
+const { post } = Astro.props;
+const locale = (Astro.currentLocale ?? defaultLocale) as Locale;
+const t = useTranslations(locale);
+const { Content } = await render(post);
+const formattedDate = format(new Date(post.data.date), t["date.format"]);
+---
+
+<BaseLayout
+  title={post.data.title}
+  description={post.data.description}
+  ogType="article"
+  publishedTime={post.data.date}
+  ogImage={`/og/${post.id}.png`}
+>
+  <article class="space-y-8">
+    <header class="space-y-4">
+      <h1 class="text-3xl font-bold tracking-tight">{post.data.title}</h1>
+      <div class="flex flex-wrap items-center gap-2">
+        <time class="text-sm text-muted-foreground">{formattedDate}</time>
+        <span class="inline-flex items-center justify-center rounded-full bg-primary text-primary-foreground px-2 py-0.5 text-xs font-medium">
+          Local
+        </span>
+        {post.data.tags.map((tag: string) => (
+          <span class="inline-flex items-center justify-center rounded-full border border-border text-foreground px-2 py-0.5 text-xs font-medium">
+            {tag}
+          </span>
+        ))}
+      </div>
+    </header>
+    <div class="prose dark:prose-invert max-w-none">
+      <Content />
+    </div>
+  </article>
+</BaseLayout>

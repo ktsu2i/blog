@@ -1,0 +1,57 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PostCard from "../post/PostCard.astro";
+import { listAllPosts } from "../../lib/feed";
+import {
+  type Locale,
+  defaultLocale,
+  useTranslations,
+  getLocalePath,
+} from "../../i18n/config";
+
+const locale = (Astro.currentLocale ?? defaultLocale) as Locale;
+const t = useTranslations(locale);
+const posts = await listAllPosts(locale);
+const recent = posts.slice(0, 4);
+---
+
+<BaseLayout>
+  <div class="space-y-12">
+    <section class="space-y-4 py-8">
+      <h1 class="text-3xl font-bold tracking-tight">ktsu2i.dev</h1>
+      <p class="text-lg leading-relaxed text-muted-foreground">
+        {t["home.subtitle"]}
+      </p>
+      <div class="flex gap-3">
+        <a
+          href={getLocalePath("/blog", locale)}
+          class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all bg-primary text-primary-foreground hover:bg-primary/90 h-9 px-4 py-2"
+        >
+          {t["home.cta.blog"]}
+        </a>
+        <a
+          href={getLocalePath("/about", locale)}
+          class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2"
+        >
+          {t["home.cta.about"]}
+        </a>
+      </div>
+    </section>
+
+    <section class="space-y-6">
+      <h2 class="text-2xl font-bold tracking-tight">{t["home.latestPosts"]}</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {recent.map((post) => (
+          <PostCard post={post} />
+        ))}
+      </div>
+      <a
+        href={getLocalePath("/blog", locale)}
+        class="inline-flex items-center gap-1 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+      >
+        {t["home.viewAll"]}
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </a>
+    </section>
+  </div>
+</BaseLayout>

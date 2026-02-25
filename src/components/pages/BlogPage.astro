@@ -1,0 +1,35 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PostFilter from "../post/PostFilter.tsx";
+import { listAllPosts } from "../../lib/feed";
+import {
+  type Locale,
+  defaultLocale,
+  useTranslations,
+} from "../../i18n/config";
+
+const locale = (Astro.currentLocale ?? defaultLocale) as Locale;
+const t = useTranslations(locale);
+const posts = await listAllPosts(locale);
+---
+
+<BaseLayout title={t["blog.title"]} description={t["blog.description"]}>
+  <div class="space-y-6">
+    <div>
+      <h1 class="text-3xl font-bold tracking-tight">{t["blog.title"]}</h1>
+      <p class="mt-2 text-muted-foreground">
+        {t["blog.description"]}
+      </p>
+    </div>
+    <PostFilter
+      client:load
+      posts={posts}
+      locale={locale}
+      translations={{
+        count: t["blog.count"],
+        japaneseOnly: t["blog.japaneseOnly"],
+        dateFormat: t["date.format"],
+      }}
+    />
+  </div>
+</BaseLayout>

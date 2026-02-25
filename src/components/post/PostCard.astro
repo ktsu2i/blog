@@ -1,15 +1,27 @@
 ---
 import { format } from "date-fns";
 import type { Post } from "../../lib/types";
+import {
+  type Locale,
+  defaultLocale,
+  useTranslations,
+  getLocalePath,
+} from "../../i18n/config";
 
 interface Props {
   post: Post;
 }
 
 const { post } = Astro.props;
-const formattedDate = format(new Date(post.date), "yyyy年M月d日");
-const href = post.type === "local" && post.slug ? `/blog/${post.slug}` : post.url;
+const locale = (Astro.currentLocale ?? defaultLocale) as Locale;
+const t = useTranslations(locale);
+const formattedDate = format(new Date(post.date), t["date.format"]);
+const href =
+  post.type === "local" && post.slug
+    ? getLocalePath(`/blog/${post.slug}`, locale)
+    : post.url;
 const isExternal = post.type !== "local";
+const showJapaneseOnly = locale === "en" && post.source !== "local";
 ---
 
 <a
@@ -45,6 +57,11 @@ const isExternal = post.type !== "local";
         {post.source === "bengo4" && (
           <span class="inline-flex items-center justify-center rounded-full bg-secondary text-green-600 dark:text-green-400 px-2 py-0.5 text-xs font-medium">
             Bengo4
+          </span>
+        )}
+        {showJapaneseOnly && (
+          <span class="inline-flex items-center justify-center rounded-full bg-orange-500/15 text-orange-700 dark:text-orange-300 border border-orange-500/20 px-2 py-0.5 text-xs font-medium">
+            {t["blog.japaneseOnly"]}
           </span>
         )}
       </div>

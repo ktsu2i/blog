@@ -6,11 +6,29 @@ import type { Post, PostSource } from "@/lib/types";
 
 type SourceFilter = "all" | PostSource;
 
-function PostCard({ post }: { post: Post }) {
-  const formattedDate = format(new Date(post.date), "yyyy年M月d日");
+interface PostFilterTranslations {
+  count: string;
+  japaneseOnly: string;
+  dateFormat: string;
+}
+
+function PostCard({
+  post,
+  locale,
+  translations,
+}: {
+  post: Post;
+  locale: string;
+  translations: PostFilterTranslations;
+}) {
+  const formattedDate = format(new Date(post.date), translations.dateFormat);
+  const localePath = locale === "ja" ? "" : `/${locale}`;
   const href =
-    post.type === "local" && post.slug ? `/blog/${post.slug}` : post.url;
+    post.type === "local" && post.slug
+      ? `${localePath}/blog/${post.slug}`
+      : post.url;
   const isExternal = post.type !== "local";
+  const showJapaneseOnly = locale === "en" && post.source !== "local";
 
   return (
     <a
@@ -50,6 +68,14 @@ function PostCard({ post }: { post: Post }) {
                 className="text-green-600 dark:text-green-400"
               >
                 Bengo4
+              </Badge>
+            )}
+            {showJapaneseOnly && (
+              <Badge
+                variant="outline"
+                className="text-orange-700 dark:text-orange-300 border-orange-500/20 bg-orange-500/15"
+              >
+                {translations.japaneseOnly}
               </Badge>
             )}
           </div>
@@ -96,7 +122,13 @@ function PostCard({ post }: { post: Post }) {
   );
 }
 
-export default function PostFilter({ posts }: { posts: Post[] }) {
+interface Props {
+  posts: Post[];
+  locale: string;
+  translations: PostFilterTranslations;
+}
+
+export default function PostFilter({ posts, locale, translations }: Props) {
   const [sourceFilter, setSourceFilter] = useState<SourceFilter>("all");
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
@@ -124,9 +156,14 @@ export default function PostFilter({ posts }: { posts: Post[] }) {
 
   const toggleTag = (tag: string) => {
     setSelectedTags((prev) =>
-      prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]
+      prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag],
     );
   };
+
+  const countText = translations.count.replace(
+    "{count}",
+    String(filtered.length),
+  );
 
   return (
     <div className="space-y-6">
@@ -168,13 +205,16 @@ export default function PostFilter({ posts }: { posts: Post[] }) {
         </div>
       )}
 
-      <p className="text-sm text-muted-foreground">
-        {filtered.length} 件の記事
-      </p>
+      <p className="text-sm text-muted-foreground">{countText}</p>
 
       <div className="grid gap-4 md:grid-cols-2">
         {filtered.map((post) => (
-          <PostCard key={post.id} post={post} />
+          <PostCard
+            key={post.id}
+            post={post}
+            locale={locale}
+            translations={translations}
+          />
         ))}
       </div>
     </div>

@@ -1,13 +1,16 @@
 ---
 import { format } from "date-fns";
 import type { Talk } from "../lib/types";
+import { type Locale, defaultLocale, useTranslations } from "../i18n/config";
 
 interface Props {
   talk: Talk;
 }
 
 const { talk } = Astro.props;
-const formattedDate = format(new Date(talk.date), "yyyy年M月d日");
+const locale = (Astro.currentLocale ?? defaultLocale) as Locale;
+const t = useTranslations(locale);
+const formattedDate = format(new Date(talk.date), t["date.format"]);
 ---
 
 <div class="bg-card text-card-foreground flex flex-col gap-6 rounded-xl border py-6 shadow-sm">
@@ -35,7 +38,7 @@ const formattedDate = format(new Date(talk.date), "yyyy年M月d日");
       rel="noopener noreferrer"
       class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground h-8 px-3"
     >
-      SpeakerDeck で見る
+      {t["talks.viewOnSpeakerDeck"]}
       <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-3.5"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
     </a>
   </div>
