@@ -24,9 +24,7 @@ export const ja: Translations = {
   "about.description": "自己紹介",
   "about.bio":
     "ソフトウェアエンジニア。Web 開発を中心に活動しています。プレースホルダーのテキストです。実際の自己紹介に置き換えてください。",
-  "about.techStack": "Tech Stack",
   "about.career": "Career",
-  "about.links": "Links",
   "about.current": "現在",
   "about.type.work": "正社員",
   "about.type.internship": "インターン",

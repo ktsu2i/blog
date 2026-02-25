@@ -31,9 +31,7 @@ export interface Translations {
   "about.title": string;
   "about.description": string;
   "about.bio": string;
-  "about.techStack": string;
   "about.career": string;
-  "about.links": string;
   "about.current": string;
   "about.type.work": string;
   "about.type.internship": string;
