@@ -22,13 +22,15 @@ function PostCard({
   translations: PostFilterTranslations;
 }) {
   const formattedDate = format(new Date(post.date), translations.dateFormat);
-  const localePath = locale === "ja" ? "" : `/${locale}`;
+  const isJapaneseOnly = locale === "en" && post.locale !== "en";
+  const localePath =
+    post.type === "local" && isJapaneseOnly ? "" : locale === "ja" ? "" : `/${locale}`;
   const href =
     post.type === "local" && post.slug
       ? `${localePath}/blog/${post.slug}`
       : post.url;
   const isExternal = post.type !== "local";
-  const showJapaneseOnly = locale === "en" && post.source !== "local";
+  const showJapaneseOnly = isJapaneseOnly;
 
   return (
     <a
