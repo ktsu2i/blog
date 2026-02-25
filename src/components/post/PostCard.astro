@@ -16,12 +16,13 @@ const { post } = Astro.props;
 const locale = (Astro.currentLocale ?? defaultLocale) as Locale;
 const t = useTranslations(locale);
 const formattedDate = format(new Date(post.date), t["date.format"]);
+const isJapaneseOnly = locale === "en" && post.locale !== "en";
 const href =
   post.type === "local" && post.slug
-    ? getLocalePath(`/blog/${post.slug}`, locale)
+    ? getLocalePath(`/blog/${post.slug}`, isJapaneseOnly ? "ja" : locale)
     : post.url;
 const isExternal = post.type !== "local";
-const showJapaneseOnly = locale === "en" && post.source !== "local";
+const showJapaneseOnly = isJapaneseOnly;
 ---
 
 <a
