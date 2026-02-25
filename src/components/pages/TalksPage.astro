@@ -1,0 +1,30 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import TalkCard from "../TalkCard.astro";
+import { getTalks } from "../../data/talks";
+import {
+  type Locale,
+  defaultLocale,
+  useTranslations,
+} from "../../i18n/config";
+
+const locale = (Astro.currentLocale ?? defaultLocale) as Locale;
+const t = useTranslations(locale);
+const talks = getTalks(locale);
+---
+
+<BaseLayout title={t["talks.title"]} description={t["talks.description"]}>
+  <div class="space-y-6">
+    <div>
+      <h1 class="text-3xl font-bold tracking-tight">{t["talks.title"]}</h1>
+      <p class="mt-2 text-muted-foreground">
+        {t["talks.description"]}
+      </p>
+    </div>
+    <div class="grid gap-4 md:grid-cols-2">
+      {talks.map((talk) => (
+        <TalkCard talk={talk} />
+      ))}
+    </div>
+  </div>
+</BaseLayout>

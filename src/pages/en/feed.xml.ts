@@ -3,7 +3,7 @@ import type { APIContext } from "astro";
 import { getCollection } from "astro:content";
 
 export async function GET(context: APIContext) {
-  const posts = await getCollection("postsJa");
+  const posts = await getCollection("postsEn");
 
   const sortedPosts = posts
     .filter((post) => !post.data.draft)
@@ -14,13 +14,13 @@ export async function GET(context: APIContext) {
 
   return rss({
     title: "ktsu2i.dev",
-    description: "ktsu2i のブログ & ポートフォリオサイト",
+    description: "ktsu2i's blog & portfolio",
     site: context.site!,
     items: sortedPosts.map((post) => ({
       title: post.data.title,
       pubDate: new Date(post.data.date),
       description: post.data.description,
-      link: `/blog/${post.id}/`,
+      link: `/en/blog/${post.id}/`,
     })),
   });
 }

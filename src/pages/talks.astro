@@ -1,21 +1,5 @@
 ---
-import BaseLayout from "../layouts/BaseLayout.astro";
-import TalkCard from "../components/TalkCard.astro";
-import { talks } from "../data/talks";
+import TalksPage from "../components/pages/TalksPage.astro";
 ---
 
-<BaseLayout title="Talks" description="登壇・発表まとめ">
-  <div class="space-y-6">
-    <div>
-      <h1 class="text-3xl font-bold tracking-tight">Talks</h1>
-      <p class="mt-2 text-muted-foreground">
-        カンファレンスやミートアップでの登壇・発表一覧です。
-      </p>
-    </div>
-    <div class="grid gap-4 md:grid-cols-2">
-      {talks.map((talk) => (
-        <TalkCard talk={talk} />
-      ))}
-    </div>
-  </div>
-</BaseLayout>
+<TalksPage />

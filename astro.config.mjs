@@ -10,6 +10,13 @@ import rehypePrettyCode from "rehype-pretty-code";
 export default defineConfig({
   site: "https://ktsu2i.dev",
   server: { port: 3000 },
+  i18n: {
+    defaultLocale: "ja",
+    locales: ["ja", "en"],
+    routing: {
+      prefixDefaultLocale: false,
+    },
+  },
   integrations: [react(), mdx(), sitemap()],
   vite: {
     plugins: [tailwindcss()],

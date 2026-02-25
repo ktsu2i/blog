@@ -1,11 +1,21 @@
 ---
 import MobileNav from "./MobileNav.tsx";
 import ThemeToggle from "./ThemeToggle.tsx";
+import LanguageToggle from "./LanguageToggle.tsx";
+import {
+  type Locale,
+  defaultLocale,
+  useTranslations,
+  getLocalePath,
+} from "../../i18n/config";
+
+const locale = (Astro.currentLocale ?? defaultLocale) as Locale;
+const t = useTranslations(locale);
 
 const navItems = [
-  { href: "/blog", label: "Blog" },
-  { href: "/talks", label: "Talks" },
-  { href: "/about", label: "About" },
+  { href: getLocalePath("/blog", locale), label: t["nav.blog"] },
+  { href: getLocalePath("/talks", locale), label: t["nav.talks"] },
+  { href: getLocalePath("/about", locale), label: t["nav.about"] },
 ];
 
 const pathname = Astro.url.pathname;
@@ -13,7 +23,7 @@ const pathname = Astro.url.pathname;
 
 <header class="sticky top-0 z-40 border-b bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60">
   <div class="mx-auto flex h-14 max-w-4xl items-center justify-between px-6">
-    <a href="/" class="text-lg font-bold">
+    <a href={getLocalePath("/", locale)} class="text-lg font-bold">
       ktsu2i.dev
     </a>
     <nav class="hidden items-center gap-6 md:flex">
@@ -30,11 +40,13 @@ const pathname = Astro.url.pathname;
           {item.label}
         </a>
       ))}
+      <LanguageToggle currentLocale={locale} currentPath={pathname} />
       <ThemeToggle client:load />
     </nav>
     <div class="flex items-center gap-1 md:hidden">
+      <LanguageToggle currentLocale={locale} currentPath={pathname} />
       <ThemeToggle client:load />
-      <MobileNav client:media="(max-width: 768px)" />
+      <MobileNav client:media="(max-width: 768px)" locale={locale} navItems={navItems} />
     </div>
   </div>
 </header>

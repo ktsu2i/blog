@@ -1,19 +1,5 @@
 ---
-import BaseLayout from "../../layouts/BaseLayout.astro";
-import PostFilter from "../../components/post/PostFilter.tsx";
-import { listAllPosts } from "../../lib/feed";
-
-const posts = await listAllPosts();
+import BlogPage from "../../components/pages/BlogPage.astro";
 ---
 
-<BaseLayout title="Blog" description="ブログ記事一覧">
-  <div class="space-y-6">
-    <div>
-      <h1 class="text-3xl font-bold tracking-tight">Blog</h1>
-      <p class="mt-2 text-muted-foreground">
-        ローカル記事と外部記事をまとめて表示しています。
-      </p>
-    </div>
-    <PostFilter client:load posts={posts} />
-  </div>
-</BaseLayout>
+<BlogPage />

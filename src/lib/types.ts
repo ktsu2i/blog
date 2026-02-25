@@ -1,3 +1,5 @@
+import type { Locale } from "../i18n/config";
+
 // 投稿のソース種別
 export type PostSource = "local" | "zenn" | "bengo4";
 
@@ -14,6 +16,7 @@ export interface Post {
   url?: string; // external 用
   draft?: boolean; // local 用
   ogImage?: string; // OG画像URL
+  locale?: Locale;
 }
 
 // ローカル記事の frontmatter 型

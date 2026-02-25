@@ -1,5 +1,9 @@
 ---
+import { type Locale, defaultLocale } from "../../i18n/config";
+
+const locale = (Astro.currentLocale ?? defaultLocale) as Locale;
 const currentYear = new Date().getFullYear();
+const rssHref = locale === "ja" ? "/feed.xml" : "/en/feed.xml";
 ---
 
 <footer class="border-t">
@@ -34,7 +38,7 @@ const currentYear = new Date().getFullYear();
         </a>
         <span class="h-4 w-px shrink-0 bg-border" aria-hidden="true"></span>
         <a
-          href="/feed.xml"
+          href={rssHref}
           class="hover:text-foreground transition-colors"
         >
           RSS
