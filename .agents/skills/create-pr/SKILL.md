@@ -59,7 +59,7 @@ The body MUST follow this structure:
 
 - [ ] <Steps to verify the changes work correctly>
 
-🤖 Generated with [Claude Code](https://claude.com/claude-code)
+🤖 Generated with [<agent/tool name>](<agent/tool URL>)
 ```
 
 ### Body Rules
@@ -67,3 +67,4 @@ The body MUST follow this structure:
 - **Summary**: Brief, scannable overview. Focus on the "what" and "why", not the "how".
 - **Details**: Provide enough context for a reviewer to understand the changes without reading every line of code. Mention trade-offs, alternative approaches considered, or migration notes if relevant.
 - **Test Plan**: Actionable checklist of verification steps. Include manual testing steps, relevant commands, or URLs to check.
+- **Generator attribution**: If you include the final "Generated with ..." line, it MUST match the actual agent/tool used for the task (for example, Codex vs Claude Code). If the correct attribution is unclear, omit the line instead of using a wrong one.
