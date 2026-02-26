@@ -64,12 +64,12 @@ function PostCard({
                 Zenn
               </Badge>
             )}
-            {post.source === "bengo4" && (
+            {post.source === "external" && (
               <Badge
                 variant="secondary"
-                className="text-green-600 dark:text-green-400"
+                className="text-emerald-700 dark:text-emerald-300"
               >
-                Bengo4
+                External
               </Badge>
             )}
             {showJapaneseOnly && (
@@ -170,7 +170,7 @@ export default function PostFilter({ posts, locale, translations }: Props) {
   return (
     <div className="space-y-6">
       <div className="flex flex-wrap items-center gap-2">
-        {(["all", "blog", "zenn", "bengo4"] as const).map((source) => {
+        {(["all", "blog", "zenn", "external"] as const).map((source) => {
           const label =
             source === "all"
               ? "All"
@@ -178,7 +178,7 @@ export default function PostFilter({ posts, locale, translations }: Props) {
                 ? "Blog"
                 : source === "zenn"
                   ? "Zenn"
-                  : "Bengo4";
+                  : "External";
           return (
             <Button
               key={source}
