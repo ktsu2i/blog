@@ -1,7 +1,7 @@
 import type { Locale } from "../i18n/config";
 
 // 投稿のソース種別
-export type PostSource = "local" | "zenn" | "bengo4";
+export type PostSource = "blog" | "zenn" | "bengo4";
 
 // 統一投稿型（ローカル記事・外部記事共通）
 export interface Post {

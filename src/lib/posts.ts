@@ -13,8 +13,8 @@ export async function listLocalPosts(
     postLocale: Locale,
   ): Post => ({
     id: entry.id,
-    type: "local" as const,
-    source: "local" as const,
+    type: "blog" as const,
+    source: "blog" as const,
     slug: entry.id,
     title: entry.data.title,
     date: entry.data.date,

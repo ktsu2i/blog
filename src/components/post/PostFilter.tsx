@@ -24,12 +24,12 @@ function PostCard({
   const formattedDate = format(new Date(post.date), translations.dateFormat);
   const isJapaneseOnly = locale === "en" && post.locale !== "en";
   const localePath =
-    post.type === "local" && isJapaneseOnly ? "" : locale === "ja" ? "" : `/${locale}`;
+    post.type === "blog" && isJapaneseOnly ? "" : locale === "ja" ? "" : `/${locale}`;
   const href =
-    post.type === "local" && post.slug
+    post.type === "blog" && post.slug
       ? `${localePath}/blog/${post.slug}`
       : post.url;
-  const isExternal = post.type !== "local";
+  const isExternal = post.type !== "blog";
   const showJapaneseOnly = isJapaneseOnly;
 
   return (
@@ -55,7 +55,7 @@ function PostCard({
             <time className="text-sm text-muted-foreground">
               {formattedDate}
             </time>
-            {post.source === "local" && <Badge>Local</Badge>}
+            {post.source === "blog" && <Badge>Blog</Badge>}
             {post.source === "zenn" && (
               <Badge
                 variant="secondary"
@@ -170,12 +170,12 @@ export default function PostFilter({ posts, locale, translations }: Props) {
   return (
     <div className="space-y-6">
       <div className="flex flex-wrap items-center gap-2">
-        {(["all", "local", "zenn", "bengo4"] as const).map((source) => {
+        {(["all", "blog", "zenn", "bengo4"] as const).map((source) => {
           const label =
             source === "all"
               ? "All"
-              : source === "local"
-                ? "Local"
+              : source === "blog"
+                ? "Blog"
                 : source === "zenn"
                   ? "Zenn"
                   : "Bengo4";

@@ -18,10 +18,10 @@ const t = useTranslations(locale);
 const formattedDate = format(new Date(post.date), t["date.format"]);
 const isJapaneseOnly = locale === "en" && post.locale !== "en";
 const href =
-  post.type === "local" && post.slug
+  post.type === "blog" && post.slug
     ? getLocalePath(`/blog/${post.slug}`, isJapaneseOnly ? "ja" : locale)
     : post.url;
-const isExternal = post.type !== "local";
+const isExternal = post.type !== "blog";
 const showJapaneseOnly = isJapaneseOnly;
 ---
 
@@ -45,9 +45,9 @@ const showJapaneseOnly = isJapaneseOnly;
     <div class="grid auto-rows-min grid-rows-[auto_auto] items-start gap-2 px-6">
       <div class="flex items-center gap-2">
         <time class="text-sm text-muted-foreground">{formattedDate}</time>
-        {post.source === "local" && (
+        {post.source === "blog" && (
           <span class="inline-flex items-center justify-center rounded-full bg-primary text-primary-foreground px-2 py-0.5 text-xs font-medium">
-            Local
+            Blog
           </span>
         )}
         {post.source === "zenn" && (
