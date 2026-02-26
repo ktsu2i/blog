@@ -38,8 +38,13 @@ Create a git commit using the Conventional Commits specification. All commit mes
 - The summary MUST be in English, imperative mood, lowercase, and without a trailing period.
 - Keep the summary under 72 characters.
 - If more context is needed, add a blank line after the summary followed by a body paragraph (also in English).
-- Always append the co-author trailer:
+- Always append a co-author trailer that matches the actual agent/tool used for the task.
+- The co-author name/email MUST be correct for the current agent (for example, Claude Code vs Codex).
+- If the correct co-author identity is unclear, ask the user instead of guessing.
+
+Examples:
 
 ```
 Co-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>
+Co-authored-by: Codex <noreply@openai.com>
 ```
