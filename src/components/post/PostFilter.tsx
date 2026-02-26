@@ -41,11 +41,11 @@ function PostCard({
     >
       <div className="bg-card text-card-foreground flex h-full flex-col gap-6 rounded-xl border py-6 shadow-sm overflow-hidden transition-colors hover:bg-accent/50">
         {post.ogImage && (
-          <div className="relative aspect-40/21 px-0 -mt-6">
+          <div className="relative aspect-40/21 px-0 -mt-6 overflow-hidden border-b border-border/70">
             <img
               src={post.ogImage}
               alt=""
-              className="h-full w-full object-cover"
+              className="h-full w-full object-cover ring-1 ring-inset ring-border/60"
               loading="lazy"
             />
           </div>
