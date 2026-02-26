@@ -1,6 +1,6 @@
 import { getCollection } from "astro:content";
 import { POST_SOURCES, type Post } from "./types";
-import type { Locale } from "../i18n/config";
+import { type Locale, getLocalePath } from "../i18n/config";
 
 export async function listLocalPosts(
   locale: Locale = "ja",
@@ -20,7 +20,7 @@ export async function listLocalPosts(
     tags: entry.data.tags,
     description: entry.data.description,
     draft: entry.data.draft,
-    ogImage: `/og/${entry.id}.png`,
+    ogImage: getLocalePath(`/og/${entry.id}.png`, postLocale),
     locale: postLocale,
   });
 

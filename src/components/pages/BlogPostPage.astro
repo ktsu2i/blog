@@ -6,6 +6,7 @@ import { POST_SOURCES } from "../../lib/types";
 import {
   type Locale,
   defaultLocale,
+  getLocalePath,
   useTranslations,
 } from "../../i18n/config";
 
@@ -25,7 +26,7 @@ const formattedDate = format(new Date(post.data.date), t["date.format"]);
   description={post.data.description}
   ogType="article"
   publishedTime={post.data.date}
-  ogImage={`/og/${post.id}.png`}
+  ogImage={getLocalePath(`/og/${post.id}.png`, locale)}
 >
   <article class="space-y-8">
     <header class="space-y-4">
