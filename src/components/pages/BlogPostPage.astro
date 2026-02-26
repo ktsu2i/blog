@@ -2,7 +2,7 @@
 import { getCollection, render } from "astro:content";
 import { format } from "date-fns";
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import { POST_SOURCES, POST_SOURCE_LABELS } from "../../lib/types";
+import { POST_SOURCES } from "../../lib/types";
 import {
   type Locale,
   defaultLocale,
@@ -33,7 +33,7 @@ const formattedDate = format(new Date(post.data.date), t["date.format"]);
       <div class="flex flex-wrap items-center gap-2">
         <time class="text-sm text-muted-foreground">{formattedDate}</time>
         <span class="inline-flex items-center justify-center rounded-full bg-primary text-primary-foreground px-2 py-0.5 text-xs font-medium">
-          {POST_SOURCE_LABELS[POST_SOURCES.BLOG]}
+          {POST_SOURCES.BLOG}
         </span>
         {post.data.tags.map((tag: string) => (
           <span class="inline-flex items-center justify-center rounded-full border border-border text-foreground px-2 py-0.5 text-xs font-medium">

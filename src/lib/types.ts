@@ -2,18 +2,12 @@ import type { Locale } from "../i18n/config";
 
 // 投稿のソース種別
 export const POST_SOURCES = {
-  BLOG: "blog",
-  ZENN: "zenn",
-  EXTERNAL: "external",
+  BLOG: "Blog",
+  ZENN: "Zenn",
+  EXTERNAL: "External",
 } as const;
 
 export type PostSource = (typeof POST_SOURCES)[keyof typeof POST_SOURCES];
-
-export const POST_SOURCE_LABELS: Record<PostSource, string> = {
-  [POST_SOURCES.BLOG]: "Blog",
-  [POST_SOURCES.ZENN]: "Zenn",
-  [POST_SOURCES.EXTERNAL]: "External",
-};
 
 // 統一投稿型（ローカル記事・外部記事共通）
 export interface Post {

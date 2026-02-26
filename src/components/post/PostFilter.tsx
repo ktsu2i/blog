@@ -2,7 +2,7 @@ import { useMemo, useState } from "react";
 import { format } from "date-fns";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { POST_SOURCES, POST_SOURCE_LABELS, type Post, type PostSource } from "@/lib/types";
+import { POST_SOURCES, type Post, type PostSource } from "@/lib/types";
 
 type SourceFilter = "all" | PostSource;
 
@@ -55,13 +55,13 @@ function PostCard({
             <time className="text-sm text-muted-foreground">
               {formattedDate}
             </time>
-            {post.source === POST_SOURCES.BLOG && <Badge>{POST_SOURCE_LABELS[POST_SOURCES.BLOG]}</Badge>}
+            {post.source === POST_SOURCES.BLOG && <Badge>{POST_SOURCES.BLOG}</Badge>}
             {post.source === POST_SOURCES.ZENN && (
               <Badge
                 variant="secondary"
                 className="text-blue-600 dark:text-blue-400"
               >
-                {POST_SOURCE_LABELS[POST_SOURCES.ZENN]}
+                {POST_SOURCES.ZENN}
               </Badge>
             )}
             {post.source === POST_SOURCES.EXTERNAL && (
@@ -69,7 +69,7 @@ function PostCard({
                 variant="secondary"
                 className="text-emerald-700 dark:text-emerald-300"
               >
-                {POST_SOURCE_LABELS[POST_SOURCES.EXTERNAL]}
+                {POST_SOURCES.EXTERNAL}
               </Badge>
             )}
             {showJapaneseOnly && (
@@ -177,7 +177,7 @@ export default function PostFilter({ posts, locale, translations }: Props) {
               size="sm"
               onClick={() => setSourceFilter(source)}
             >
-              {source === "all" ? "All" : POST_SOURCE_LABELS[source]}
+              {source === "all" ? "All" : source}
             </Button>
           ))}
       </div>

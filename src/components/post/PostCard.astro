@@ -47,17 +47,17 @@ const showJapaneseOnly = isJapaneseOnly;
         <time class="text-sm text-muted-foreground">{formattedDate}</time>
         {post.source === POST_SOURCES.BLOG && (
           <span class="inline-flex items-center justify-center rounded-full bg-primary text-primary-foreground px-2 py-0.5 text-xs font-medium">
-            Blog
+            {POST_SOURCES.BLOG}
           </span>
         )}
         {post.source === POST_SOURCES.ZENN && (
           <span class="inline-flex items-center justify-center rounded-full bg-secondary text-blue-600 dark:text-blue-400 px-2 py-0.5 text-xs font-medium">
-            Zenn
+            {POST_SOURCES.ZENN}
           </span>
         )}
         {post.source === POST_SOURCES.EXTERNAL && (
           <span class="inline-flex items-center justify-center rounded-full bg-secondary text-emerald-700 dark:text-emerald-300 px-2 py-0.5 text-xs font-medium">
-            External
+            {POST_SOURCES.EXTERNAL}
           </span>
         )}
         {showJapaneseOnly && (
