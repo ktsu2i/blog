@@ -32,7 +32,7 @@ export const ja: Translations = {
 
   "talks.title": "Talks",
   "talks.description": "カンファレンスやミートアップでの登壇・発表一覧です。",
-  "talks.viewOnSpeakerDeck": "SpeakerDeck で見る",
+  "talks.viewOnSpeakerDeck": "Speaker Deck で見る",
 
   "common.siteName": "ktsu2i.dev",
   "common.siteDescription": "ktsu2i のブログ & ポートフォリオサイト",

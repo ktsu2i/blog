@@ -31,7 +31,7 @@ export const en: Translations = {
 
   "talks.title": "Talks",
   "talks.description": "Conference and meetup presentations.",
-  "talks.viewOnSpeakerDeck": "View on SpeakerDeck",
+  "talks.viewOnSpeakerDeck": "View on Speaker Deck",
 
   "common.siteName": "ktsu2i.dev",
   "common.siteDescription": "ktsu2i's blog & portfolio",
