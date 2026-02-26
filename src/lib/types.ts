@@ -1,12 +1,23 @@
 import type { Locale } from "../i18n/config";
 
 // 投稿のソース種別
-export type PostSource = "blog" | "zenn" | "external";
+export const POST_SOURCES = {
+  BLOG: "blog",
+  ZENN: "zenn",
+  EXTERNAL: "external",
+} as const;
+
+export type PostSource = (typeof POST_SOURCES)[keyof typeof POST_SOURCES];
+
+export const POST_SOURCE_LABELS: Record<PostSource, string> = {
+  [POST_SOURCES.BLOG]: "Blog",
+  [POST_SOURCES.ZENN]: "Zenn",
+  [POST_SOURCES.EXTERNAL]: "External",
+};
 
 // 統一投稿型（ローカル記事・外部記事共通）
 export interface Post {
   id: string;
-  type: PostSource;
   source: PostSource;
   title: string;
   date: string; // ISO 8601
