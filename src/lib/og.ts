@@ -7,7 +7,7 @@ const GEIST_SANS_BOLD = fs.readFileSync(
   path.resolve("node_modules/@fontsource/geist-sans/files/geist-sans-latin-700-normal.woff")
 );
 
-const AVATAR_BASE64 = `data:image/png;base64,${fs.readFileSync(path.resolve("public/avatar.png")).toString("base64")}`;
+const AVATAR_BASE64 = `data:image/png;base64,${fs.readFileSync(path.resolve("public/images/avatar.png")).toString("base64")}`;
 
 let notoSansJPBold: ArrayBuffer | null = null;
 
