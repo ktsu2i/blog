@@ -2,7 +2,7 @@ import { useMemo, useState } from "react";
 import { format } from "date-fns";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import type { Post, PostSource } from "@/lib/types";
+import { POST_SOURCES, type Post, type PostSource } from "@/lib/types";
 
 type SourceFilter = "all" | PostSource;
 
@@ -24,12 +24,12 @@ function PostCard({
   const formattedDate = format(new Date(post.date), translations.dateFormat);
   const isJapaneseOnly = locale === "en" && post.locale !== "en";
   const localePath =
-    post.type === "blog" && isJapaneseOnly ? "" : locale === "ja" ? "" : `/${locale}`;
+    post.source === POST_SOURCES.BLOG && isJapaneseOnly ? "" : locale === "ja" ? "" : `/${locale}`;
   const href =
-    post.type === "blog" && post.slug
+    post.source === POST_SOURCES.BLOG && post.slug
       ? `${localePath}/blog/${post.slug}`
       : post.url;
-  const isExternal = post.type !== "blog";
+  const isExternal = post.source !== POST_SOURCES.BLOG;
   const showJapaneseOnly = isJapaneseOnly;
 
   return (
@@ -55,21 +55,21 @@ function PostCard({
             <time className="text-sm text-muted-foreground">
               {formattedDate}
             </time>
-            {post.source === "blog" && <Badge>Blog</Badge>}
-            {post.source === "zenn" && (
+            {post.source === POST_SOURCES.BLOG && <Badge>{POST_SOURCES.BLOG}</Badge>}
+            {post.source === POST_SOURCES.ZENN && (
               <Badge
                 variant="secondary"
                 className="text-blue-600 dark:text-blue-400"
               >
-                Zenn
+                {POST_SOURCES.ZENN}
               </Badge>
             )}
-            {post.source === "external" && (
+            {post.source === POST_SOURCES.EXTERNAL && (
               <Badge
                 variant="secondary"
                 className="text-emerald-700 dark:text-emerald-300"
               >
-                External
+                {POST_SOURCES.EXTERNAL}
               </Badge>
             )}
             {showJapaneseOnly && (
@@ -170,26 +170,16 @@ export default function PostFilter({ posts, locale, translations }: Props) {
   return (
     <div className="space-y-6">
       <div className="flex flex-wrap items-center gap-2">
-        {(["all", "blog", "zenn", "external"] as const).map((source) => {
-          const label =
-            source === "all"
-              ? "All"
-              : source === "blog"
-                ? "Blog"
-                : source === "zenn"
-                  ? "Zenn"
-                  : "External";
-          return (
+        {(["all", ...Object.values(POST_SOURCES)] as const).map((source) => (
             <Button
               key={source}
               variant={sourceFilter === source ? "default" : "outline"}
               size="sm"
               onClick={() => setSourceFilter(source)}
             >
-              {label}
+              {source === "all" ? "All" : source}
             </Button>
-          );
-        })}
+          ))}
       </div>
 
       {allTags.length > 0 && (

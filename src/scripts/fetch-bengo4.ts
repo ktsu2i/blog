@@ -1,7 +1,7 @@
 import Parser from "rss-parser";
 import fs from "fs";
 import path from "path";
-import type { Post } from "../lib/types";
+import { POST_SOURCES, type Post } from "../lib/types";
 
 const FEED_URL = "https://creators.bengo4.com/feed";
 const AUTHOR = "ktsu2i";
@@ -45,8 +45,7 @@ async function main() {
 
       return {
         id: `bengo4-${urlPath}`,
-        type: "external" as const,
-        source: "external" as const,
+        source: POST_SOURCES.EXTERNAL,
         title: item.title ?? "",
         date: item.pubDate
           ? new Date(item.pubDate).toISOString()

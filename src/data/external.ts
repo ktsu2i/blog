@@ -1,10 +1,9 @@
-import type { Post } from "../lib/types";
+import { POST_SOURCES, type Post } from "../lib/types";
 
 export const externalPosts: Post[] = [
   {
     id: "pepabo-2024-internship-kaito",
-    type: "external",
-    source: "external",
+    source: POST_SOURCES.EXTERNAL,
     title: "GMOペパボ サマーインターン2024 体験記（かいと）",
     date: "2024-12-16T00:00:00.000Z",
     tags: [],

@@ -1,10 +1,9 @@
-import type { Post } from "../lib/types";
+import { POST_SOURCES, type Post } from "../lib/types";
 
 export const zennPosts: Post[] = [
   {
     id: "zenn-ktsu2i-articles-75d34eb6d260b9",
-    type: "zenn",
-    source: "zenn",
+    source: POST_SOURCES.ZENN,
     title: "開発したChrome拡張機能がArcだと動かない！？",
     date: "2025-07-13T09:43:27.000Z",
     tags: [],
@@ -16,8 +15,7 @@ export const zennPosts: Post[] = [
   },
   {
     id: "zenn-lovegraph-articles-a4b96fb9925341",
-    type: "zenn",
-    source: "zenn",
+    source: POST_SOURCES.ZENN,
     title: "影響範囲を考えて@changeとwatchを使い分けよう！",
     date: "2025-03-27T05:42:24.000Z",
     tags: [],
@@ -29,8 +27,7 @@ export const zennPosts: Post[] = [
   },
   {
     id: "zenn-ktsu2i-articles-eb171c26c8f9ca",
-    type: "zenn",
-    source: "zenn",
+    source: POST_SOURCES.ZENN,
     title: "シンガポールでのGoのカンファレンスに参加してきました",
     date: "2025-02-18T12:31:51.000Z",
     tags: [],
@@ -42,8 +39,7 @@ export const zennPosts: Post[] = [
   },
   {
     id: "zenn-ktsu2i-articles-1bd88807ef1111",
-    type: "zenn",
-    source: "zenn",
+    source: POST_SOURCES.ZENN,
     title: "弁護士ドットコムのインターンに参加した話",
     date: "2025-01-15T02:52:46.000Z",
     tags: [],
@@ -55,8 +51,7 @@ export const zennPosts: Post[] = [
   },
   {
     id: "zenn-ktsu2i-articles-28e5d69307915b",
-    type: "zenn",
-    source: "zenn",
+    source: POST_SOURCES.ZENN,
     title: "2024年のふりかえり",
     date: "2024-12-31T10:47:11.000Z",
     tags: [],
@@ -68,8 +63,7 @@ export const zennPosts: Post[] = [
   },
   {
     id: "zenn-lovegraph-articles-a177392467ceed",
-    type: "zenn",
-    source: "zenn",
+    source: POST_SOURCES.ZENN,
     title: "追加gem無しでActiveModelの画像ファイルにバリデーションをかけたい！",
     date: "2024-12-05T03:17:11.000Z",
     tags: [],
@@ -81,8 +75,7 @@ export const zennPosts: Post[] = [
   },
   {
     id: "zenn-ktsu2i-articles-68d541a43bd36f",
-    type: "zenn",
-    source: "zenn",
+    source: POST_SOURCES.ZENN,
     title: "LLM API GroqをGoで叩いてみる",
     date: "2024-10-12T04:23:29.000Z",
     tags: [],
@@ -94,8 +87,7 @@ export const zennPosts: Post[] = [
   },
   {
     id: "zenn-lovegraph-articles-6a479166eb48cd",
-    type: "zenn",
-    source: "zenn",
+    source: POST_SOURCES.ZENN,
     title: "インターンで思いっきり失敗した話",
     date: "2024-09-12T08:04:11.000Z",
     tags: [],

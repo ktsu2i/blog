@@ -1,5 +1,5 @@
 import { getCollection } from "astro:content";
-import type { Post } from "./types";
+import { POST_SOURCES, type Post } from "./types";
 import type { Locale } from "../i18n/config";
 
 export async function listLocalPosts(
@@ -13,8 +13,7 @@ export async function listLocalPosts(
     postLocale: Locale,
   ): Post => ({
     id: entry.id,
-    type: "blog" as const,
-    source: "blog" as const,
+    source: POST_SOURCES.BLOG,
     slug: entry.id,
     title: entry.data.title,
     date: entry.data.date,
