@@ -45,8 +45,8 @@ async function main() {
 
       return {
         id: `bengo4-${urlPath}`,
-        type: "bengo4" as const,
-        source: "bengo4" as const,
+        type: "external" as const,
+        source: "external" as const,
         title: item.title ?? "",
         date: item.pubDate
           ? new Date(item.pubDate).toISOString()

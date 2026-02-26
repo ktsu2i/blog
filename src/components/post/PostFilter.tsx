@@ -24,12 +24,12 @@ function PostCard({
   const formattedDate = format(new Date(post.date), translations.dateFormat);
   const isJapaneseOnly = locale === "en" && post.locale !== "en";
   const localePath =
-    post.type === "local" && isJapaneseOnly ? "" : locale === "ja" ? "" : `/${locale}`;
+    post.type === "blog" && isJapaneseOnly ? "" : locale === "ja" ? "" : `/${locale}`;
   const href =
-    post.type === "local" && post.slug
+    post.type === "blog" && post.slug
       ? `${localePath}/blog/${post.slug}`
       : post.url;
-  const isExternal = post.type !== "local";
+  const isExternal = post.type !== "blog";
   const showJapaneseOnly = isJapaneseOnly;
 
   return (
@@ -41,11 +41,11 @@ function PostCard({
     >
       <div className="bg-card text-card-foreground flex h-full flex-col gap-6 rounded-xl border py-6 shadow-sm overflow-hidden transition-colors hover:bg-accent/50">
         {post.ogImage && (
-          <div className="relative aspect-40/21 px-0 -mt-6">
+          <div className="relative aspect-40/21 px-0 -mt-6 overflow-hidden border-b border-border/70">
             <img
               src={post.ogImage}
               alt=""
-              className="h-full w-full object-cover"
+              className="h-full w-full object-cover ring-1 ring-inset ring-border/60"
               loading="lazy"
             />
           </div>
@@ -55,7 +55,7 @@ function PostCard({
             <time className="text-sm text-muted-foreground">
               {formattedDate}
             </time>
-            {post.source === "local" && <Badge>Local</Badge>}
+            {post.source === "blog" && <Badge>Blog</Badge>}
             {post.source === "zenn" && (
               <Badge
                 variant="secondary"
@@ -64,12 +64,12 @@ function PostCard({
                 Zenn
               </Badge>
             )}
-            {post.source === "bengo4" && (
+            {post.source === "external" && (
               <Badge
                 variant="secondary"
-                className="text-green-600 dark:text-green-400"
+                className="text-emerald-700 dark:text-emerald-300"
               >
-                Bengo4
+                External
               </Badge>
             )}
             {showJapaneseOnly && (
@@ -170,15 +170,15 @@ export default function PostFilter({ posts, locale, translations }: Props) {
   return (
     <div className="space-y-6">
       <div className="flex flex-wrap items-center gap-2">
-        {(["all", "local", "zenn", "bengo4"] as const).map((source) => {
+        {(["all", "blog", "zenn", "external"] as const).map((source) => {
           const label =
             source === "all"
               ? "All"
-              : source === "local"
-                ? "Local"
+              : source === "blog"
+                ? "Blog"
                 : source === "zenn"
                   ? "Zenn"
-                  : "Bengo4";
+                  : "External";
           return (
             <Button
               key={source}

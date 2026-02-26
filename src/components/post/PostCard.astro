@@ -18,10 +18,10 @@ const t = useTranslations(locale);
 const formattedDate = format(new Date(post.date), t["date.format"]);
 const isJapaneseOnly = locale === "en" && post.locale !== "en";
 const href =
-  post.type === "local" && post.slug
+  post.type === "blog" && post.slug
     ? getLocalePath(`/blog/${post.slug}`, isJapaneseOnly ? "ja" : locale)
     : post.url;
-const isExternal = post.type !== "local";
+const isExternal = post.type !== "blog";
 const showJapaneseOnly = isJapaneseOnly;
 ---
 
@@ -33,11 +33,11 @@ const showJapaneseOnly = isJapaneseOnly;
 >
   <div class="bg-card text-card-foreground flex h-full flex-col gap-6 rounded-xl border py-6 shadow-sm overflow-hidden transition-colors hover:bg-accent/50">
     {post.ogImage && (
-      <div class="relative aspect-40/21 px-0 -mt-6">
+      <div class="relative aspect-40/21 px-0 -mt-6 overflow-hidden border-b border-border/70">
         <img
           src={post.ogImage}
           alt=""
-          class="h-full w-full object-cover"
+          class="h-full w-full object-cover ring-1 ring-inset ring-border/60"
           loading="lazy"
         />
       </div>
@@ -45,9 +45,9 @@ const showJapaneseOnly = isJapaneseOnly;
     <div class="grid auto-rows-min grid-rows-[auto_auto] items-start gap-2 px-6">
       <div class="flex items-center gap-2">
         <time class="text-sm text-muted-foreground">{formattedDate}</time>
-        {post.source === "local" && (
+        {post.source === "blog" && (
           <span class="inline-flex items-center justify-center rounded-full bg-primary text-primary-foreground px-2 py-0.5 text-xs font-medium">
-            Local
+            Blog
           </span>
         )}
         {post.source === "zenn" && (
@@ -55,9 +55,9 @@ const showJapaneseOnly = isJapaneseOnly;
             Zenn
           </span>
         )}
-        {post.source === "bengo4" && (
-          <span class="inline-flex items-center justify-center rounded-full bg-secondary text-green-600 dark:text-green-400 px-2 py-0.5 text-xs font-medium">
-            Bengo4
+        {post.source === "external" && (
+          <span class="inline-flex items-center justify-center rounded-full bg-secondary text-emerald-700 dark:text-emerald-300 px-2 py-0.5 text-xs font-medium">
+            External
           </span>
         )}
         {showJapaneseOnly && (
