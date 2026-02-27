@@ -17,24 +17,33 @@ const recent = posts.slice(0, 4);
 
 <BaseLayout>
   <div class="space-y-12">
-    <section class="space-y-4 py-8">
-      <h1 class="text-3xl font-bold tracking-tight">ktsu2i.dev</h1>
-      <p class="text-lg leading-relaxed text-muted-foreground">
-        {t["home.subtitle"]}
-      </p>
-      <div class="flex gap-3">
-        <a
-          href={getLocalePath("/blog", locale)}
-          class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all bg-primary text-primary-foreground hover:bg-primary/90 h-9 px-4 py-2"
-        >
-          {t["home.cta.blog"]}
-        </a>
-        <a
-          href={getLocalePath("/about", locale)}
-          class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2"
-        >
-          {t["home.cta.about"]}
-        </a>
+    <section class="flex items-center gap-8 py-8">
+      <img
+        src="/images/avatar.png"
+        alt="Kaito Tsutsui"
+        class="size-24 shrink-0 rounded-full bg-muted object-cover"
+      />
+      <div class="space-y-6">
+        <div class="space-y-2">
+          <h1 class="text-4xl font-bold tracking-tight">ktsu2i.dev</h1>
+          <p class="text-lg text-muted-foreground">
+            {t["home.subtitle"]}
+          </p>
+        </div>
+        <div class="flex gap-3">
+          <a
+            href={getLocalePath("/blog", locale)}
+            class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all bg-primary text-primary-foreground hover:bg-primary/90 h-9 px-4 py-2"
+          >
+            {t["home.cta.blog"]}
+          </a>
+          <a
+            href={getLocalePath("/about", locale)}
+            class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2"
+          >
+            {t["home.cta.about"]}
+          </a>
+        </div>
       </div>
     </section>
 
