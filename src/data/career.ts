@@ -106,7 +106,7 @@ const careerData: Record<Locale, CareerEntry[]> = {
     },
     {
       id: "itd-gbs",
-      company: "IT-Deutschland Global Business Solutions",
+      company: "IT-Deutschland Global Business Solutions, K.K.",
       role: "Software Engineer Intern",
       period: "Jun 2024 - Jul 2024 (1 month)",
       description: "",
