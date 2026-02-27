@@ -8,21 +8,21 @@ export const en: Translations = {
   "nav.menu": "Menu",
 
   "home.subtitle":
-    "A software engineer's blog & portfolio. Writing about tech, talks, and projects.",
+    "Kaito Tsutsui's blog. Writing about tech and talks.",
   "home.cta.blog": "Read Blog",
   "home.cta.about": "About",
   "home.latestPosts": "Latest Posts",
   "home.viewAll": "View all posts",
 
   "blog.title": "Blog",
-  "blog.description": "Local and external posts in one place.",
+  "blog.description": "Posts from this site and external sources in one place.",
   "blog.count": "{count} posts",
   "blog.filter.all": "All",
   "blog.japaneseOnly": "Japanese only",
 
   "about.title": "About",
   "about.description": "About me",
-  "about.bio": "Software engineer focused on web development.",
+  "about.bio": "Software Engineer / Gopher / 🍣",
   "about.career": "Career",
   "about.current": "Current",
   "about.type.work": "Full-time",
