@@ -6,6 +6,7 @@ import tailwindcss from "@tailwindcss/vite";
 import remarkGfm from "remark-gfm";
 import remarkLinkCard from "remark-link-card-plus";
 import rehypeSlug from "rehype-slug";
+import rehypeExternalLinks from "rehype-external-links";
 import rehypePrettyCode from "rehype-pretty-code";
 
 export default defineConfig({
@@ -29,6 +30,7 @@ export default defineConfig({
     ],
     rehypePlugins: [
       rehypeSlug,
+      [rehypeExternalLinks, { target: "_blank", rel: ["noopener", "noreferrer"] }],
       [rehypePrettyCode, { theme: "one-dark-pro" }],
     ],
   },
