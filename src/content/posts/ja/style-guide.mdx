@@ -1,0 +1,210 @@
+---
+title: "スタイルガイド"
+date: "2024-01-01"
+tags: ["style", "guide"]
+description: "Markdown で使える全要素のスタイル確認用ページです。"
+draft: true
+---
+
+## 見出し (Headings)
+
+## H2 見出しのスタイル
+
+### H3 見出しのスタイル
+
+#### H4 見出しのスタイル
+
+---
+
+## 段落とインラインテキスト (Paragraph & Inline)
+
+これは通常の段落です。テキストは自動的に折り返されます。文章が長くなっても読みやすいように、適切な行間が設定されています。ここに**太字のテキスト**と*斜体のテキスト*、そして***太字かつ斜体***のテキストがあります。
+
+~~取り消し線~~のテキストや、`インラインコード`も使えます。こちらは `const x = 42` のような短いコードに便利です。
+
+これは[内部リンク](/about)で、こちらは[外部リンク](https://github.com)です。
+
+---
+
+## 引用 (Blockquote)
+
+> シンプルなブロック引用です。引用はインディゴのアクセントが付きます。
+
+> 複数段落の引用です。
+>
+> 2つ目の段落もこのように書けます。**太字**や*斜体*も引用内で使えます。
+
+---
+
+## リスト (Lists)
+
+### 順序なしリスト
+
+- リストアイテム 1
+- リストアイテム 2
+  - ネストされたアイテム A
+  - ネストされたアイテム B
+    - さらにネストされたアイテム
+- リストアイテム 3
+
+### 順序付きリスト
+
+1. 最初のステップ
+2. 次のステップ
+   1. サブステップ A
+   2. サブステップ B
+3. 最後のステップ
+
+### タスクリスト
+
+- [x] 完了したタスク
+- [x] これも完了
+- [ ] まだ終わっていないタスク
+- [ ] これも未完了
+
+---
+
+## コードブロック (Code Blocks)
+
+### TypeScript
+
+```typescript
+interface Post {
+  title: string;
+  date: string;
+  tags: string[];
+  source: "blog" | "zenn" | "bengo4";
+}
+
+async function fetchPosts(): Promise<Post[]> {
+  const response = await fetch("/api/posts");
+  const data = await response.json();
+  return data.posts;
+}
+```
+
+### JSX / React
+
+```tsx
+export function PostCard({ post }: { post: Post }) {
+  return (
+    <article className="rounded-lg border p-4">
+      <h2 className="text-xl font-bold">{post.title}</h2>
+      <time className="text-sm text-muted">{post.date}</time>
+      <div className="flex gap-2 mt-2">
+        {post.tags.map((tag) => (
+          <span key={tag} className="badge">{tag}</span>
+        ))}
+      </div>
+    </article>
+  );
+}
+```
+
+### CSS
+
+```css
+.prose h2 {
+  border-bottom: 2px solid var(--prose-accent-light);
+  padding-bottom: 0.75rem;
+}
+
+.prose a:hover {
+  background-size: 100% 1px;
+}
+```
+
+### Shell
+
+```bash
+pnpm dev
+pnpm build
+git commit -m "feat: add new post"
+```
+
+### JSON
+
+```json
+{
+  "name": "ktsu2i-blog",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build"
+  }
+}
+```
+
+---
+
+## テーブル (Table)
+
+| 技術 | バージョン | 用途 |
+|------|-----------|------|
+| Astro | 5.x | フレームワーク |
+| React | 19 | UI コンポーネント |
+| Tailwind CSS | v4 | スタイリング |
+| MDX | 4.x | コンテンツ |
+
+### 右寄せ・中央寄せのテーブル
+
+| 項目 | 数量 | 単価 |
+|:-----|:----:|-----:|
+| りんご | 3 | ¥150 |
+| みかん | 5 | ¥100 |
+| バナナ | 2 | ¥200 |
+| **合計** | **10** | **¥450** |
+
+---
+
+## 画像 (Image)
+
+![サンプル画像](https://res.cloudinary.com/demo/image/upload/v1312461204/sample.jpg)
+
+---
+
+## 水平線 (Horizontal Rule)
+
+上のテキスト
+
+---
+
+下のテキスト
+
+---
+
+## 脚注 (Footnote)
+
+これは脚注付きのテキストです[^1]。もう一つの脚注もあります[^2]。
+
+[^1]: これが最初の脚注です。
+[^2]: こちらが2つ目の脚注です。
+
+---
+
+## 複合的な例 (Combined)
+
+> **Note:** 以下は実際の記事で見られるような構成例です。
+
+### API からデータを取得する
+
+まず、`fetch` 関数を使って API を呼び出します:
+
+```typescript
+const res = await fetch("https://api.example.com/posts");
+const posts: Post[] = await res.json();
+```
+
+取得したデータは以下のような構造です:
+
+| フィールド | 型 | 説明 |
+|-----------|-----|------|
+| `id` | `number` | 一意の ID |
+| `title` | `string` | 記事タイトル |
+| `tags` | `string[]` | タグの配列 |
+
+1. レスポンスを **パース** する
+2. 型を `Post[]` に **キャスト** する
+3. 結果を `listAllPosts()` で **マージ** する
+
+> 詳しくは[公式ドキュメント](https://docs.astro.build)を参照してください。

@@ -126,21 +126,109 @@
   }
 }
 
-/* 記事本文のスタイリング */
-.prose pre {
-  @apply rounded-lg border border-border;
+/* ── Blue accent for prose (アイコンのシャッター青に合わせた) ── */
+:root {
+  --prose-accent: oklch(0.44 0.2 252);
+  --prose-accent-light: oklch(0.44 0.2 252 / 10%);
+}
+.dark {
+  --prose-accent: oklch(0.64 0.18 252);
+  --prose-accent-light: oklch(0.64 0.18 252 / 15%);
 }
 
-.prose code:not(pre code) {
-  @apply rounded bg-muted px-1.5 py-0.5 text-sm font-medium before:content-none after:content-none;
+/* ── 記事本文のスタイリング ── */
+
+/* 見出し */
+.prose h2 {
+  @apply scroll-mt-20 relative pb-3;
+  border-bottom: 2px solid var(--prose-accent-light);
 }
 
-.prose h2,
 .prose h3 {
-  @apply scroll-mt-20;
+  @apply scroll-mt-20 relative pl-4;
+  border-left: 3px solid var(--prose-accent);
+}
+
+/* リンク */
+.prose a {
+  color: var(--prose-accent);
+  text-decoration: none;
+  background-image: linear-gradient(var(--prose-accent), var(--prose-accent));
+  background-size: 0% 1px;
+  background-position: left bottom;
+  background-repeat: no-repeat;
+  transition: background-size 0.25s ease;
+}
+
+.prose a:hover {
+  background-size: 100% 1px;
 }
 
 .prose a[href^="http"]::after {
   content: " \2197";
   font-size: 0.75em;
+}
+
+/* 引用 */
+.prose blockquote {
+  @apply rounded-r-lg not-italic;
+  border-left: 3px solid var(--prose-accent);
+  background: var(--prose-accent-light);
+}
+
+.prose blockquote p {
+  @apply before:content-none after:content-none;
+}
+
+/* コードブロック */
+.prose pre {
+  @apply rounded-lg border border-border;
+}
+
+/* インラインコード */
+.prose code:not(pre code) {
+  @apply rounded-md px-1.5 py-0.5 text-sm font-medium before:content-none after:content-none;
+  background: var(--prose-accent-light);
+  color: var(--prose-accent);
+}
+
+/* 区切り線 */
+.prose hr {
+  @apply my-10 border-none h-px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    var(--prose-accent),
+    transparent
+  );
+}
+
+/* 画像 */
+.prose img {
+  @apply rounded-lg shadow-md;
+}
+
+/* リスト */
+.prose ul > li::marker {
+  color: var(--prose-accent);
+}
+
+.prose ol > li::marker {
+  color: var(--prose-accent);
+  font-weight: 600;
+}
+
+/* テーブル */
+.prose table {
+  @apply overflow-hidden rounded-lg;
+}
+
+.prose thead th {
+  @apply border-b-2;
+  border-color: var(--prose-accent);
+  background: var(--prose-accent-light);
+}
+
+.prose tbody tr {
+  @apply border-border;
 }
