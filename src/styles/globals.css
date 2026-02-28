@@ -231,3 +231,72 @@
 .prose tbody tr {
   @apply border-border;
 }
+
+/* ── Link Card (remark-link-card-plus) ── */
+
+/* Exclude link card from prose link styles */
+.prose a.remark-link-card-plus__card {
+  color: inherit;
+  background-image: none;
+}
+
+.prose a.remark-link-card-plus__card:hover {
+  background-size: 0 0;
+}
+
+.prose a.remark-link-card-plus__card[href^="http"]::after {
+  content: none;
+}
+
+.remark-link-card-plus__container {
+  @apply my-6;
+}
+
+.remark-link-card-plus__card {
+  @apply flex rounded-lg border border-border overflow-hidden no-underline transition-colors;
+  background: var(--card);
+  color: var(--card-foreground);
+}
+
+.remark-link-card-plus__card:hover {
+  background: var(--accent);
+}
+
+.remark-link-card-plus__main {
+  @apply flex flex-col justify-between flex-1 min-w-0 p-4;
+}
+
+.remark-link-card-plus__content {
+  @apply flex flex-col gap-1;
+}
+
+.remark-link-card-plus__title {
+  @apply text-sm font-semibold line-clamp-2;
+  color: var(--foreground);
+}
+
+.remark-link-card-plus__description {
+  @apply text-xs line-clamp-2;
+  color: var(--muted-foreground);
+}
+
+.remark-link-card-plus__meta {
+  @apply flex items-center gap-2 mt-2;
+}
+
+.remark-link-card-plus__favicon {
+  @apply shrink-0;
+}
+
+.remark-link-card-plus__url {
+  @apply text-xs truncate;
+  color: var(--muted-foreground);
+}
+
+.remark-link-card-plus__thumbnail {
+  @apply hidden sm:block shrink-0 w-[200px] border-l border-border;
+}
+
+.remark-link-card-plus__image {
+  @apply w-full h-full object-cover !rounded-none !shadow-none !my-0;
+}
