@@ -144,11 +144,6 @@
   border-bottom: 2px solid var(--prose-accent-light);
 }
 
-.prose h3 {
-  @apply scroll-mt-20 relative pl-4;
-  border-left: 3px solid var(--prose-accent);
-}
-
 /* Links */
 .prose a {
   color: var(--prose-accent);
