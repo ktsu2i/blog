@@ -171,8 +171,8 @@
 
 /* Blockquotes */
 .prose blockquote {
-  @apply rounded-r-lg not-italic;
-  border-left: 3px solid var(--prose-accent);
+  @apply rounded-r-lg not-italic text-muted-foreground py-1 px-5;
+  border-left: 4px solid var(--prose-accent);
   background: var(--prose-accent-light);
 }
 
