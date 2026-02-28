@@ -215,13 +215,17 @@
 
 /* Tables */
 .prose table {
-  @apply overflow-hidden rounded-lg;
+  @apply w-auto overflow-hidden rounded-lg;
 }
 
 .prose thead th {
-  @apply border-b-2;
+  @apply border-b-2 px-4 py-2;
   border-color: var(--prose-accent);
   background: var(--prose-accent-light);
+}
+
+.prose tbody td {
+  @apply px-4 py-2;
 }
 
 .prose tbody tr {
