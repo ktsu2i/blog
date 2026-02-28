@@ -17,11 +17,11 @@ const recent = posts.slice(0, 4);
 
 <BaseLayout>
   <div class="space-y-12">
-    <section class="flex items-center gap-8 py-8">
+    <section class="flex flex-col items-center text-center gap-6 py-8 sm:flex-row sm:items-center sm:text-left sm:gap-8">
       <img
         src="/images/avatar.png"
         alt="Kaito Tsutsui"
-        class="size-24 shrink-0 rounded-full bg-muted object-cover"
+        class="size-28 shrink-0 rounded-full bg-muted object-cover sm:size-24"
       />
       <div class="space-y-6">
         <div class="space-y-2">
@@ -30,7 +30,7 @@ const recent = posts.slice(0, 4);
             {t["home.subtitle"]}
           </p>
         </div>
-        <div class="flex gap-3">
+        <div class="flex justify-center gap-3 sm:justify-start">
           <a
             href={getLocalePath("/blog", locale)}
             class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all bg-primary text-primary-foreground hover:bg-primary/90 h-9 px-4 py-2"
