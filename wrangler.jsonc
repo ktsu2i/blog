@@ -4,8 +4,11 @@
   "assets": {
     "directory": "./dist"
   },
-  // カスタムドメイン（Cloudflare DNS 管理下のドメインが必要）
+  "preview_urls": false,
   "routes": [
     { "pattern": "ktsu2i.dev", "custom_domain": true }
-  ]
+  ],
+  "observability": {
+    "enabled": true
+  }
 }
