@@ -34,7 +34,7 @@ export const ja: Translations = {
   "talks.viewOnSpeakerDeck": "Speaker Deck で見る",
 
   "common.siteName": "ktsu2i.dev",
-  "common.siteDescription": "ktsu2i のブログ & ポートフォリオサイト",
+  "common.siteDescription": "Kaito Tsutsui のブログ",
 
   "date.format": "yyyy年M月d日",
 };
