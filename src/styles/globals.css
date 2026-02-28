@@ -126,7 +126,7 @@
   }
 }
 
-/* ── Blue accent for prose (アイコンのシャッター青に合わせた) ── */
+/* ── Blue accent for prose ── */
 :root {
   --prose-accent: oklch(0.44 0.2 252);
   --prose-accent-light: oklch(0.44 0.2 252 / 10%);
@@ -136,9 +136,9 @@
   --prose-accent-light: oklch(0.64 0.18 252 / 15%);
 }
 
-/* ── 記事本文のスタイリング ── */
+/* ── Prose styling ── */
 
-/* 見出し */
+/* Headings */
 .prose h2 {
   @apply scroll-mt-20 relative pb-3;
   border-bottom: 2px solid var(--prose-accent-light);
@@ -149,7 +149,7 @@
   border-left: 3px solid var(--prose-accent);
 }
 
-/* リンク */
+/* Links */
 .prose a {
   color: var(--prose-accent);
   text-decoration: none;
@@ -169,7 +169,7 @@
   font-size: 0.75em;
 }
 
-/* 引用 */
+/* Blockquotes */
 .prose blockquote {
   @apply rounded-r-lg not-italic;
   border-left: 3px solid var(--prose-accent);
@@ -180,19 +180,19 @@
   @apply before:content-none after:content-none;
 }
 
-/* コードブロック */
+/* Code blocks */
 .prose pre {
   @apply rounded-lg border border-border;
 }
 
-/* インラインコード */
+/* Inline code */
 .prose code:not(pre code) {
   @apply rounded-md px-1.5 py-0.5 text-sm font-medium before:content-none after:content-none;
   background: var(--prose-accent-light);
   color: var(--prose-accent);
 }
 
-/* 区切り線 */
+/* Horizontal rule */
 .prose hr {
   @apply my-10 border-none h-px;
   background: linear-gradient(
@@ -203,12 +203,12 @@
   );
 }
 
-/* 画像 */
+/* Images */
 .prose img {
   @apply rounded-lg shadow-md;
 }
 
-/* リスト */
+/* Lists */
 .prose ul > li::marker {
   color: var(--prose-accent);
 }
@@ -218,7 +218,7 @@
   font-weight: 600;
 }
 
-/* テーブル */
+/* Tables */
 .prose table {
   @apply overflow-hidden rounded-lg;
 }
