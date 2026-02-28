@@ -33,7 +33,7 @@ export const en: Translations = {
   "talks.viewOnSpeakerDeck": "View on Speaker Deck",
 
   "common.siteName": "ktsu2i.dev",
-  "common.siteDescription": "ktsu2i's blog & portfolio",
+  "common.siteDescription": "Kaito Tsutsui's blog",
 
   "date.format": "MMM d, yyyy",
 };
