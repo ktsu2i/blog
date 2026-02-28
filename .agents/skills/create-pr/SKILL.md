@@ -3,7 +3,7 @@ name: create-pr
 description: Create a GitHub pull request with Conventional Commits prefix and structured description in English
 ---
 
-Create a GitHub pull request. The title MUST use a Conventional Commits prefix and all text MUST be in English.
+Create a GitHub pull request. The title MUST use a Conventional Commits prefix, and both the title and PR description (body) MUST be in English.
 
 ## Steps
 
@@ -64,6 +64,7 @@ The body MUST follow this structure:
 
 ### Body Rules
 
+- **Language**: The PR description body (`## Summary`, `## Details`, `## Test Plan`) MUST be written in English.
 - **Summary**: Brief, scannable overview. Focus on the "what" and "why", not the "how".
 - **Details**: Provide enough context for a reviewer to understand the changes without reading every line of code. Mention trade-offs, alternative approaches considered, or migration notes if relevant.
 - **Test Plan**: Actionable checklist of verification steps. Include manual testing steps, relevant commands, or URLs to check.
