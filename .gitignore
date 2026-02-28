@@ -34,6 +34,7 @@ yarn-error.log*
 
 # build-generated content
 src/data/generated/
+public/remark-link-card-plus/
 
 # vercel
 .vercel

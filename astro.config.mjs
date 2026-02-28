@@ -4,6 +4,7 @@ import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
 import tailwindcss from "@tailwindcss/vite";
 import remarkGfm from "remark-gfm";
+import remarkLinkCard from "remark-link-card-plus";
 import rehypeSlug from "rehype-slug";
 import rehypePrettyCode from "rehype-pretty-code";
 
@@ -22,7 +23,10 @@ export default defineConfig({
     plugins: [tailwindcss()],
   },
   markdown: {
-    remarkPlugins: [remarkGfm],
+    remarkPlugins: [
+      remarkGfm,
+      [remarkLinkCard, { cache: true, shortenUrl: true }],
+    ],
     rehypePlugins: [
       rehypeSlug,
       [rehypePrettyCode, { theme: "one-dark-pro" }],
