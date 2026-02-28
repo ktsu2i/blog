@@ -1,0 +1,210 @@
+---
+title: "Style Guide"
+date: "2024-01-01"
+tags: ["style", "guide"]
+description: "A showcase of all available Markdown elements and their styles."
+draft: true
+---
+
+## Headings
+
+## H2 Heading Style
+
+### H3 Heading Style
+
+#### H4 Heading Style
+
+---
+
+## Paragraph & Inline Text
+
+This is a regular paragraph. Text wraps automatically with comfortable line spacing for readability, even for longer passages. Here is **bold text**, *italic text*, and ***bold italic*** text.
+
+You can also use ~~strikethrough~~ and `inline code`. The latter is handy for short snippets like `const x = 42`.
+
+This is an [internal link](/about), and this is an [external link](https://github.com).
+
+---
+
+## Blockquote
+
+> A simple blockquote. Quotes are accented with a blue highlight.
+
+> A multi-paragraph blockquote.
+>
+> The second paragraph works just like this. You can use **bold** and *italic* inside quotes too.
+
+---
+
+## Lists
+
+### Unordered List
+
+- List item 1
+- List item 2
+  - Nested item A
+  - Nested item B
+    - Deeply nested item
+- List item 3
+
+### Ordered List
+
+1. First step
+2. Next step
+   1. Sub-step A
+   2. Sub-step B
+3. Final step
+
+### Task List
+
+- [x] Completed task
+- [x] This one too
+- [ ] Pending task
+- [ ] Also pending
+
+---
+
+## Code Blocks
+
+### TypeScript
+
+```typescript
+interface Post {
+  title: string;
+  date: string;
+  tags: string[];
+  source: "blog" | "zenn" | "bengo4";
+}
+
+async function fetchPosts(): Promise<Post[]> {
+  const response = await fetch("/api/posts");
+  const data = await response.json();
+  return data.posts;
+}
+```
+
+### JSX / React
+
+```tsx
+export function PostCard({ post }: { post: Post }) {
+  return (
+    <article className="rounded-lg border p-4">
+      <h2 className="text-xl font-bold">{post.title}</h2>
+      <time className="text-sm text-muted">{post.date}</time>
+      <div className="flex gap-2 mt-2">
+        {post.tags.map((tag) => (
+          <span key={tag} className="badge">{tag}</span>
+        ))}
+      </div>
+    </article>
+  );
+}
+```
+
+### CSS
+
+```css
+.prose h2 {
+  border-bottom: 2px solid var(--prose-accent-light);
+  padding-bottom: 0.75rem;
+}
+
+.prose a:hover {
+  background-size: 100% 1px;
+}
+```
+
+### Shell
+
+```bash
+pnpm dev
+pnpm build
+git commit -m "feat: add new post"
+```
+
+### JSON
+
+```json
+{
+  "name": "ktsu2i-blog",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build"
+  }
+}
+```
+
+---
+
+## Table
+
+| Technology | Version | Purpose |
+|------------|---------|---------|
+| Astro | 5.x | Framework |
+| React | 19 | UI Components |
+| Tailwind CSS | v4 | Styling |
+| MDX | 4.x | Content |
+
+### Right-aligned & Centered Table
+
+| Item | Qty | Price |
+|:-----|:---:|------:|
+| Apple | 3 | $1.50 |
+| Orange | 5 | $1.00 |
+| Banana | 2 | $2.00 |
+| **Total** | **10** | **$4.50** |
+
+---
+
+## Image
+
+![Sample image](https://res.cloudinary.com/demo/image/upload/v1312461204/sample.jpg)
+
+---
+
+## Horizontal Rule
+
+Text above
+
+---
+
+Text below
+
+---
+
+## Footnote
+
+This text has a footnote[^1]. Here is another one[^2].
+
+[^1]: This is the first footnote.
+[^2]: And this is the second footnote.
+
+---
+
+## Combined Example
+
+> **Note:** The following is a realistic example you might see in an actual blog post.
+
+### Fetching Data from an API
+
+First, call the API using the `fetch` function:
+
+```typescript
+const res = await fetch("https://api.example.com/posts");
+const posts: Post[] = await res.json();
+```
+
+The returned data has the following structure:
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `id` | `number` | Unique identifier |
+| `title` | `string` | Post title |
+| `tags` | `string[]` | Array of tags |
+
+1. **Parse** the response
+2. **Cast** the type to `Post[]`
+3. **Merge** the results with `listAllPosts()`
+
+> For more details, see the [official documentation](https://docs.astro.build).

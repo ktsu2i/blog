@@ -126,21 +126,108 @@
   }
 }
 
-/* 記事本文のスタイリング */
-.prose pre {
-  @apply rounded-lg border border-border;
+/* ── Blue accent for prose ── */
+:root {
+  --prose-accent: oklch(0.44 0.2 252);
+  --prose-accent-light: oklch(0.44 0.2 252 / 10%);
+}
+.dark {
+  --prose-accent: oklch(0.64 0.18 252);
+  --prose-accent-light: oklch(0.64 0.18 252 / 15%);
 }
 
-.prose code:not(pre code) {
-  @apply rounded bg-muted px-1.5 py-0.5 text-sm font-medium before:content-none after:content-none;
+/* ── Prose styling ── */
+
+/* Headings */
+.prose h2 {
+  @apply scroll-mt-20 relative pb-3;
+  border-bottom: 2px solid var(--prose-accent-light);
 }
 
-.prose h2,
-.prose h3 {
-  @apply scroll-mt-20;
+/* Links */
+.prose a {
+  color: var(--prose-accent);
+  text-decoration: none;
+  background-image: linear-gradient(var(--prose-accent), var(--prose-accent));
+  background-size: 0% 1px;
+  background-position: left bottom;
+  background-repeat: no-repeat;
+  transition: background-size 0.25s ease;
+}
+
+.prose a:hover {
+  background-size: 100% 1px;
 }
 
 .prose a[href^="http"]::after {
   content: " \2197";
   font-size: 0.75em;
+}
+
+/* Blockquotes */
+.prose blockquote {
+  @apply rounded-r-lg not-italic text-muted-foreground py-1 px-5;
+  border-left: 4px solid var(--prose-accent);
+  background: var(--prose-accent-light);
+}
+
+.prose blockquote p {
+  @apply before:content-none after:content-none;
+}
+
+/* Code blocks */
+.prose pre {
+  @apply rounded-lg border border-border;
+}
+
+/* Inline code */
+.prose code:not(pre code) {
+  @apply rounded-md px-1.5 py-0.5 text-sm font-medium before:content-none after:content-none;
+  background: var(--prose-accent-light);
+  color: var(--prose-accent);
+}
+
+/* Horizontal rule */
+.prose hr {
+  @apply my-10 border-none h-px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    var(--prose-accent),
+    transparent
+  );
+}
+
+/* Images */
+.prose img {
+  @apply rounded-lg shadow-md;
+}
+
+/* Lists */
+.prose ul > li::marker {
+  color: var(--prose-accent);
+}
+
+.prose ol > li::marker {
+  color: var(--prose-accent);
+  font-weight: 600;
+}
+
+/* Tables */
+.prose table {
+  @apply w-auto overflow-hidden rounded-lg;
+}
+
+.prose thead th {
+  @apply border-b-2 px-4 py-2;
+  border-color: var(--prose-accent);
+  background: var(--prose-accent-light);
+}
+
+.prose tbody td {
+  @apply px-4 py-2;
+}
+
+.prose tbody tr {
+  @apply border-border;
 }
