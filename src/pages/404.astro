@@ -12,6 +12,8 @@ const t = useTranslations(locale);
       404
     </p>
 
+    <div class="mx-auto h-px w-24 not-found-divider"></div>
+
     <div class="space-y-4">
       <p class="text-lg text-muted-foreground">
         {t["notFound.message"]}
@@ -26,4 +28,10 @@ const t = useTranslations(locale);
       </a>
     </div>
   </div>
+
+  <style>
+    .not-found-divider {
+      background: linear-gradient(to right, transparent, var(--prose-accent), transparent);
+    }
+  </style>
 </BaseLayout>
