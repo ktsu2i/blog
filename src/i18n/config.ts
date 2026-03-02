@@ -42,6 +42,10 @@ export interface Translations {
   "talks.description": string;
   "talks.viewOnSpeakerDeck": string;
 
+  // 404
+  "notFound.message": string;
+  "notFound.backHome": string;
+
   // Common
   "common.siteName": string;
   "common.siteDescription": string;

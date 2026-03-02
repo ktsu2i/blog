@@ -1,0 +1,29 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { getLocaleFromUrl, useTranslations, getLocalePath } from "../i18n/config";
+
+const locale = getLocaleFromUrl(Astro.url);
+const t = useTranslations(locale);
+---
+
+<BaseLayout title="404">
+  <div class="flex flex-col items-center justify-center gap-8 py-24 text-center">
+    <p class="text-[10rem] leading-none font-bold tracking-tighter select-none sm:text-[14rem]">
+      404
+    </p>
+
+    <div class="space-y-4">
+      <p class="text-lg text-muted-foreground">
+        {t["notFound.message"]}
+      </p>
+
+      <a
+        href={getLocalePath("/", locale)}
+        class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all bg-primary text-primary-foreground hover:bg-primary/90 h-9 px-4 py-2"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+        {t["notFound.backHome"]}
+      </a>
+    </div>
+  </div>
+</BaseLayout>

@@ -33,6 +33,9 @@ export const ja: Translations = {
   "talks.description": "カンファレンスやイベントでの登壇・発表一覧です。",
   "talks.viewOnSpeakerDeck": "Speaker Deck で見る",
 
+  "notFound.message": "お探しのページは見つかりませんでした",
+  "notFound.backHome": "ホームに戻る",
+
   "common.siteName": "ktsu2i.dev",
   "common.siteDescription": "Kaito Tsutsui のブログ",
 
