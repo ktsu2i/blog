@@ -32,6 +32,9 @@ export const en: Translations = {
   "talks.description": "Conference and meetup presentations.",
   "talks.viewOnSpeakerDeck": "View on Speaker Deck",
 
+  "notFound.message": "The page you're looking for doesn't exist",
+  "notFound.backHome": "Back to Home",
+
   "common.siteName": "ktsu2i.dev",
   "common.siteDescription": "Kaito Tsutsui's blog",
 
