@@ -8,7 +8,7 @@ const t = useTranslations(locale);
 
 <BaseLayout title="404">
   <div class="flex flex-col items-center justify-center gap-8 py-24 text-center">
-    <p class="text-[10rem] leading-none font-bold tracking-tighter select-none sm:text-[14rem]">
+    <p class="text-[10rem] leading-none font-bold tracking-tighter select-none sm:text-[14rem] not-found-number">
       404
     </p>
 
@@ -30,6 +30,9 @@ const t = useTranslations(locale);
   </div>
 
   <style>
+    .not-found-number {
+      filter: drop-shadow(0 0 24px var(--prose-accent-light));
+    }
     .not-found-divider {
       background: linear-gradient(to right, transparent, var(--prose-accent), transparent);
     }
