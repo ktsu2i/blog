@@ -44,7 +44,7 @@ function PostCard({
           <div className="relative aspect-40/21 px-0 -mt-6 overflow-hidden border-b border-border/70">
             <img
               src={post.ogImage}
-              alt=""
+              alt={post.title}
               className="h-full w-full object-cover ring-1 ring-inset ring-border/60"
               loading="lazy"
             />
