@@ -3,6 +3,7 @@ import { format } from "date-fns";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { POST_SOURCES, type Post, type PostSource } from "@/lib/types";
+import type { Locale } from "@/i18n/config";
 
 type SourceFilter = "all" | PostSource;
 
@@ -18,7 +19,7 @@ function PostCard({
   translations,
 }: {
   post: Post;
-  locale: string;
+  locale: Locale;
   translations: PostFilterTranslations;
 }) {
   const formattedDate = format(new Date(post.date), translations.dateFormat);
@@ -126,7 +127,7 @@ function PostCard({
 
 interface Props {
   posts: Post[];
-  locale: string;
+  locale: Locale;
   translations: PostFilterTranslations;
 }
 
