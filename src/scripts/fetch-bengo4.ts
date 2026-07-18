@@ -18,10 +18,16 @@ type FeedItem = Parser.Item & CustomItemFields;
 
 const parser = new Parser<Record<string, unknown>, CustomItemFields>();
 
-async function fetchAllItems(): Promise<FeedItem[]> {
+type ParseUrl = (url: string) => Promise<{ items?: FeedItem[] }>;
+type Fetcher = (url: string) => Promise<{ text(): Promise<string> }>;
+
+export async function fetchAllItems(
+  parseUrl: ParseUrl = (url) => parser.parseURL(url),
+  maxPages = MAX_PAGES,
+): Promise<FeedItem[]> {
   const items: FeedItem[] = [];
-  for (let page = 1; page <= MAX_PAGES; page++) {
-    const feed = await parser.parseURL(`${FEED_URL}?page=${page}`);
+  for (let page = 1; page <= maxPages; page++) {
+    const feed = await parseUrl(`${FEED_URL}?page=${page}`);
     const pageItems = feed.items ?? [];
     if (pageItems.length === 0) break;
     items.push(...pageItems);
@@ -29,9 +35,12 @@ async function fetchAllItems(): Promise<FeedItem[]> {
   return items;
 }
 
-async function fetchOgImage(url: string): Promise<string | undefined> {
+export async function fetchOgImage(
+  url: string,
+  fetcher: Fetcher = fetch,
+): Promise<string | undefined> {
   try {
-    const res = await fetch(url);
+    const res = await fetcher(url);
     const html = await res.text();
     const match = html.match(
       /<meta[^>]+property=["']og:image["'][^>]+content=["']([^"']+)["']/
@@ -42,8 +51,12 @@ async function fetchOgImage(url: string): Promise<string | undefined> {
   }
 }
 
-async function main() {
-  const items = (await fetchAllItems()).filter((item) => {
+export async function createPosts(
+  feedItems: FeedItem[],
+  loadOgImage: (url: string) => Promise<string | undefined> = fetchOgImage,
+  now: () => Date = () => new Date(),
+): Promise<Post[]> {
+  const items = feedItems.filter((item) => {
     return item.author === AUTHOR;
   });
 
@@ -64,7 +77,7 @@ async function main() {
         : "";
 
       const ogImage = item.link
-        ? await fetchOgImage(item.link)
+        ? await loadOgImage(item.link)
         : undefined;
 
       return {
@@ -73,7 +86,7 @@ async function main() {
         title: item.title ?? "",
         date: item.pubDate
           ? new Date(item.pubDate).toISOString()
-          : new Date().toISOString(),
+          : now().toISOString(),
         description,
         url: item.link ?? "",
         ...(ogImage ? { ogImage } : {}),
@@ -81,7 +94,11 @@ async function main() {
     })
   );
 
-  const outputDir = path.join(process.cwd(), "src/data/generated");
+  return posts;
+}
+
+export function writePosts(posts: Post[], cwd = process.cwd()): void {
+  const outputDir = path.join(cwd, "src/data/generated");
   const outputPath = path.join(outputDir, "bengo4.json");
 
   fs.mkdirSync(outputDir, { recursive: true });
@@ -89,7 +106,27 @@ async function main() {
   console.log(`Fetched ${posts.length} posts from Bengo4 Creators Blog.`);
 }
 
-main().catch((err) => {
+export async function main(
+  loadItems: () => Promise<FeedItem[]> = fetchAllItems,
+  write: (posts: Post[]) => void = writePosts,
+): Promise<void> {
+  write(await createPosts(await loadItems()));
+}
+
+export function handleCliError(err: unknown): void {
   console.error("Failed to fetch Bengo4 RSS:", err);
-  process.exit(1);
-});
+  process.exitCode = 1;
+}
+
+export async function runCli(
+  task: () => Promise<void> = main,
+  onError: (err: unknown) => void = handleCliError,
+): Promise<void> {
+  try {
+    await task();
+  } catch (err) {
+    onError(err);
+  }
+}
+
+export const cliRun = runCli();

@@ -9,7 +9,7 @@ const postSchema = z.object({
   draft: z.boolean().optional().default(false),
 });
 
-function generatePostId({ entry }: { entry: string }): string {
+export function generatePostId({ entry }: { entry: string }): string {
   const id = entry.replace(/\.(?:md|mdx)$/, "");
   return id.replace(/(^|\/)\d{8}-(?=[^/]+$)/, "$1");
 }
