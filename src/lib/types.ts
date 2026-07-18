@@ -15,7 +15,6 @@ export interface Post {
   source: PostSource;
   title: string;
   date: string; // ISO 8601
-  tags: string[];
   description: string;
   slug?: string; // local 用
   url?: string; // external 用
@@ -28,7 +27,6 @@ export interface Post {
 export interface PostFrontmatter {
   title: string;
   date: string;
-  tags: string[];
   description: string;
   draft?: boolean;
 }

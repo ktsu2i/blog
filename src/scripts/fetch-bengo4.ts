@@ -9,25 +9,14 @@ const AUTHOR = "ktsu2i";
 // pages past the end return 200 with zero entries
 const MAX_PAGES = 50;
 
-// rss-parser does not map Atom <category term> to item.categories,
-// so pull the raw elements via customFields
-interface AtomCategory {
-  $: { term?: string; label?: string };
-}
-
 interface CustomItemFields {
   // Set from Atom <author><name>, but missing from Parser.Item
   author?: string;
-  atomCategories?: AtomCategory[];
 }
 
 type FeedItem = Parser.Item & CustomItemFields;
 
-const parser = new Parser<Record<string, unknown>, CustomItemFields>({
-  customFields: {
-    item: [["category", "atomCategories", { keepArray: true }]],
-  },
-});
+const parser = new Parser<Record<string, unknown>, CustomItemFields>();
 
 async function fetchAllItems(): Promise<FeedItem[]> {
   const items: FeedItem[] = [];
@@ -74,10 +63,6 @@ async function main() {
         ? item.contentSnippet.slice(0, 200)
         : "";
 
-      const tags: string[] = (item.atomCategories ?? [])
-        .map((category) => category.$.term)
-        .filter((term): term is string => Boolean(term));
-
       const ogImage = item.link
         ? await fetchOgImage(item.link)
         : undefined;
@@ -89,7 +74,6 @@ async function main() {
         date: item.pubDate
           ? new Date(item.pubDate).toISOString()
           : new Date().toISOString(),
-        tags,
         description,
         url: item.link ?? "",
         ...(ogImage ? { ogImage } : {}),
