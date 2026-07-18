@@ -6,7 +6,7 @@ ktsu2i.dev — Kaito Tsutsui の個人ブログ＆ポートフォリオサイト
 3つのソース（ローカルMDX、Zenn、Bengo4）の記事を統合表示する。
 
 - **URL**: https://ktsu2i.dev
-- **Framework**: Astro 5 + React 19 (Islands Architecture)
+- **Framework**: Astro 7 + React 19 (Islands Architecture)
 - **Styling**: Tailwind CSS v4 + shadcn/ui
 - **Package Manager**: pnpm
 
