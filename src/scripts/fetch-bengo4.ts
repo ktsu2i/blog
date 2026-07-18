@@ -5,6 +5,40 @@ import { POST_SOURCES, type Post } from "../lib/types";
 
 const FEED_URL = "https://creators.bengo4.com/feed";
 const AUTHOR = "ktsu2i";
+// The Hatena feed returns 30 entries per page with no rel="next";
+// pages past the end return 200 with zero entries
+const MAX_PAGES = 50;
+
+// rss-parser does not map Atom <category term> to item.categories,
+// so pull the raw elements via customFields
+interface AtomCategory {
+  $: { term?: string; label?: string };
+}
+
+interface CustomItemFields {
+  // Set from Atom <author><name>, but missing from Parser.Item
+  author?: string;
+  atomCategories?: AtomCategory[];
+}
+
+type FeedItem = Parser.Item & CustomItemFields;
+
+const parser = new Parser<Record<string, unknown>, CustomItemFields>({
+  customFields: {
+    item: [["category", "atomCategories", { keepArray: true }]],
+  },
+});
+
+async function fetchAllItems(): Promise<FeedItem[]> {
+  const items: FeedItem[] = [];
+  for (let page = 1; page <= MAX_PAGES; page++) {
+    const feed = await parser.parseURL(`${FEED_URL}?page=${page}`);
+    const pageItems = feed.items ?? [];
+    if (pageItems.length === 0) break;
+    items.push(...pageItems);
+  }
+  return items;
+}
 
 async function fetchOgImage(url: string): Promise<string | undefined> {
   try {
@@ -20,12 +54,15 @@ async function fetchOgImage(url: string): Promise<string | undefined> {
 }
 
 async function main() {
-  const parser = new Parser();
-  const feed = await parser.parseURL(FEED_URL);
-
-  const items = (feed.items ?? []).filter((item) => {
+  const items = (await fetchAllItems()).filter((item) => {
     return item.author === AUTHOR;
   });
+
+  if (items.length === 0) {
+    throw new Error(
+      `No posts by ${AUTHOR} found in the feed. The feed structure may have changed.`
+    );
+  }
 
   const posts: Post[] = await Promise.all(
     items.map(async (item) => {
@@ -37,7 +74,9 @@ async function main() {
         ? item.contentSnippet.slice(0, 200)
         : "";
 
-      const tags: string[] = item.categories ?? [];
+      const tags: string[] = (item.atomCategories ?? [])
+        .map((category) => category.$.term)
+        .filter((term): term is string => Boolean(term));
 
       const ogImage = item.link
         ? await fetchOgImage(item.link)
