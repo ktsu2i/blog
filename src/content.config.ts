@@ -5,7 +5,6 @@ const postSchema = z.object({
   title: z.string(),
   ogTitle: z.string().optional(),
   date: z.string(),
-  tags: z.array(z.string()),
   description: z.string().optional().default(""),
   draft: z.boolean().optional().default(false),
 });

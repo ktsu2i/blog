@@ -110,15 +110,6 @@ function PostCard({
           <div className="text-muted-foreground text-sm line-clamp-2">
             {post.description}
           </div>
-          {post.tags.length > 0 && (
-            <div className="mt-3 flex flex-wrap gap-1.5">
-              {post.tags.map((tag) => (
-                <Badge key={tag} variant="outline" className="text-xs">
-                  {tag}
-                </Badge>
-              ))}
-            </div>
-          )}
         </div>
       </div>
     </a>
@@ -133,35 +124,12 @@ interface Props {
 
 export default function PostFilter({ posts, locale, translations }: Props) {
   const [sourceFilter, setSourceFilter] = useState<SourceFilter>("all");
-  const [selectedTags, setSelectedTags] = useState<string[]>([]);
-
-  const allTags = useMemo(() => {
-    const tagSet = new Set<string>();
-    for (const post of posts) {
-      for (const tag of post.tags) {
-        tagSet.add(tag);
-      }
-    }
-    return Array.from(tagSet).sort();
-  }, [posts]);
 
   const filtered = useMemo(() => {
-    return posts.filter((post) => {
-      if (sourceFilter !== "all" && post.source !== sourceFilter) return false;
-      if (
-        selectedTags.length > 0 &&
-        !selectedTags.some((tag) => post.tags.includes(tag))
-      )
-        return false;
-      return true;
-    });
-  }, [posts, sourceFilter, selectedTags]);
-
-  const toggleTag = (tag: string) => {
-    setSelectedTags((prev) =>
-      prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag],
+    return posts.filter(
+      (post) => sourceFilter === "all" || post.source === sourceFilter,
     );
-  };
+  }, [posts, sourceFilter]);
 
   const countText = translations.count.replace(
     "{count}",
@@ -182,21 +150,6 @@ export default function PostFilter({ posts, locale, translations }: Props) {
             </Button>
           ))}
       </div>
-
-      {allTags.length > 0 && (
-        <div className="flex flex-wrap gap-1.5">
-          {allTags.map((tag) => (
-            <button key={tag} onClick={() => toggleTag(tag)}>
-              <Badge
-                variant={selectedTags.includes(tag) ? "default" : "outline"}
-                className="cursor-pointer"
-              >
-                {tag}
-              </Badge>
-            </button>
-          ))}
-        </div>
-      )}
 
       <p className="text-sm text-muted-foreground">{countText}</p>
 

@@ -59,7 +59,7 @@ src/
 
 ### 1. ローカル記事
 - `src/content/posts/` に MDX ファイルを作成
-- Frontmatter: `title`(必須), `date`(必須), `tags`(必須), `description`(必須), `draft`(任意), `ogTitle`(任意)
+- Frontmatter: `title`(必須), `date`(必須), `description`(必須), `draft`(任意), `ogTitle`(任意)
 - OG 画像は `/og/[slug].png` で自動生成される
 
 ### 2. Zenn 記事

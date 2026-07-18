@@ -36,11 +36,6 @@ const formattedDate = format(new Date(post.data.date), t["date.format"]);
         <span class="inline-flex items-center justify-center rounded-full bg-primary text-primary-foreground px-2 py-0.5 text-xs font-medium">
           {POST_SOURCES.BLOG}
         </span>
-        {post.data.tags.map((tag: string) => (
-          <span class="inline-flex items-center justify-center rounded-full border border-border text-foreground px-2 py-0.5 text-xs font-medium">
-            {tag}
-          </span>
-        ))}
       </div>
     </header>
     <div class="prose dark:prose-invert max-w-none">

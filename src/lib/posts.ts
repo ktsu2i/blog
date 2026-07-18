@@ -42,7 +42,6 @@ export async function listLocalPosts(
     slug: entry.id,
     title: entry.data.title,
     date: entry.data.date,
-    tags: entry.data.tags,
     description: entry.data.description || extractDescription(entry.body ?? ""),
     draft: entry.data.draft,
     ogImage: getLocalePath(`/og/${entry.id}.png`, postLocale),
