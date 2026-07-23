@@ -40,6 +40,7 @@ const siteUrl = import.meta.env.SITE || "https://ktsu2i.dev";
 const pageTitle = title ? `${title} | ktsu2i.dev` : t["common.defaultTitle"];
 const ogLocale = locale === "ja" ? "ja_JP" : "en_US";
 const currentPath = Astro.url.pathname;
+const canonicalUrl = new URL(currentPath, siteUrl).href;
 const jaUrl = `${siteUrl}${getAlternatePath(currentPath, "ja")}`;
 const enUrl = `${siteUrl}${getAlternatePath(currentPath, "en")}`;
 const rssHref = locale === "ja" ? "/feed.xml" : "/en/feed.xml";
@@ -71,7 +72,7 @@ const personSchema = {
     <meta name="description" content={description} />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
-    <meta property="og:url" content={siteUrl} />
+    <meta property="og:url" content={canonicalUrl} />
     <meta property="og:site_name" content="ktsu2i.dev" />
     <meta property="og:locale" content={ogLocale} />
     <meta property="og:type" content={ogType} />
@@ -84,6 +85,7 @@ const personSchema = {
     <link rel="alternate" hreflang="ja" href={jaUrl} />
     <link rel="alternate" hreflang="en" href={enUrl} />
     <link rel="alternate" hreflang="x-default" href={jaUrl} />
+    <link rel="canonical" href={canonicalUrl} />
     <link rel="alternate" type="application/rss+xml" href={`${siteUrl}${rssHref}`} title="ktsu2i.dev" />
     <script type="application/ld+json" set:html={JSON.stringify(personSchema)} />
     <script is:inline>
