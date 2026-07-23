@@ -48,6 +48,7 @@ export interface Translations {
 
   // Common
   "common.siteName": string;
+  "common.defaultTitle": string;
   "common.siteDescription": string;
 
   // Date format

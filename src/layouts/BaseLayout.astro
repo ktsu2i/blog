@@ -37,12 +37,27 @@ const {
 } = Astro.props;
 
 const siteUrl = import.meta.env.SITE || "https://ktsu2i.dev";
-const pageTitle = title ? `${title} | ktsu2i.dev` : "ktsu2i.dev";
+const pageTitle = title ? `${title} | ktsu2i.dev` : t["common.defaultTitle"];
 const ogLocale = locale === "ja" ? "ja_JP" : "en_US";
 const currentPath = Astro.url.pathname;
 const jaUrl = `${siteUrl}${getAlternatePath(currentPath, "ja")}`;
 const enUrl = `${siteUrl}${getAlternatePath(currentPath, "en")}`;
 const rssHref = locale === "ja" ? "/feed.xml" : "/en/feed.xml";
+
+const personSchema = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "筒井海人",
+  alternateName: "Kaito Tsutsui",
+  url: siteUrl,
+  image: `${siteUrl}/images/avatar.png`,
+  jobTitle: "Software Engineer",
+  sameAs: [
+    "https://github.com/ktsu2i",
+    "https://x.com/ktsu2i",
+    "https://zenn.dev/ktsu2i",
+  ],
+};
 ---
 
 <!doctype html>
@@ -70,6 +85,7 @@ const rssHref = locale === "ja" ? "/feed.xml" : "/en/feed.xml";
     <link rel="alternate" hreflang="en" href={enUrl} />
     <link rel="alternate" hreflang="x-default" href={jaUrl} />
     <link rel="alternate" type="application/rss+xml" href={`${siteUrl}${rssHref}`} title="ktsu2i.dev" />
+    <script type="application/ld+json" set:html={JSON.stringify(personSchema)} />
     <script is:inline>
       (function () {
         const stored = localStorage.getItem("theme");
