@@ -36,7 +36,9 @@ export const en: Translations = {
   "notFound.backHome": "Back to Home",
 
   "common.siteName": "ktsu2i.dev",
-  "common.siteDescription": "Kaito Tsutsui's blog",
+  "common.defaultTitle": "ktsu2i.dev | Kaito Tsutsui's Blog",
+  "common.siteDescription":
+    "Personal blog of Kaito Tsutsui, a software engineer. Articles and talks about software engineering.",
 
   "date.format": "MMM d, yyyy",
 };

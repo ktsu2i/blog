@@ -37,7 +37,9 @@ export const ja: Translations = {
   "notFound.backHome": "ホームに戻る",
 
   "common.siteName": "ktsu2i.dev",
-  "common.siteDescription": "Kaito Tsutsui のブログ",
+  "common.defaultTitle": "ktsu2i.dev | 筒井海人のブログ",
+  "common.siteDescription":
+    "筒井海人の個人ブログ。ソフトウェアエンジニアリングに関する技術記事や登壇情報を掲載しています。",
 
   "date.format": "yyyy年M月d日",
 };
