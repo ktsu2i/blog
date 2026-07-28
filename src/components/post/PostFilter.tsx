@@ -11,6 +11,7 @@ interface PostFilterTranslations {
   count: string;
   japaneseOnly: string;
   dateFormat: string;
+  filterLabel: string;
 }
 
 function PostCard({
@@ -38,7 +39,7 @@ function PostCard({
       href={href}
       target={isExternal ? "_blank" : undefined}
       rel={isExternal ? "noopener noreferrer" : undefined}
-      className="block h-full"
+      className="block h-full rounded-xl"
     >
       <div className="bg-card text-card-foreground flex h-full flex-col gap-6 rounded-xl border py-6 shadow-sm overflow-hidden transition-colors hover:bg-accent/50">
         {post.ogImage && (
@@ -138,12 +139,17 @@ export default function PostFilter({ posts, locale, translations }: Props) {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-wrap items-center gap-2">
+      <div
+        role="group"
+        aria-label={translations.filterLabel}
+        className="flex flex-wrap items-center gap-2"
+      >
         {(["all", ...Object.values(POST_SOURCES)] as const).map((source) => (
             <Button
               key={source}
               variant={sourceFilter === source ? "default" : "outline"}
               size="sm"
+              aria-pressed={sourceFilter === source}
               onClick={() => setSourceFilter(source)}
             >
               {source === "all" ? "All" : source}
@@ -151,7 +157,9 @@ export default function PostFilter({ posts, locale, translations }: Props) {
           ))}
       </div>
 
-      <p className="text-sm text-muted-foreground">{countText}</p>
+      <p aria-live="polite" className="text-sm text-muted-foreground">
+        {countText}
+      </p>
 
       <div className="grid gap-4 md:grid-cols-2">
         {filtered.map((post) => (

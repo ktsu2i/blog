@@ -27,26 +27,34 @@ const pathname = Astro.url.pathname;
       ktsu2i.dev
     </a>
     <nav class="hidden items-center gap-6 md:flex">
-      {navItems.map((item) => (
-        <a
-          href={item.href}
-          class:list={[
-            "text-sm transition-colors hover:text-foreground",
-            pathname.startsWith(item.href)
-              ? "text-foreground font-medium"
-              : "text-muted-foreground",
-          ]}
-        >
-          {item.label}
-        </a>
-      ))}
+      {navItems.map((item) => {
+        const isActive = pathname.startsWith(item.href);
+
+        return (
+          <a
+            href={item.href}
+            aria-current={isActive ? "page" : undefined}
+            class:list={[
+              "text-sm transition-colors hover:text-foreground",
+              isActive ? "text-foreground font-medium" : "text-muted-foreground",
+            ]}
+          >
+            {item.label}
+          </a>
+        );
+      })}
       <LanguageToggle currentLocale={locale} currentPath={pathname} />
       <ThemeToggle client:load />
     </nav>
     <div class="flex items-center gap-1 md:hidden">
       <LanguageToggle currentLocale={locale} currentPath={pathname} />
       <ThemeToggle client:load />
-      <MobileNav client:media="(max-width: 768px)" locale={locale} navItems={navItems} />
+      <MobileNav
+        client:media="(max-width: 768px)"
+        locale={locale}
+        navItems={navItems}
+        pathname={pathname}
+      />
     </div>
   </div>
 </header>
