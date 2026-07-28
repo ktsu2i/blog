@@ -67,7 +67,8 @@
   --destructive: oklch(0.577 0.245 27.325);
   --border: oklch(0.922 0 0);
   --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
+  /* Dark enough that a 50%-opacity ring still clears WCAG 1.4.11 (3:1) on --background */
+  --ring: oklch(0.28 0 0);
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
@@ -101,7 +102,8 @@
   --destructive: oklch(0.704 0.191 22.216);
   --border: oklch(1 0 0 / 12%);
   --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
+  /* See light-mode note above */
+  --ring: oklch(0.77 0 0);
   --chart-1: oklch(0.488 0.243 264.376);
   --chart-2: oklch(0.696 0.17 162.48);
   --chart-3: oklch(0.769 0.188 70.08);
@@ -124,6 +126,12 @@
   body {
     @apply bg-background text-foreground;
   }
+  /* Links and native focusables don't go through <Button>, so give them the ring too */
+  a:focus-visible,
+  summary:focus-visible,
+  [tabindex]:not([tabindex="-1"]):focus-visible {
+    @apply rounded-sm outline-2 outline-offset-2 outline-ring;
+  }
 }
 
 /* ── Blue accent for prose ── */
@@ -144,19 +152,17 @@
   border-bottom: 2px solid var(--prose-accent-light);
 }
 
-/* Links */
+/* Links — underlined at rest: color alone doesn't clear 3:1 against body text (WCAG 1.4.1) */
 .prose a {
   color: var(--prose-accent);
-  text-decoration: none;
-  background-image: linear-gradient(var(--prose-accent), var(--prose-accent));
-  background-size: 0% 1px;
-  background-position: left bottom;
-  background-repeat: no-repeat;
-  transition: background-size 0.25s ease;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+  transition: text-decoration-thickness 0.2s ease;
 }
 
 .prose a:hover {
-  background-size: 100% 1px;
+  text-decoration-thickness: 2px;
 }
 
 .prose a[href^="http"]::after {
@@ -235,13 +241,10 @@
 /* ── Link Card (remark-link-card-plus) ── */
 
 /* Exclude link card from prose link styles */
-.prose a.remark-link-card-plus__card {
-  color: inherit;
-  background-image: none;
-}
-
+.prose a.remark-link-card-plus__card,
 .prose a.remark-link-card-plus__card:hover {
-  background-size: 0 0;
+  color: inherit;
+  text-decoration: none;
 }
 
 .prose a.remark-link-card-plus__card[href^="http"]::after {

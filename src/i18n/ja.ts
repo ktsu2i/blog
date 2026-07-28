@@ -17,6 +17,7 @@ export const ja: Translations = {
   "blog.description": "本サイトの記事と外部記事をまとめて表示しています。",
   "blog.count": "{count} 件の記事",
   "blog.filter.all": "All",
+  "blog.filter.label": "記事のソースで絞り込む",
   "blog.japaneseOnly": "日本語のみ",
 
   "about.title": "About",
