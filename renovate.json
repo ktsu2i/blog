@@ -5,5 +5,19 @@
     "group:allNonMajor",
     "schedule:weekly"
   ],
-  "timezone": "Asia/Tokyo"
+  "timezone": "Asia/Tokyo",
+  "customManagers": [
+    {
+      "customType": "regex",
+      "description": "Keep the jevgate version used by the review workflow current",
+      "managerFilePatterns": [
+        "/^\\.github/workflows/review\\.yml$/"
+      ],
+      "matchStrings": [
+        "JEVGATE_VERSION: (?<currentValue>\\S+)"
+      ],
+      "datasourceTemplate": "go",
+      "depNameTemplate": "github.com/ktsu2i/jevgate"
+    }
+  ]
 }

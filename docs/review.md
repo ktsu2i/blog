@@ -10,10 +10,11 @@ pull_request
 └── approve: gate が ALLOW かつ review が blocking なし のときだけ approve
 ```
 
-- **gate** は [ktsu2i/jevgate](https://github.com/ktsu2i/jevgate) のリリースアーカイブを
-  `checksums.txt` で検証してから取得し、
+- **gate** は [ktsu2i/jevgate](https://github.com/ktsu2i/jevgate) を `go install` で入れて
   `--base <PR の base SHA> --head <PR の head SHA> --format json` で実行する。
-  バージョンはワークフロー先頭の `JEVGATE_VERSION` で固定していて、Renovate が追従する。
+  module proxy 経由なので sum.golang.org でハッシュが検証される。
+  バージョンはワークフロー先頭の `JEVGATE_VERSION` で固定し、
+  renovate.json の custom manager が追従する。
   終了コード 0 が ALLOW、1 が人間レビュー必須、2 が評価失敗。1 と 2 は CI の失敗ではなく
   「自動 approve しない」という判断として扱うので、ジョブは緑のままになる。
 - **review** は Gemini CLI に差分を読ませ、`.review/result.json`

@@ -29,8 +29,8 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  # renovate: datasource=github-releases depName=ktsu2i/jevgate
-  JEVGATE_VERSION: 0.1.0
+  # Renovate keeps this current; see the custom manager in renovate.json.
+  JEVGATE_VERSION: v0.1.0
 
 jobs:
   gate:
@@ -57,19 +57,21 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
 
+      - name: Set up Go
+        uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version: '1.26'
+          # This repository has no go.sum for the module cache to key on.
+          cache: false
+
       - name: Install jevgate
+        env:
+          GOBIN: ${{ runner.temp }}/bin
         run: |
           set -euo pipefail
 
-          asset="jevgate_${JEVGATE_VERSION}_linux_amd64.tar.gz"
-          base="https://github.com/ktsu2i/jevgate/releases/download/v${JEVGATE_VERSION}"
-
-          cd "${RUNNER_TEMP}"
-          curl -fsSLO "${base}/${asset}"
-          curl -fsSLO "${base}/checksums.txt"
-          grep "  ${asset}$" checksums.txt | sha256sum --check -
-          tar -xzf "${asset}"
-          ./jevgate --version
+          go install "github.com/ktsu2i/jevgate/cmd/jevgate@${JEVGATE_VERSION}"
+          "${RUNNER_TEMP}/bin/jevgate" --version
 
       - name: Evaluate the change
         id: evaluate
@@ -82,7 +84,7 @@ jobs:
 
           result="${RUNNER_TEMP}/jevgate.json"
           exit_code=0
-          "${RUNNER_TEMP}/jevgate" --base "${BASE_SHA}" --head "${HEAD_SHA}" --format json \
+          "${RUNNER_TEMP}/bin/jevgate" --base "${BASE_SHA}" --head "${HEAD_SHA}" --format json \
             >"${result}" 2>"${RUNNER_TEMP}/jevgate.err" || exit_code=$?
 
           confidence=""
