@@ -10,7 +10,6 @@ name: review
 # Setup (see docs/review.md for details):
 #   secrets.GEMINI_API_KEY   Google AI Studio API key (free tier).
 #   secrets.JEV_API_KEY      Jev API key used by jevgate.
-#   secrets.JEVGATE_TOKEN    Read-only token for the private ktsu2i/jevgate repo.
 #   vars.GEMINI_MODEL        Optional. Pin a free-tier model id.
 #   Repository setting: Actions > General > "Allow GitHub Actions to create and
 #   approve pull requests" must be enabled, or the approve step cannot run.
@@ -30,8 +29,8 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  # Revision of ktsu2i/jevgate to build. Move this to a tag once jevgate has a release.
-  JEVGATE_REF: main
+  # renovate: datasource=github-releases depName=ktsu2i/jevgate
+  JEVGATE_VERSION: 0.1.0
 
 jobs:
   gate:
@@ -56,32 +55,24 @@ jobs:
         with:
           # jevgate resolves both revisions itself, so the full history is needed.
           fetch-depth: 0
-          path: blog
           persist-credentials: false
 
-      - name: Check out jevgate
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          repository: ktsu2i/jevgate
-          ref: ${{ env.JEVGATE_REF }}
-          # JEVGATE_TOKEN is only needed while ktsu2i/jevgate is private.
-          token: ${{ secrets.JEVGATE_TOKEN || github.token }}
-          path: jevgate
-          persist-credentials: false
+      - name: Install jevgate
+        run: |
+          set -euo pipefail
 
-      - name: Set up Go
-        uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
-        with:
-          go-version-file: jevgate/go.mod
-          cache-dependency-path: jevgate/go.sum
+          asset="jevgate_${JEVGATE_VERSION}_linux_amd64.tar.gz"
+          base="https://github.com/ktsu2i/jevgate/releases/download/v${JEVGATE_VERSION}"
 
-      - name: Build jevgate
-        working-directory: jevgate
-        run: go build -o "${RUNNER_TEMP}/jevgate" ./cmd/jevgate
+          cd "${RUNNER_TEMP}"
+          curl -fsSLO "${base}/${asset}"
+          curl -fsSLO "${base}/checksums.txt"
+          grep "  ${asset}$" checksums.txt | sha256sum --check -
+          tar -xzf "${asset}"
+          ./jevgate --version
 
       - name: Evaluate the change
         id: evaluate
-        working-directory: blog
         env:
           JEV_API_KEY: ${{ secrets.JEV_API_KEY }}
           BASE_SHA: ${{ github.event.pull_request.base.sha }}

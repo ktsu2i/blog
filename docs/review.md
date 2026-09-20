@@ -10,8 +10,10 @@ pull_request
 └── approve: gate が ALLOW かつ review が blocking なし のときだけ approve
 ```
 
-- **gate** は [ktsu2i/jevgate](https://github.com/ktsu2i/jevgate) を `main` からビルドして
+- **gate** は [ktsu2i/jevgate](https://github.com/ktsu2i/jevgate) のリリースアーカイブを
+  `checksums.txt` で検証してから取得し、
   `--base <PR の base SHA> --head <PR の head SHA> --format json` で実行する。
+  バージョンはワークフロー先頭の `JEVGATE_VERSION` で固定していて、Renovate が追従する。
   終了コード 0 が ALLOW、1 が人間レビュー必須、2 が評価失敗。1 と 2 は CI の失敗ではなく
   「自動 approve しない」という判断として扱うので、ジョブは緑のままになる。
 - **review** は Gemini CLI に差分を読ませ、`.review/result.json`
@@ -32,7 +34,6 @@ approve は行われずコメントだけが残る。fork からの PR と draft
 | --- | --- |
 | `GEMINI_API_KEY` | [Google AI Studio](https://aistudio.google.com/apikey) の API キー。無料枠で動く。 |
 | `JEV_API_KEY` | jevgate が使う [Jev API](https://docs.typesafe.ai/api) のキー。 |
-| `JEVGATE_TOKEN` | `ktsu2i/jevgate` を clone するための読み取り専用トークン（contents: read の fine-grained PAT）。jevgate が public になったら不要。 |
 
 ### Variables（任意）
 
@@ -60,9 +61,3 @@ approve は行われずコメントだけが残る。fork からの PR と draft
   `anthropics/claude-code-action@v1` に差し替え、`CLAUDE_CODE_OAUTH_TOKEN`
   （Claude Pro/Max のサブスクリプションで `claude setup-token` から発行）を渡す。
   `.review/result.json` を書かせる prompt はそのまま使える。
-
-## jevgate が release されたら
-
-いまは private リポジトリを clone して `go build` している。
-jevgate が public になりリリースが出たら、`gate` ジョブの Go ビルド 3 ステップを
-リリースアーカイブのダウンロードに置き換えられる（`JEVGATE_TOKEN` も不要になる）。
