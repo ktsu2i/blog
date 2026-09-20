@@ -1,0 +1,20 @@
+# Used by .github/workflows/ai-review.yml to decide whether a pull request may
+# rely on the AI reviewer's approval instead of a human one.
+threshold: 0.95
+
+context: |
+  ktsu2i.dev is a personal blog and portfolio site: an Astro 7 + React 19 static
+  site (Islands Architecture) styled with Tailwind CSS v4 and shadcn/ui, built
+  with pnpm and deployed to Cloudflare Workers. It has no backend, no database
+  and no authentication; there is no user input and no runtime secret.
+
+  Articles come from three sources: MDX files under src/content/posts/ validated
+  by Astro Content Collections, hand-maintained Zenn entries in src/data/zenn.ts,
+  and src/data/generated/bengo4.json, which src/scripts/fetch-bengo4.ts
+  regenerates from an RSS feed during the build.
+
+  Adding or editing an article under src/content/posts/, or editing prose in
+  src/data/, changes published content only and does not change site behaviour.
+  Changes under src/lib/, src/components/, src/pages/, astro.config.mjs,
+  wrangler.jsonc, package.json or the lockfile change how the site is built or
+  rendered.

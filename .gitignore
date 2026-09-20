@@ -41,3 +41,6 @@ public/remark-link-card-plus/
 
 # typescript
 *.tsbuildinfo
+
+# review workflow scratch space (.github/workflows/review.yml)
+.review/
