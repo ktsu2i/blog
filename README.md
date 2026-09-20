@@ -9,3 +9,7 @@ Personal blog and portfolio site by Kaito Tsutsui.
 - [Astro](https://astro.build/) + [React](https://react.dev/)
 - [Tailwind CSS](https://tailwindcss.com/) + [shadcn/ui](https://ui.shadcn.com/)
 - [Cloudflare Workers](https://workers.cloudflare.com/)
+
+## Development
+
+- [AI レビューと自動 approve](docs/review.md)

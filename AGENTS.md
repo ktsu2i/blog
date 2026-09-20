@@ -71,6 +71,14 @@ src/
 - `src/data/generated/bengo4.json` に出力
 - `pnpm build` 時に prebuild フックで自動実行される
 
+## CI
+
+- `.github/workflows/review.yml`: pull request を Gemini CLI がレビューし、
+  [jevgate](https://github.com/ktsu2i/jevgate) が「AI 承認に任せてよい変更」と判定し、
+  かつ blocking な指摘が無い場合のみ `github-actions[bot]` が自動 approve する
+- `.jevgate.yml`: jevgate に渡すしきい値とリポジトリの前提。構成や記事ソースを変えたら更新する
+- セットアップ（必要な secrets とリポジトリ設定）は `docs/review.md`
+
 ## Key Architecture Decisions
 
 - **Islands Architecture**: インタラクティブな UI（PostFilter, ThemeToggle, MobileNav）のみ React、それ以外は Astro コンポーネント

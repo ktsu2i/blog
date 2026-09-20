@@ -1,0 +1,368 @@
+name: review
+
+# Reviews a pull request with Gemini CLI and lets github-actions[bot] approve it
+# only when both gates agree:
+#
+#   1. jevgate (https://github.com/ktsu2i/jevgate) says the change is simple
+#      enough to rely on AI approval (exit code 0 / ALLOW).
+#   2. The review finds no blocking issue.
+#
+# Setup (see docs/review.md for details):
+#   secrets.GEMINI_API_KEY   Google AI Studio API key (free tier).
+#   secrets.JEV_API_KEY      Jev API key used by jevgate.
+#   vars.GEMINI_MODEL        Optional. Pin a free-tier model id.
+#   Repository setting: Actions > General > "Allow GitHub Actions to create and
+#   approve pull requests" must be enabled, or the approve step cannot run.
+
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - ready_for_review
+
+permissions: {}
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+env:
+  # Renovate keeps this current; see the custom manager in renovate.json.
+  JEVGATE_VERSION: v0.1.0
+
+jobs:
+  gate:
+    name: jevgate
+    # Secrets are not available to pull requests from forks, and draft pull
+    # requests are not ready for review yet.
+    if: >-
+      github.event.pull_request.draft == false &&
+      github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    outputs:
+      allowed: ${{ steps.evaluate.outputs.allowed }}
+      status: ${{ steps.evaluate.outputs.status }}
+      confidence: ${{ steps.evaluate.outputs.confidence }}
+      threshold: ${{ steps.evaluate.outputs.threshold }}
+    steps:
+      - name: Check out the blog
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          # jevgate resolves both revisions itself, so the full history is needed.
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Set up Go
+        uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version: '1.26'
+          # This repository has no go.sum for the module cache to key on.
+          cache: false
+
+      - name: Install jevgate
+        env:
+          GOBIN: ${{ runner.temp }}/bin
+        run: |
+          set -euo pipefail
+
+          go install "github.com/ktsu2i/jevgate/cmd/jevgate@${JEVGATE_VERSION}"
+          "${RUNNER_TEMP}/bin/jevgate" --version
+
+      - name: Evaluate the change
+        id: evaluate
+        env:
+          JEV_API_KEY: ${{ secrets.JEV_API_KEY }}
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          set -uo pipefail
+
+          result="${RUNNER_TEMP}/jevgate.json"
+          exit_code=0
+          "${RUNNER_TEMP}/bin/jevgate" --base "${BASE_SHA}" --head "${HEAD_SHA}" --format json \
+            >"${result}" 2>"${RUNNER_TEMP}/jevgate.err" || exit_code=$?
+
+          confidence=""
+          threshold=""
+          case "${exit_code}" in
+            0) status=allow ; allowed=true ;;
+            1) status=human ; allowed=false ;;
+            *) status=error ; allowed=false ;;
+          esac
+
+          if [ "${status}" != "error" ]; then
+            confidence="$(jq -r '.confidence' "${result}")"
+            threshold="$(jq -r '.threshold' "${result}")"
+          fi
+
+          {
+            echo "allowed=${allowed}"
+            echo "status=${status}"
+            echo "confidence=${confidence}"
+            echo "threshold=${threshold}"
+          } >>"${GITHUB_OUTPUT}"
+
+          {
+            echo "### jevgate"
+            echo
+            case "${status}" in
+              allow) echo "ALLOW — AI approval is allowed (confidence ${confidence}, threshold ${threshold})." ;;
+              human) echo "HUMAN REVIEW REQUIRED — confidence ${confidence} is below the ${threshold} threshold." ;;
+              error)
+                echo "Evaluation failed (exit code ${exit_code}); no decision is available, so the pull request is not auto-approved."
+                echo
+                echo '```'
+                tail -c 2000 "${RUNNER_TEMP}/jevgate.err"
+                echo '```'
+                ;;
+            esac
+          } >>"${GITHUB_STEP_SUMMARY}"
+
+          # Exit code 1 (human review) and 2 (evaluation failure) are decisions,
+          # not CI failures: they only withhold the automatic approval.
+          exit 0
+
+  review:
+    name: review
+    if: >-
+      github.event.pull_request.draft == false &&
+      github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      pull-requests: write
+    outputs:
+      verdict: ${{ steps.verdict.outputs.verdict }}
+    steps:
+      - name: Check out the blog
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Collect the diff
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          set -euo pipefail
+
+          mkdir -p .review
+
+          # The lockfile is machine generated and crowds out the real change.
+          git diff --stat "${BASE_SHA}" "${HEAD_SHA}" -- . ':(exclude)pnpm-lock.yaml' \
+            >.review/diffstat.txt
+          git diff "${BASE_SHA}" "${HEAD_SHA}" -- . ':(exclude)pnpm-lock.yaml' \
+            >.review/pr.diff
+
+          # Keep the prompt within a sane size; a diff this large is not going to
+          # be auto-approved by jevgate anyway.
+          limit=200000
+          if [ "$(wc -c <.review/pr.diff)" -gt "${limit}" ]; then
+            head -c "${limit}" .review/pr.diff >.review/pr.diff.truncated
+            printf '\n\n[diff truncated at %s bytes]\n' "${limit}" >>.review/pr.diff.truncated
+            mv .review/pr.diff.truncated .review/pr.diff
+          fi
+
+      - name: Run the review
+        id: gemini
+        # A rate-limited or failing review withholds the approval; it does not
+        # turn the whole check red.
+        continue-on-error: true
+        uses: google-github-actions/run-gemini-cli@f77273f4c914e4bf38440cf36a0369cb64a37489 # v0.1.22
+        env:
+          GEMINI_CLI_TRUST_WORKSPACE: 'true'
+        with:
+          gemini_api_key: ${{ secrets.GEMINI_API_KEY }}
+          gemini_model: ${{ vars.GEMINI_MODEL }}
+          settings: |-
+            {
+              "model": {
+                "maxSessionTurns": 20
+              },
+              "tools": {
+                "core": [
+                  "read_file",
+                  "read_many_files",
+                  "glob",
+                  "search_file_content",
+                  "list_directory",
+                  "write_file"
+                ]
+              }
+            }
+          prompt: |-
+            You are reviewing a pull request for ktsu2i.dev, a personal blog and
+            portfolio site built with Astro, React, Tailwind CSS v4 and shadcn/ui,
+            deployed to Cloudflare Workers.
+
+            The change under review is in `.review/pr.diff` (summary in
+            `.review/diffstat.txt`). Read those files first. Read `AGENTS.md`
+            and any source file you need to judge the change in context. Do not
+            modify any file other than `.review/result.json`.
+
+            Report only problems introduced by this diff:
+
+            - Bugs, broken types, broken builds, broken routes or broken links.
+            - Accessibility regressions and violations of the conventions in
+              `AGENTS.md` (Islands Architecture, the unified `Post` type,
+              Content Collections schemas).
+            - Leaked secrets, unsafe HTML, or unreviewed third-party code.
+
+            Do not report pre-existing issues, speculative refactors, or matters
+            of taste. A finding is `blocking` only when the change should not be
+            merged as is; everything else is `nit`.
+
+            When you are done, write your review to `.review/result.json` as
+            JSON with exactly this shape and nothing else:
+
+            {
+              "verdict": "approve" | "request_changes",
+              "summary": "<two or three sentences, in Japanese>",
+              "findings": [
+                {
+                  "severity": "blocking" | "nit",
+                  "file": "<path>",
+                  "line": <number or null>,
+                  "comment": "<what is wrong and how to fix it, in Japanese>"
+                }
+              ]
+            }
+
+            Set `verdict` to `approve` when there is no blocking finding, and to
+            `request_changes` when there is at least one. `findings` may be empty.
+
+      - name: Read the verdict
+        id: verdict
+        run: |
+          set -uo pipefail
+
+          result=.review/result.json
+          verdict=error
+
+          # The model sometimes wraps the JSON in a code fence.
+          if [ -f "${result}" ] && ! jq -e . "${result}" >/dev/null 2>&1; then
+            sed '/^[[:space:]]*```/d' "${result}" >"${RUNNER_TEMP}/result.json"
+            mv "${RUNNER_TEMP}/result.json" "${result}"
+          fi
+
+          if [ -f "${result}" ] && jq -e '.verdict == "approve" or .verdict == "request_changes"' "${result}" >/dev/null 2>&1; then
+            verdict="$(jq -r '.verdict' "${result}")"
+            if [ "${verdict}" = "approve" ] \
+              && jq -e '[.findings[]? | select(.severity == "blocking")] | length > 0' "${result}" >/dev/null 2>&1; then
+              # Trust the findings over the self-reported verdict.
+              verdict=request_changes
+            fi
+          fi
+
+          echo "verdict=${verdict}" >>"${GITHUB_OUTPUT}"
+
+          {
+            case "${verdict}" in
+              approve) echo "### レビュー: 指摘なし" ;;
+              request_changes) echo "### レビュー: 要修正" ;;
+              error) echo "### レビュー: 実行できませんでした" ;;
+            esac
+            echo
+            if [ -f "${result}" ]; then
+              jq -r '.summary // ""' "${result}"
+            fi
+          } >>"${GITHUB_STEP_SUMMARY}"
+
+      - name: Post the review comment
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          VERDICT: ${{ steps.verdict.outputs.verdict }}
+          GEMINI_ERROR: ${{ steps.gemini.outputs.error }}
+        run: |
+          set -euo pipefail
+
+          body="${RUNNER_TEMP}/comment.md"
+          result=.review/result.json
+
+          {
+            echo "<!-- review -->"
+            case "${VERDICT}" in
+              approve) echo "## 🤖 レビュー — 指摘なし" ;;
+              request_changes) echo "## 🤖 レビュー — 要修正" ;;
+              error) echo "## 🤖 レビュー — 実行できませんでした" ;;
+            esac
+            echo
+            if [ "${VERDICT}" = "error" ]; then
+              echo "レビューを完了できなかったため、自動 approve は行いません。"
+              if [ -n "${GEMINI_ERROR}" ]; then
+                echo
+                echo '```'
+                echo "${GEMINI_ERROR:0:2000}"
+                echo '```'
+              fi
+            else
+              jq -r '.summary // ""' "${result}"
+              echo
+              jq -r '
+                (.findings // [])
+                | map(select(.severity == "blocking"))
+                | if length == 0 then empty
+                  else "### Blocking\n" + (map("- `" + (.file // "?") + (if .line then ":" + (.line | tostring) else "" end) + "` — " + (.comment // "")) | join("\n")) + "\n"
+                  end
+              ' "${result}"
+              jq -r '
+                (.findings // [])
+                | map(select(.severity != "blocking"))
+                | if length == 0 then empty
+                  else "### Nits\n" + (map("- `" + (.file // "?") + (if .line then ":" + (.line | tostring) else "" end) + "` — " + (.comment // "")) | join("\n")) + "\n"
+                  end
+              ' "${result}"
+            fi
+          } >"${body}"
+
+          gh pr comment "${PR_NUMBER}" --body-file "${body}" --edit-last --create-if-none
+
+  approve:
+    name: auto approve
+    needs:
+      - gate
+      - review
+    if: >-
+      needs.gate.outputs.allowed == 'true' &&
+      needs.review.outputs.verdict == 'approve'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      pull-requests: write
+    steps:
+      - name: Approve the pull request
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          CONFIDENCE: ${{ needs.gate.outputs.confidence }}
+          THRESHOLD: ${{ needs.gate.outputs.threshold }}
+        run: |
+          set -euo pipefail
+
+          # A re-run must not stack another approval on the same commit.
+          already_approved="$(
+            gh api "repos/${GH_REPO}/pulls/${PR_NUMBER}/reviews" --paginate \
+              --jq '[.[] | select(.user.login == "github-actions[bot]" and .state == "APPROVED" and .commit_id == env.HEAD_SHA)] | length'
+          )"
+          if [ "${already_approved}" -gt 0 ]; then
+            echo "Commit ${HEAD_SHA} is already approved." >>"${GITHUB_STEP_SUMMARY}"
+            exit 0
+          fi
+
+          gh pr review "${PR_NUMBER}" --approve --body "$(
+            printf 'jevgate が AI 承認を許可し (confidence %s / threshold %s)、AI レビューでも blocking な指摘がなかったため自動 approve しました。\n' \
+              "${CONFIDENCE}" "${THRESHOLD}"
+          )"
+
+          echo "Approved ${HEAD_SHA}." >>"${GITHUB_STEP_SUMMARY}"
