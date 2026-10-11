@@ -17,33 +17,38 @@ const recent = posts.slice(0, 4);
 
 <BaseLayout ogImage="/og/site.png">
   <div class="space-y-12">
-    <section class="flex flex-col items-center text-center gap-6 py-8 sm:flex-row sm:items-center sm:text-left sm:gap-8">
-      <img
-        src="/images/avatar.png"
-        alt="Kaito Tsutsui"
-        class="size-28 shrink-0 rounded-full bg-muted object-cover sm:size-24"
-      />
-      <div class="space-y-6">
-        <div class="space-y-2">
-          <h1 class="text-4xl font-bold tracking-tight">ktsu2i.dev</h1>
-          <p class="text-lg text-muted-foreground">
-            {t["home.subtitle"]}
+    <section class="space-y-6 py-8">
+      <div class="flex items-center gap-4">
+        <img
+          src="/images/avatar.png"
+          alt=""
+          class="size-16 shrink-0 rounded-full bg-muted object-cover sm:size-20"
+        />
+        <div>
+          <h1 class="text-2xl font-bold tracking-tight sm:text-3xl">
+            {locale === "ja" ? "筒井 海人" : "Kaito Tsutsui"}
+          </h1>
+          <p class="text-sm text-muted-foreground">
+            {locale === "ja" ? "Kaito Tsutsui · @ktsu2i" : "@ktsu2i"}
           </p>
         </div>
-        <div class="flex justify-center gap-3 sm:justify-start">
-          <a
-            href={getLocalePath("/blog", locale)}
-            class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all bg-primary text-primary-foreground hover:bg-primary/90 h-9 px-4 py-2"
-          >
-            {t["home.cta.blog"]}
-          </a>
-          <a
-            href={getLocalePath("/about", locale)}
-            class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2"
-          >
-            {t["home.cta.about"]}
-          </a>
-        </div>
+      </div>
+      <p class="max-w-prose whitespace-pre-line leading-relaxed text-muted-foreground">
+        {t["home.subtitle"]}
+      </p>
+      <div class="flex gap-3">
+        <a
+          href={getLocalePath("/blog", locale)}
+          class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all bg-primary text-primary-foreground hover:bg-primary/90 h-9 px-4 py-2"
+        >
+          {t["home.cta.blog"]}
+        </a>
+        <a
+          href={getLocalePath("/about", locale)}
+          class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2"
+        >
+          {t["home.cta.about"]}
+        </a>
       </div>
     </section>
 
