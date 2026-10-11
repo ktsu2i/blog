@@ -23,14 +23,6 @@ export interface Post {
   locale?: Locale;
 }
 
-// ローカル記事の frontmatter 型
-export interface PostFrontmatter {
-  title: string;
-  date: string;
-  description: string;
-  draft?: boolean;
-}
-
 // SpeakerDeck トーク型
 export interface Talk {
   id: string;
@@ -40,17 +32,6 @@ export interface Talk {
   speakerdeckUrl: string;
   embedUrl: string;
   description: string;
-}
-
-// プロジェクト型
-export interface Project {
-  id: string;
-  title: string;
-  description: string;
-  url?: string;
-  repoUrl?: string;
-  tags: string[];
-  image?: string;
 }
 
 // 経歴型
