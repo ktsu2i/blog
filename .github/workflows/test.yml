@@ -5,8 +5,8 @@ on:
   push:
     branches: [main]
 
-permissions:
-  contents: read
+# Deny all by default; each job requests only what it needs
+permissions: {}
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -14,7 +14,10 @@ concurrency:
 
 jobs:
   test:
+    name: Test with coverage
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     timeout-minutes: 10
     steps:
       # Actions are pinned to commit SHAs to guard against tag hijacking
