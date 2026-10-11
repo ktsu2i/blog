@@ -56,7 +56,7 @@ function PostCard({
             />
           </div>
         )}
-        <div className="grid auto-rows-min grid-rows-[auto_auto] items-start gap-2 px-6">
+        <div className="grid auto-rows-min items-start gap-2 px-6">
           <div className="flex items-center gap-2">
             <time className="text-sm text-muted-foreground">
               {formattedDate}
@@ -65,28 +65,13 @@ function PostCard({
               <Badge>{POST_SOURCES.BLOG}</Badge>
             )}
             {post.source === POST_SOURCES.ZENN && (
-              <Badge
-                variant="secondary"
-                className="text-blue-600 dark:text-blue-400"
-              >
-                {POST_SOURCES.ZENN}
-              </Badge>
+              <Badge variant="zenn">{POST_SOURCES.ZENN}</Badge>
             )}
             {post.source === POST_SOURCES.EXTERNAL && (
-              <Badge
-                variant="secondary"
-                className="text-emerald-700 dark:text-emerald-300"
-              >
-                {POST_SOURCES.EXTERNAL}
-              </Badge>
+              <Badge variant="external">{POST_SOURCES.EXTERNAL}</Badge>
             )}
             {showJapaneseOnly && (
-              <Badge
-                variant="outline"
-                className="text-orange-700 dark:text-orange-300 border-orange-500/20 bg-orange-500/15"
-              >
-                {translations.japaneseOnly}
-              </Badge>
+              <Badge variant="notice">{translations.japaneseOnly}</Badge>
             )}
           </div>
           <div className="leading-snug font-semibold text-lg line-clamp-2">
