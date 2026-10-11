@@ -22,6 +22,7 @@ pnpm test:coverage  # カバレッジ計測（src/**/*.{ts,tsx} で 100% 必須�
 pnpm lint           # Oxlint（type-aware）で lint
 pnpm format         # Oxfmt で整形（.astro は Oxfmt 未対応のため Prettier）
 pnpm format:check   # 整形チェック（CI で実行）
+pnpm knip           # 未使用ファイル・export・依存の検出（CI で実行、設定は knip.json）
 actionlint          # ワークフローの lint（aqua で導入: aqua i -l）
 ghalint run         # ワークフローのセキュリティポリシーチェック（aqua で導入）
 ```
