@@ -19,6 +19,9 @@ pnpm preview        # ビルド結果のプレビュー
 pnpm fetch:bengo4   # Bengo4 Creators Blog から記事を手動フェッチ
 pnpm test           # Vitest でテスト実行
 pnpm test:coverage  # カバレッジ計測（src/**/*.{ts,tsx} で 100% 必須、components/ui は除外）
+pnpm lint           # Oxlint（type-aware）で lint
+pnpm format         # Oxfmt で整形（.astro は Oxfmt 未対応のため Prettier）
+pnpm format:check   # 整形チェック（CI で実行）
 ```
 
 ## Project Structure
@@ -60,15 +63,18 @@ src/
 ## Content Sources
 
 ### 1. ローカル記事
+
 - `src/content/posts/` に MDX ファイルを作成
 - Frontmatter: `title`(必須), `date`(必須), `description`(必須), `draft`(任意), `ogTitle`(任意)
 - OG 画像は `/og/[slug].png` で自動生成される
 
 ### 2. Zenn 記事
+
 - `src/data/zenn.ts` にエントリを手動追加
 - Post 型に合わせて `source: "zenn"` を指定
 
 ### 3. Bengo4 記事
+
 - `pnpm fetch:bengo4` で RSS（https://creators.bengo4.com/feed）から著者 `ktsu2i` の記事を自動取得
 - `src/data/generated/bengo4.json` に出力
 - `pnpm build` 時に prebuild フックで自動実行される
