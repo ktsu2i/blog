@@ -21,7 +21,9 @@
       "rules": {
         "typescript/unbound-method": "off",
         "vitest/require-mock-type-parameters": "off",
-        "vitest/require-to-throw-message": "off"
+        "vitest/require-to-throw-message": "off",
+        "vitest/no-focused-tests": "error",
+        "vitest/no-disabled-tests": "error"
       }
     }
   ]
