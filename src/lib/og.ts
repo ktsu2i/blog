@@ -85,6 +85,7 @@ export async function generateOgImage(title: string): Promise<Buffer> {
                 justifyContent: "space-between",
                 width: "100%",
                 height: "100%",
+                boxSizing: "border-box",
                 padding: "60px 72px",
               },
               children: [
