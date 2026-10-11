@@ -44,4 +44,15 @@ describe("content collections", () => {
     });
     expect(() => schema.parse({ date: "2025-01-01" })).toThrow();
   });
+
+  it.each(["2025-02-30", "2025/01/01", "not a date", ""])(
+    "rejects the invalid date %j",
+    (date) => {
+      const schema = collections.postsJa.schema as {
+        parse: (value: unknown) => unknown;
+      };
+
+      expect(() => schema.parse({ title: "t", date })).toThrow();
+    },
+  );
 });

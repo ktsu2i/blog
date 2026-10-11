@@ -4,7 +4,7 @@ import { glob } from "astro/loaders";
 const postSchema = z.object({
   title: z.string(),
   ogTitle: z.string().optional(),
-  date: z.string(),
+  date: z.iso.date(),
   description: z.string().optional().default(""),
   draft: z.boolean().optional().default(false),
 });

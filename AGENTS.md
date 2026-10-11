@@ -31,22 +31,33 @@ ghalint run         # ワークフローのセキュリティポリシーチェ�
 
 ```
 src/
-├── content/posts/       # ローカル記事（MDX）
+├── content/posts/
+│   ├── ja/              # ローカル記事（日本語、MDX）
+│   └── en/              # ローカル記事（英語、MDX）。同じファイル名で ja と対応
 ├── components/
-│   ├── layout/          # Header, Footer, MobileNav, ThemeToggle
+│   ├── layout/          # Header, Footer, MobileNav, ThemeToggle, LanguageToggle
+│   ├── pages/           # ページ本体（HomePage, BlogPage, BlogPostPage, AboutPage, TalksPage）
 │   ├── post/            # PostCard, PostFilter
+│   ├── TalkCard.astro
 │   └── ui/              # shadcn/ui コンポーネント
 ├── data/
 │   ├── career.ts        # 経歴データ
 │   ├── talks.ts         # 登壇データ
 │   ├── zenn.ts          # Zenn 記事（手動管理）
+│   ├── external.ts      # その他の外部記事（手動管理）
 │   └── generated/       # 自動生成ファイル（gitignore 対象、prebuild で生成）
 │       └── bengo4.json  # fetch-bengo4 スクリプトで生成
+├── i18n/
+│   ├── config.ts        # Locale 型、Translations 型、useTranslations / getLocalePath など
+│   ├── ja.ts            # 日本語の翻訳テーブル
+│   └── en.ts            # 英語の翻訳テーブル
+├── layouts/
+│   └── BaseLayout.astro # 共通レイアウト（meta, OG, hreflang, JSON-LD）
 ├── lib/
 │   ├── feed.ts          # 全ソース統合（listAllPosts）
 │   ├── posts.ts         # ローカル記事の読み込み
 │   ├── zenn.ts          # Zenn 記事の読み込み
-│   ├── bengo4.ts        # Bengo4 記事の読み込み
+│   ├── external.ts      # 外部記事（bengo4.json + data/external.ts）の読み込み
 │   ├── types.ts         # 型定義（Post, PostSource, Talk, CareerEntry 等）
 │   ├── og.ts            # OG 画像生成ユーティリティ
 │   └── utils.ts         # 汎用ユーティリティ
@@ -55,32 +66,44 @@ src/
 │   ├── blog/            # ブログ一覧・個別記事ページ
 │   ├── about.astro      # About ページ（経歴タイムライン）
 │   ├── talks.astro      # 登壇一覧
+│   ├── 404.astro
 │   ├── feed.xml.ts      # RSS フィード（ローカル記事のみ）
-│   └── og/[slug].png.ts # OG 画像の動的生成（Satori + Sharp）
+│   ├── og/              # OG 画像の動的生成（Satori + Sharp）: [slug].png.ts, site.png.ts
+│   └── en/              # 英語版ルート（/en/...）。中身は components/pages/ を呼ぶだけ
 ├── scripts/
 │   └── fetch-bengo4.ts  # Bengo4 RSS フェッチスクリプト
 ├── styles/globals.css   # グローバルスタイル
-└── content.config.ts    # Astro Content Collections スキーマ定義
+└── content.config.ts    # Astro Content Collections スキーマ定義（postsJa, postsEn）
 ```
 
 ## Content Sources
 
 ### 1. ローカル記事
 
-- `src/content/posts/` に MDX ファイルを作成
-- Frontmatter: `title`(必須), `date`(必須), `description`(必須), `draft`(任意), `ogTitle`(任意)
-- OG 画像は `/og/[slug].png` で自動生成される
+- `src/content/posts/ja/` / `src/content/posts/en/` に MDX ファイルを作成（ファイル名 `YYYYMMDD-slug.mdx`、slug は日付部分を除いたもの）
+- 英語版がない記事は英語ページにも日本語記事として表示される
+- Frontmatter: `title`(必須), `date`(必須、`YYYY-MM-DD` 形式で検証), `description`(任意、未設定・空なら本文先頭から自動生成), `draft`(任意), `ogTitle`(任意)
+- OG 画像は `/og/[slug].png`（英語は `/en/og/[slug].png`）で自動生成される
 
 ### 2. Zenn 記事
 
 - `src/data/zenn.ts` にエントリを手動追加
-- Post 型に合わせて `source: "zenn"` を指定
+- Post 型に合わせて `source: POST_SOURCES.ZENN`（値は `"Zenn"`）を指定
 
-### 3. Bengo4 記事
+### 3. 外部記事（Bengo4 ほか）
 
 - `pnpm fetch:bengo4` で RSS（https://creators.bengo4.com/feed）から著者 `ktsu2i` の記事を自動取得
 - `src/data/generated/bengo4.json` に出力
 - `pnpm build` 時に prebuild フックで自動実行される
+- それ以外の外部記事は `src/data/external.ts` に手動追加
+- どちらも `source: POST_SOURCES.EXTERNAL`（値は `"External"`）
+
+## i18n
+
+- 対応ロケールは `ja`（デフォルト、プレフィックスなし）と `en`（`/en/` プレフィックス）
+- UI 文言は `src/i18n/{ja,en}.ts` に置き、コンポーネントへの直書きはしない。キーを追加したら `Translations` 型にも追加する
+- React アイランドには翻訳テーブルを渡さず、Astro 側で解決した文字列を props で渡す
+- ロケールを受け取る props は `string` ではなく `Locale` 型にする
 
 ## Key Architecture Decisions
 

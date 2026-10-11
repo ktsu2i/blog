@@ -12,8 +12,8 @@ afterEach(() => {
 describe("ThemeToggle", () => {
   it("toggles the dark class and persists the choice", async () => {
     const user = userEvent.setup();
-    render(<ThemeToggle />);
-    const button = screen.getByRole("button", { name: "Toggle theme" });
+    render(<ThemeToggle label="テーマを切り替え" />);
+    const button = screen.getByRole("button", { name: "テーマを切り替え" });
 
     await user.click(button);
     expect(document.documentElement).toHaveClass("dark");
@@ -27,9 +27,9 @@ describe("ThemeToggle", () => {
   it("starts from the theme already applied to the document", async () => {
     document.documentElement.classList.add("dark");
     const user = userEvent.setup();
-    render(<ThemeToggle />);
+    render(<ThemeToggle label="テーマを切り替え" />);
 
-    await user.click(screen.getByRole("button", { name: "Toggle theme" }));
+    await user.click(screen.getByRole("button", { name: "テーマを切り替え" }));
 
     expect(localStorage.getItem("theme")).toBe("light");
   });

@@ -3,7 +3,7 @@ import { getAlternatePath } from "@/i18n/config";
 import type { Locale } from "@/i18n/config";
 
 interface Props {
-  currentLocale: string;
+  currentLocale: Locale;
   currentPath: string;
 }
 

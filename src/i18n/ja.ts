@@ -6,6 +6,7 @@ export const ja: Translations = {
   "nav.talks": "Talks",
   "nav.about": "About",
   "nav.menu": "メニュー",
+  "nav.toggleTheme": "テーマを切り替え",
 
   "home.subtitle":
     "ソフトウェアエンジニアです。\nGo や TypeScript、AI 活用など、技術のことや登壇のことを書いています。",
@@ -36,6 +37,9 @@ export const ja: Translations = {
 
   "notFound.message": "お探しのページは見つかりませんでした",
   "notFound.backHome": "ホームに戻る",
+
+  "profile.name": "筒井 海人",
+  "profile.altName": "Kaito Tsutsui",
 
   "common.siteName": "ktsu2i.dev",
   "common.defaultTitle": "ktsu2i.dev | 筒井海人のブログ",
