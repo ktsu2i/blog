@@ -34,7 +34,7 @@ src/
 │   ├── career.ts        # 経歴データ
 │   ├── talks.ts         # 登壇データ
 │   ├── zenn.ts          # Zenn 記事（手動管理）
-│   └── generated/       # 自動生成ファイル（git 管理対象）
+│   └── generated/       # 自動生成ファイル（gitignore 対象、prebuild で生成）
 │       └── bengo4.json  # fetch-bengo4 スクリプトで生成
 ├── lib/
 │   ├── feed.ts          # 全ソース統合（listAllPosts）
