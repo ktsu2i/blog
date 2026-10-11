@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=https://json.schemastore.org/lefthook.json
+pre-commit:
+  parallel: true
+  jobs:
+    - name: forbid-yml
+      glob: "*.yml"
+      run: |
+        echo "Use the .yaml extension instead of .yml:"
+        printf '  %s\n' {staged_files}
+        exit 1
+
+    - name: oxlint
+      glob: "*.{js,jsx,mjs,cjs,ts,tsx,mts,cts}"
+      run: pnpm exec oxlint --type-aware --no-error-on-unmatched-pattern {staged_files}
+
+    - name: oxfmt
+      run: pnpm exec oxfmt --no-error-on-unmatched-pattern {staged_files}
+      stage_fixed: true
+
+    - name: prettier
+      glob: "*.astro"
+      run: pnpm exec prettier --write {staged_files}
+      stage_fixed: true

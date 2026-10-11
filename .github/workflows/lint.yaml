@@ -37,3 +37,5 @@ jobs:
       - run: pnpm format:check
 
       - run: pnpm knip
+
+      - run: pnpm exec lefthook run pre-commit --all-files --no-stage-fixed --fail-on-changes
