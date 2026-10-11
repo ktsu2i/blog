@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { POST_SOURCES, type PostSource } from "@/lib/types";
+import { cn } from "@/lib/utils";
 
 type SourceFilter = "all" | PostSource;
 
@@ -41,21 +42,35 @@ export default function PostFilter({ listId, counts, translations }: Props) {
         aria-label={translations.filterLabel}
         className="flex flex-wrap items-center gap-2"
       >
-        {(["all", ...Object.values(POST_SOURCES)] as const).map((source) => (
-          <Button
-            key={source}
-            variant={sourceFilter === source ? "default" : "outline"}
-            size="sm"
-            aria-pressed={sourceFilter === source}
-            aria-controls={listId}
-            onClick={() => select(source)}
-          >
-            {source === "all" ? "All" : source}
-          </Button>
-        ))}
+        {(["all", ...Object.values(POST_SOURCES)] as const).map((source) => {
+          const active = sourceFilter === source;
+          return (
+            <Button
+              key={source}
+              variant={active ? "default" : "outline"}
+              size="sm"
+              aria-pressed={active}
+              aria-controls={listId}
+              onClick={() => select(source)}
+            >
+              {source === "all" ? "All" : source}
+              <span
+                aria-hidden="true"
+                className={cn(
+                  "rounded-full px-1.5 text-xs tabular-nums",
+                  active
+                    ? "bg-primary-foreground/20"
+                    : "bg-muted text-muted-foreground",
+                )}
+              >
+                {counts[source]}
+              </span>
+            </Button>
+          );
+        })}
       </div>
 
-      <p aria-live="polite" className="text-sm text-muted-foreground">
+      <p aria-live="polite" className="sr-only">
         {countText}
       </p>
     </div>
