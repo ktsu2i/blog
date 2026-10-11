@@ -1,5 +1,7 @@
 ---
+import { Image } from "astro:assets";
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import avatar from "../../assets/avatar.jpg";
 import { getCareer } from "../../data/career";
 import { Briefcase, GraduationCap, Building2 } from "lucide-react";
 import { type Locale, defaultLocale, useTranslations } from "../../i18n/config";
@@ -33,9 +35,13 @@ const typeConfig = {
     </div>
 
     <div class="flex flex-col items-start gap-8 sm:flex-row">
-      <img
-        src="/images/avatar.png"
+      <Image
+        src={avatar}
         alt="筒井海人 Kaito Tsutsui"
+        width={128}
+        height={128}
+        densities={[1, 2]}
+        loading="eager"
         class="size-32 shrink-0 rounded-full bg-muted object-cover"
       />
       <div class="space-y-4">

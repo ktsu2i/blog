@@ -1,12 +1,23 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import PostCard from "../post/PostCard.astro";
 import PostFilter from "../post/PostFilter.tsx";
 import { listAllPosts } from "../../lib/feed";
+import { POST_SOURCES } from "../../lib/types";
 import { type Locale, defaultLocale, useTranslations } from "../../i18n/config";
 
 const locale = (Astro.currentLocale ?? defaultLocale) as Locale;
 const t = useTranslations(locale);
 const posts = await listAllPosts(locale);
+const countBySource = (source: string) =>
+  posts.filter((post) => post.source === source).length;
+const counts = {
+  all: posts.length,
+  [POST_SOURCES.BLOG]: countBySource(POST_SOURCES.BLOG),
+  [POST_SOURCES.ZENN]: countBySource(POST_SOURCES.ZENN),
+  [POST_SOURCES.EXTERNAL]: countBySource(POST_SOURCES.EXTERNAL),
+};
+const listId = "post-list";
 ---
 
 <BaseLayout title={t["blog.title"]} description={t["blog.description"]}>
@@ -16,15 +27,18 @@ const posts = await listAllPosts(locale);
       <p class="mt-2 text-muted-foreground">{t["blog.description"]}</p>
     </div>
     <PostFilter
-      client:load
-      posts={posts}
-      locale={locale}
+      client:idle
+      listId={listId}
+      counts={counts}
       translations={{
         count: t["blog.count"],
-        japaneseOnly: t["blog.japaneseOnly"],
-        dateFormat: t["date.format"],
         filterLabel: t["blog.filter.label"],
       }}
     />
+    <div id={listId} class="grid gap-4 md:grid-cols-2">
+      {posts.map((post) => (
+        <PostCard post={post} />
+      ))}
+    </div>
   </div>
 </BaseLayout>

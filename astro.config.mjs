@@ -7,7 +7,6 @@ import remarkGfm from "remark-gfm";
 import remarkLinkCard from "remark-link-card-plus";
 import rehypeSlug from "rehype-slug";
 import rehypeExternalLinks from "rehype-external-links";
-import rehypePrettyCode from "rehype-pretty-code";
 
 export default defineConfig({
   site: "https://ktsu2i.dev",
@@ -34,7 +33,6 @@ export default defineConfig({
         rehypeExternalLinks,
         { target: "_blank", rel: ["noopener", "noreferrer"] },
       ],
-      [rehypePrettyCode, { theme: "one-dark-pro" }],
     ],
   },
   image: {

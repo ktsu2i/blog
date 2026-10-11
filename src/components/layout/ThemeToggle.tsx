@@ -1,23 +1,13 @@
-import { useState, useEffect } from "react";
 import { Moon, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export default function ThemeToggle() {
-  const [dark, setDark] = useState(false);
-
-  useEffect(() => {
-    // Sync with the class set by the inline script after hydration
-    // oxlint-disable-next-line react/set-state-in-effect
-    setDark(document.documentElement.classList.contains("dark"));
-  }, []);
-
   function toggle() {
-    const next = !dark;
-    document.documentElement.classList.toggle("dark", next);
-    localStorage.setItem("theme", next ? "dark" : "light");
-    setDark(next);
+    const dark = document.documentElement.classList.toggle("dark");
+    localStorage.setItem("theme", dark ? "dark" : "light");
   }
 
+  // Icons follow the html.dark class via CSS, so SSR output is already correct
   return (
     <Button
       variant="ghost"
@@ -25,7 +15,8 @@ export default function ThemeToggle() {
       onClick={toggle}
       aria-label="Toggle theme"
     >
-      {dark ? <Sun className="size-5" /> : <Moon className="size-5" />}
+      <Sun className="hidden size-5 dark:block" />
+      <Moon className="size-5 dark:hidden" />
     </Button>
   );
 }

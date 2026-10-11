@@ -31,6 +31,7 @@ const formattedDate = format(new Date(talk.date), t["date.format"]);
         src={talk.embedUrl}
         title={talk.title}
         class="h-full w-full"
+        loading="lazy"
         allowfullscreen
       ></iframe>
     </div>

@@ -1,131 +1,37 @@
-import { useMemo, useState } from "react";
-import { format } from "date-fns";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { POST_SOURCES, type Post, type PostSource } from "@/lib/types";
-import type { Locale } from "@/i18n/config";
+import { POST_SOURCES, type PostSource } from "@/lib/types";
 
 type SourceFilter = "all" | PostSource;
 
 interface PostFilterTranslations {
   count: string;
-  japaneseOnly: string;
-  dateFormat: string;
   filterLabel: string;
 }
 
-function PostCard({
-  post,
-  locale,
-  translations,
-}: {
-  post: Post;
-  locale: Locale;
-  translations: PostFilterTranslations;
-}) {
-  const formattedDate = format(new Date(post.date), translations.dateFormat);
-  const isJapaneseOnly = locale === "en" && post.locale !== "en";
-  const localePath =
-    post.source === POST_SOURCES.BLOG && isJapaneseOnly
-      ? ""
-      : locale === "ja"
-        ? ""
-        : `/${locale}`;
-  const href =
-    post.source === POST_SOURCES.BLOG && post.slug
-      ? `${localePath}/blog/${post.slug}`
-      : post.url;
-  const isExternal = post.source !== POST_SOURCES.BLOG;
-  const showJapaneseOnly = isJapaneseOnly;
-
-  return (
-    <a
-      href={href}
-      target={isExternal ? "_blank" : undefined}
-      rel={isExternal ? "noopener noreferrer" : undefined}
-      className="block h-full rounded-xl"
-    >
-      <div className="bg-card text-card-foreground flex h-full flex-col gap-6 rounded-xl border py-6 shadow-sm overflow-hidden transition-colors hover:bg-accent/50">
-        {post.ogImage && (
-          <div className="relative aspect-40/21 px-0 -mt-6 overflow-hidden border-b border-border/70">
-            <img
-              src={post.ogImage}
-              alt={post.title}
-              className="h-full w-full object-cover ring-1 ring-inset ring-border/60"
-              loading="lazy"
-            />
-          </div>
-        )}
-        <div className="grid auto-rows-min items-start gap-2 px-6">
-          <div className="flex items-center gap-2">
-            <time className="text-sm text-muted-foreground">
-              {formattedDate}
-            </time>
-            {post.source === POST_SOURCES.BLOG && (
-              <Badge>{POST_SOURCES.BLOG}</Badge>
-            )}
-            {post.source === POST_SOURCES.ZENN && (
-              <Badge variant="zenn">{POST_SOURCES.ZENN}</Badge>
-            )}
-            {post.source === POST_SOURCES.EXTERNAL && (
-              <Badge variant="external">{POST_SOURCES.EXTERNAL}</Badge>
-            )}
-            {showJapaneseOnly && (
-              <Badge variant="notice">{translations.japaneseOnly}</Badge>
-            )}
-          </div>
-          <div className="leading-snug font-semibold text-lg line-clamp-2">
-            <span className="inline">
-              {post.title}
-              {isExternal && (
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="ml-1 inline-block size-4 text-muted-foreground align-text-bottom"
-                >
-                  <path d="M15 3h6v6" />
-                  <path d="M10 14 21 3" />
-                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-                </svg>
-              )}
-            </span>
-          </div>
-        </div>
-        <div className="mt-auto px-6">
-          <div className="text-muted-foreground text-sm line-clamp-2">
-            {post.description}
-          </div>
-        </div>
-      </div>
-    </a>
-  );
-}
-
 interface Props {
-  posts: Post[];
-  locale: Locale;
+  // Id of the server-rendered list whose children carry data-source
+  listId: string;
+  counts: Record<SourceFilter, number>;
   translations: PostFilterTranslations;
 }
 
-export default function PostFilter({ posts, locale, translations }: Props) {
+export default function PostFilter({ listId, counts, translations }: Props) {
   const [sourceFilter, setSourceFilter] = useState<SourceFilter>("all");
 
-  const filtered = useMemo(() => {
-    return posts.filter(
-      (post) => sourceFilter === "all" || post.source === sourceFilter,
+  function select(source: SourceFilter) {
+    setSourceFilter(source);
+    const items = document.querySelectorAll<HTMLElement>(
+      `#${listId} > [data-source]`,
     );
-  }, [posts, sourceFilter]);
+    for (const item of items) {
+      item.hidden = source !== "all" && item.dataset.source !== source;
+    }
+  }
 
   const countText = translations.count.replace(
     "{count}",
-    String(filtered.length),
+    String(counts[sourceFilter]),
   );
 
   return (
@@ -141,7 +47,8 @@ export default function PostFilter({ posts, locale, translations }: Props) {
             variant={sourceFilter === source ? "default" : "outline"}
             size="sm"
             aria-pressed={sourceFilter === source}
-            onClick={() => setSourceFilter(source)}
+            aria-controls={listId}
+            onClick={() => select(source)}
           >
             {source === "all" ? "All" : source}
           </Button>
@@ -151,17 +58,6 @@ export default function PostFilter({ posts, locale, translations }: Props) {
       <p aria-live="polite" className="text-sm text-muted-foreground">
         {countText}
       </p>
-
-      <div className="grid gap-4 md:grid-cols-2">
-        {filtered.map((post) => (
-          <PostCard
-            key={post.id}
-            post={post}
-            locale={locale}
-            translations={translations}
-          />
-        ))}
-      </div>
     </div>
   );
 }
