@@ -14,8 +14,9 @@ ktsu2i.dev — Kaito Tsutsui の個人ブログ＆ポートフォリオサイト
 
 ```bash
 pnpm dev            # 開発サーバー起動 (port 3000)
-pnpm build          # ビルド（prebuild で bengo4 記事を自動フェッチ）
+pnpm build          # ビルド（prebuild で bengo4 記事を自動フェッチ、.cloudflare/output に Build Output を生成）
 pnpm preview        # ビルド結果のプレビュー
+pnpm run deploy     # cf CLI でビルド済み成果物をデプロイ（`pnpm deploy` は pnpm 組み込みコマンドなので run 必須）
 pnpm fetch:bengo4   # Bengo4 Creators Blog から記事を手動フェッチ
 pnpm test           # Vitest でテスト実行
 pnpm test:coverage  # カバレッジ計測（src/**/*.{ts,tsx} で 100% 必須、components/ui は除外）
@@ -88,4 +89,5 @@ src/
 - **統一 Post 型**: 3ソースを `Post` インターフェースで統一し、`listAllPosts()` で日付降順にマージ
 - **Markdown 処理**: remark-gfm → rehype-slug → rehype-pretty-code (theme: one-dark-pro)
 - **テスト配置**: 実装の隣に `*.test.ts(x)` を置く。`src/pages/` 配下は Astro がルートとして扱うため `src/pages/__tests__/` に置く（`_` 始まりは除外される）。共通 setup とモックは `tests/`
+- **デプロイ**: Cloudflare Workers（静的アセットのみ）。設定は `cloudflare.config.ts`（Worker 設定）と `wrangler.config.ts`（アセットディレクトリ）。`cf` は Astro を検出すると Astro アダプタ前提で動くため、Build Output は `wrangler build --experimental-new-config --experimental-cf-build-output` で生成し `cf deploy --prebuilt` でデプロイする
 - **画像ドメイン許可**: `res.cloudinary.com`, `cdn.image.st-hatena.com`
