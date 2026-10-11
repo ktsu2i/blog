@@ -56,6 +56,18 @@ describe("PostFilter", () => {
     expect(visible(list)).toHaveLength(4);
   });
 
+  it("shows each source's count inside its button", () => {
+    renderWithList();
+    const group = screen.getByRole("group", { name: "Filter posts" });
+
+    expect(
+      within(group).getByRole("button", { name: "All" }),
+    ).toHaveTextContent("All4");
+    expect(
+      within(group).getByRole("button", { name: "Blog" }),
+    ).toHaveTextContent("Blog2");
+  });
+
   it("hides posts from other sources and restores them with All", async () => {
     const user = userEvent.setup();
     const list = renderWithList();
