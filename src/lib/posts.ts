@@ -1,4 +1,4 @@
-import { getCollection } from "astro:content";
+import { type CollectionEntry, getCollection } from "astro:content";
 import { POST_SOURCES, type Post } from "./types";
 import { type Locale, getLocalePath } from "../i18n/config";
 
@@ -29,6 +29,21 @@ function extractDescription(body: string): string {
   return `${plain.slice(0, DESCRIPTION_MAX_LENGTH)}...`;
 }
 
+type PostCollection = "postsJa" | "postsEn";
+
+/** Drafts are visible only outside production builds */
+function isPublished(entry: { data: { draft: boolean } }): boolean {
+  return !(entry.data.draft && import.meta.env.PROD);
+}
+
+/** Collection entries that should be built as pages */
+export async function listPublishedEntries<C extends PostCollection>(
+  collection: C,
+): Promise<CollectionEntry<C>[]> {
+  const entries = await getCollection(collection);
+  return entries.filter(isPublished);
+}
+
 export async function listLocalPosts(locale: Locale = "ja"): Promise<Post[]> {
   const collectionName = locale === "ja" ? "postsJa" : "postsEn";
   const entries = await getCollection(collectionName);
@@ -49,10 +64,7 @@ export async function listLocalPosts(locale: Locale = "ja"): Promise<Post[]> {
   });
 
   const posts: Post[] = entries
-    .filter((entry) => {
-      if (entry.data.draft && import.meta.env.PROD) return false;
-      return true;
-    })
+    .filter(isPublished)
     .map((entry) => toPost(entry, locale));
 
   // For English pages, also include Japanese-only posts (no English version)
@@ -60,10 +72,7 @@ export async function listLocalPosts(locale: Locale = "ja"): Promise<Post[]> {
     const jaEntries = await getCollection("postsJa");
     const enSlugs = new Set(entries.map((e) => e.id));
     const jaOnly = jaEntries
-      .filter((entry) => {
-        if (entry.data.draft && import.meta.env.PROD) return false;
-        return !enSlugs.has(entry.id);
-      })
+      .filter((entry) => isPublished(entry) && !enSlugs.has(entry.id))
       .map((entry) => toPost(entry, "ja"));
     posts.push(...jaOnly);
   }

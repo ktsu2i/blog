@@ -10,8 +10,12 @@ vi.mock("@/lib/og", () => ({
 }));
 
 const entries = [
-  { id: "plain", data: { title: "Plain" } },
-  { id: "custom", data: { title: "Custom", ogTitle: "Custom\nOG" } },
+  { id: "plain", data: { title: "Plain", draft: false } },
+  {
+    id: "custom",
+    data: { title: "Custom", ogTitle: "Custom\nOG", draft: false },
+  },
+  { id: "draft", data: { title: "Draft", draft: true } },
 ];
 
 beforeEach(() => {
@@ -22,7 +26,8 @@ describe.each([
   ["ja", jaOg, "postsJa"],
   ["en", enOg, "postsEn"],
 ])("%s OG image route", (_, route, collection) => {
-  it("creates a path per post, preferring ogTitle", async () => {
+  it("creates a path per published post, preferring ogTitle", async () => {
+    vi.stubEnv("PROD", true);
     const paths = await route.getStaticPaths({} as never);
 
     expect(getCollection).toHaveBeenCalledWith(collection);
