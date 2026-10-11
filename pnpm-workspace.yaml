@@ -4,9 +4,12 @@ allowBuilds:
   msw: false
   sharp: false
   workerd: true
-ignoredBuiltDependencies:
-  - esbuild
-  - sharp
-  - unrs-resolver
+strictDepBuilds: true
+trustPolicy: no-downgrade
+trustPolicyExclude:
+  # Pulled in by @babel/core via shadcn. 6.3.1 is a ReDoS backport published
+  # without provenance after 7.x started shipping it.
+  - semver@6.3.1
+blockExoticSubdeps: true
 savePrefix: ""
 engineStrict: true
