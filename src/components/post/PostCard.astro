@@ -1,28 +1,27 @@
 ---
 import { format } from "date-fns";
-import { POST_SOURCES, type Post } from "../../lib/types";
-import {
-  type Locale,
-  defaultLocale,
-  useTranslations,
-  getLocalePath,
-} from "../../i18n/config";
+import { badgeVariants } from "../ui/badge";
+import { POST_SOURCES, type Post, type PostSource } from "../../lib/types";
+import { getPostHref, isJapaneseOnly } from "../../lib/post-link";
+import { type Locale, defaultLocale, useTranslations } from "../../i18n/config";
 
 interface Props {
   post: Post;
 }
 
+const SOURCE_BADGE_VARIANTS = {
+  [POST_SOURCES.BLOG]: "default",
+  [POST_SOURCES.ZENN]: "zenn",
+  [POST_SOURCES.EXTERNAL]: "external",
+} as const satisfies Record<PostSource, string>;
+
 const { post } = Astro.props;
 const locale = (Astro.currentLocale ?? defaultLocale) as Locale;
 const t = useTranslations(locale);
 const formattedDate = format(new Date(post.date), t["date.format"]);
-const isJapaneseOnly = locale === "en" && post.locale !== "en";
-const href =
-  post.source === POST_SOURCES.BLOG && post.slug
-    ? getLocalePath(`/blog/${post.slug}`, isJapaneseOnly ? "ja" : locale)
-    : post.url;
+const href = getPostHref(post, locale);
 const isExternal = post.source !== POST_SOURCES.BLOG;
-const showJapaneseOnly = isJapaneseOnly;
+const showJapaneseOnly = isJapaneseOnly(post, locale);
 ---
 
 <a
@@ -43,31 +42,21 @@ const showJapaneseOnly = isJapaneseOnly;
         />
       </div>
     )}
-    <div class="grid auto-rows-min grid-rows-[auto_auto] items-start gap-2 px-6">
+    <div class="grid auto-rows-min items-start gap-2 px-6">
       <div class="flex items-center gap-2">
         <time class="text-sm text-muted-foreground">{formattedDate}</time>
-        {post.source === POST_SOURCES.BLOG && (
-          <span class="inline-flex items-center justify-center rounded-full bg-primary text-primary-foreground px-2 py-0.5 text-xs font-medium">
-            {POST_SOURCES.BLOG}
-          </span>
-        )}
-        {post.source === POST_SOURCES.ZENN && (
-          <span class="inline-flex items-center justify-center rounded-full bg-secondary text-blue-600 dark:text-blue-400 px-2 py-0.5 text-xs font-medium">
-            {POST_SOURCES.ZENN}
-          </span>
-        )}
-        {post.source === POST_SOURCES.EXTERNAL && (
-          <span class="inline-flex items-center justify-center rounded-full bg-secondary text-emerald-700 dark:text-emerald-300 px-2 py-0.5 text-xs font-medium">
-            {POST_SOURCES.EXTERNAL}
-          </span>
-        )}
+        <span
+          class={badgeVariants({ variant: SOURCE_BADGE_VARIANTS[post.source] })}
+        >
+          {post.source}
+        </span>
         {showJapaneseOnly && (
-          <span class="inline-flex items-center justify-center rounded-full bg-orange-500/15 text-orange-700 dark:text-orange-300 border border-orange-500/20 px-2 py-0.5 text-xs font-medium">
+          <span class={badgeVariants({ variant: "notice" })}>
             {t["blog.japaneseOnly"]}
           </span>
         )}
       </div>
-      <div class="leading-snug font-semibold text-lg">
+      <div class="leading-snug font-semibold text-lg line-clamp-2">
         <span class="inline">
           {post.title}
           {isExternal && (
