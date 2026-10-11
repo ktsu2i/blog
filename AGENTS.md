@@ -14,12 +14,13 @@ ktsu2i.dev — Kaito Tsutsui の個人ブログ＆ポートフォリオサイト
 
 ```bash
 pnpm dev            # 開発サーバー起動 (port 3000)
-pnpm build          # ビルド（prebuild で bengo4 記事を自動フェッチ）
+pnpm build          # ビルド（prebuild で bengo4 記事を自動フェッチ。CI は prebuild を飛ばして astro build を直接実行）
 pnpm preview        # ビルド結果のプレビュー
 pnpm fetch:bengo4   # Bengo4 Creators Blog から記事を手動フェッチ
 pnpm test           # Vitest でテスト実行
 pnpm test:coverage  # カバレッジ計測（src/**/*.{ts,tsx} で 100% 必須、components/ui は除外）
 pnpm lint           # Oxlint（type-aware）で lint
+pnpm typecheck      # astro check で .astro を含む型チェック（CI で実行）
 pnpm format         # Oxfmt で整形（.astro は Oxfmt 未対応のため Prettier）
 pnpm format:check   # 整形チェック（CI で実行）
 pnpm knip           # 未使用ファイル・export・依存の検出（CI で実行、設定は knip.json）
