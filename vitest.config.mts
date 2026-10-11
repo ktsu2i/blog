@@ -23,7 +23,12 @@ export default defineConfig({
     coverage: {
       provider: "v8",
       include: ["src/**/*.{ts,tsx}"],
-      exclude: ["src/**/*.d.ts", "src/**/*.test.{ts,tsx}"],
+      exclude: [
+        "src/**/*.d.ts",
+        "src/**/*.test.{ts,tsx}",
+        // Vendored by the shadcn CLI
+        "src/components/ui/**",
+      ],
       reporter: ["text", "json-summary"],
       thresholds: {
         statements: 100,

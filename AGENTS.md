@@ -18,7 +18,7 @@ pnpm build          # ビルド（prebuild で bengo4 記事を自動フェッ�
 pnpm preview        # ビルド結果のプレビュー
 pnpm fetch:bengo4   # Bengo4 Creators Blog から記事を手動フェッチ
 pnpm test           # Vitest でテスト実行
-pnpm test:coverage  # カバレッジ計測（src/**/*.{ts,tsx} で 100% 必須）
+pnpm test:coverage  # カバレッジ計測（src/**/*.{ts,tsx} で 100% 必須、components/ui は除外）
 ```
 
 ## Project Structure
