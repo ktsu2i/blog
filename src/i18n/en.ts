@@ -7,7 +7,7 @@ export const en: Translations = {
   "nav.about": "About",
   "nav.menu": "Menu",
 
-  "home.subtitle": "Kaito Tsutsui's blog. Writing about tech, talks, and more.",
+  "home.subtitle": "Software engineer.\nWriting about Go, TypeScript, working with AI, and the talks I give.",
   "home.cta.blog": "Read Blog",
   "home.cta.about": "About",
   "home.latestPosts": "Latest Posts",

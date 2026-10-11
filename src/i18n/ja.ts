@@ -7,7 +7,7 @@ export const ja: Translations = {
   "nav.about": "About",
   "nav.menu": "メニュー",
 
-  "home.subtitle": "筒井海人のブログです。技術のこと、登壇のこと、いろいろ書いてます。",
+  "home.subtitle": "ソフトウェアエンジニアです。\nGo や TypeScript、AI 活用など、技術のことや登壇のことを書いています。",
   "home.cta.blog": "ブログを見る",
   "home.cta.about": "About",
   "home.latestPosts": "最新の投稿",
