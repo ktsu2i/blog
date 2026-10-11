@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { getCollection } from "astro:content";
-import { listLocalPosts } from "./posts";
+import { listLocalPosts, listPublishedEntries } from "./posts";
 
 type Entry = {
   id: string;
@@ -132,5 +132,26 @@ describe("listLocalPosts", () => {
       ["ja-only", "ja", "/og/ja-only.png"],
       ["both", "en", "/en/og/both.png"],
     ]);
+  });
+});
+
+describe("listPublishedEntries", () => {
+  it("includes drafts outside production", async () => {
+    vi.stubEnv("PROD", false);
+    collections.postsEn = [entry("draft", { draft: true }), entry("pub")];
+
+    const entries = await listPublishedEntries("postsEn");
+
+    expect(getCollection).toHaveBeenCalledWith("postsEn");
+    expect(entries.map((e) => e.id)).toEqual(["draft", "pub"]);
+  });
+
+  it("excludes drafts in production", async () => {
+    vi.stubEnv("PROD", true);
+    collections.postsJa = [entry("draft", { draft: true }), entry("pub")];
+
+    const entries = await listPublishedEntries("postsJa");
+
+    expect(entries.map((e) => e.id)).toEqual(["pub"]);
   });
 });
