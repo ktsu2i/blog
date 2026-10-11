@@ -4,9 +4,12 @@ import sharp from "sharp";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const FONT = fs.readFileSync(
-  path.resolve("node_modules/@fontsource/geist-sans/files/geist-sans-latin-700-normal.woff"),
+  path.resolve(
+    "node_modules/@fontsource/geist-sans/files/geist-sans-latin-700-normal.woff",
+  ),
 );
-const CSS = "@font-face { src: url(https://fonts.example/noto.woff) format('woff'); }";
+const CSS =
+  "@font-face { src: url(https://fonts.example/noto.woff) format('woff'); }";
 
 function stubFontFetch(css = CSS) {
   const fetchMock = vi.fn(async (url: string) =>
@@ -42,7 +45,9 @@ describe("generateOgImage", () => {
       expect([meta.width, meta.height]).toEqual([1200, 630]);
     }
     expect(fetchMock).toHaveBeenCalledTimes(2);
-    expect(fetchMock).toHaveBeenLastCalledWith("https://fonts.example/noto.woff");
+    expect(fetchMock).toHaveBeenLastCalledWith(
+      "https://fonts.example/noto.woff",
+    );
   });
 
   it("throws when the font CSS has no URL", async () => {

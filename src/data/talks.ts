@@ -31,8 +31,7 @@ const talksData: Record<Locale, Talk[]> = {
   en: [
     {
       id: "cloudsign-go-conference-mini-2026-sendai",
-      title:
-        "Building a CI to Prevent Supply Chain Attacks on Go Packages",
+      title: "Building a CI to Prevent Supply Chain Attacks on Go Packages",
       event: "Go Conference mini in Sendai 2026",
       date: "2026-02-21",
       speakerdeckUrl:
@@ -51,8 +50,7 @@ const talksData: Record<Locale, Talk[]> = {
         "https://speakerdeck.com/bengo4com/20250822-cloudsign-coefl-go-jp2-tsutsui",
       embedUrl:
         "https://speakerdeck.com/player/41bd3405621a4598963d5753725494d0?title=false",
-      description:
-        "Presented on Go garbage collector behavior and algorithms.",
+      description: "Presented on Go garbage collector behavior and algorithms.",
     },
   ],
 };

@@ -10,7 +10,9 @@ function stripMarkdown(md: string): string {
     .replace(/```[\s\S]*?```/g, "") // コードブロック
     .replace(/`[^`]*`/g, "") // インラインコード
     .replace(/!\[[^\]]*\]\([^)]*\)/g, "") // 画像
-    .replace(/\[[^\]]*\]\([^)]*\)/g, (m) => m.replace(/\[([^\]]*)\]\([^)]*\)/, "$1")) // リンク → テキスト
+    .replace(/\[[^\]]*\]\([^)]*\)/g, (m) =>
+      m.replace(/\[([^\]]*)\]\([^)]*\)/, "$1"),
+    ) // リンク → テキスト
     .replace(/^#{1,6}\s+/gm, "") // 見出し
     .replace(/^[-*>]+\s/gm, "") // リスト・引用
     .replace(/[*_~]+/g, "") // 強調・取り消し線
@@ -27,9 +29,7 @@ function extractDescription(body: string): string {
   return `${plain.slice(0, DESCRIPTION_MAX_LENGTH)}...`;
 }
 
-export async function listLocalPosts(
-  locale: Locale = "ja",
-): Promise<Post[]> {
+export async function listLocalPosts(locale: Locale = "ja"): Promise<Post[]> {
   const collectionName = locale === "ja" ? "postsJa" : "postsEn";
   const entries = await getCollection(collectionName);
 
@@ -68,9 +68,7 @@ export async function listLocalPosts(
     posts.push(...jaOnly);
   }
 
-  posts.sort(
-    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
-  );
+  posts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
   return posts;
 }

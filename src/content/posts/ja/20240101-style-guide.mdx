@@ -92,7 +92,9 @@ export function PostCard({ post }: { post: Post }) {
       <time className="text-sm text-muted">{post.date}</time>
       <div className="flex gap-2 mt-2">
         {post.tags.map((tag) => (
-          <span key={tag} className="badge">{tag}</span>
+          <span key={tag} className="badge">
+            {tag}
+          </span>
         ))}
       </div>
     </article>
@@ -138,20 +140,20 @@ git commit -m "feat: add new post"
 
 ## テーブル (Table)
 
-| 技術 | バージョン | 用途 |
-|------|-----------|------|
-| Astro | 5.x | フレームワーク |
-| React | 19 | UI コンポーネント |
-| Tailwind CSS | v4 | スタイリング |
-| MDX | 4.x | コンテンツ |
+| 技術         | バージョン | 用途              |
+| ------------ | ---------- | ----------------- |
+| Astro        | 5.x        | フレームワーク    |
+| React        | 19         | UI コンポーネント |
+| Tailwind CSS | v4         | スタイリング      |
+| MDX          | 4.x        | コンテンツ        |
 
 ### 右寄せ・中央寄せのテーブル
 
-| 項目 | 数量 | 単価 |
-|:-----|:----:|-----:|
-| りんご | 3 | ¥150 |
-| みかん | 5 | ¥100 |
-| バナナ | 2 | ¥200 |
+| 項目     |  数量  |     単価 |
+| :------- | :----: | -------: |
+| りんご   |   3    |     ¥150 |
+| みかん   |   5    |     ¥100 |
+| バナナ   |   2    |     ¥200 |
 | **合計** | **10** | **¥450** |
 
 ---
@@ -177,6 +179,7 @@ git commit -m "feat: add new post"
 これは脚注付きのテキストです[^1]。もう一つの脚注もあります[^2]。
 
 [^1]: これが最初の脚注です。
+
 [^2]: こちらが2つ目の脚注です。
 
 ---
@@ -208,11 +211,11 @@ const posts: Post[] = await res.json();
 
 取得したデータは以下のような構造です:
 
-| フィールド | 型 | 説明 |
-|-----------|-----|------|
-| `id` | `number` | 一意の ID |
-| `title` | `string` | 記事タイトル |
-| `tags` | `string[]` | タグの配列 |
+| フィールド | 型         | 説明         |
+| ---------- | ---------- | ------------ |
+| `id`       | `number`   | 一意の ID    |
+| `title`    | `string`   | 記事タイトル |
+| `tags`     | `string[]` | タグの配列   |
 
 1. レスポンスを **パース** する
 2. 型を `Post[]` に **キャスト** する

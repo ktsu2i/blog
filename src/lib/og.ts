@@ -4,7 +4,9 @@ import fs from "node:fs";
 import path from "node:path";
 
 const GEIST_SANS_BOLD = fs.readFileSync(
-  path.resolve("node_modules/@fontsource/geist-sans/files/geist-sans-latin-700-normal.woff")
+  path.resolve(
+    "node_modules/@fontsource/geist-sans/files/geist-sans-latin-700-normal.woff",
+  ),
 );
 
 const AVATAR_BASE64 = `data:image/png;base64,${fs.readFileSync(path.resolve("public/images/avatar.png")).toString("base64")}`;
@@ -15,7 +17,7 @@ async function loadNotoSansJP(): Promise<ArrayBuffer> {
   if (notoSansJPBold) return notoSansJPBold;
 
   const res = await fetch(
-    "https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@700&display=swap"
+    "https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@700&display=swap",
   );
   const css = await res.text();
   const fontUrl = css.match(/src:\s*url\(([^)]+)\)/)?.[1];
@@ -56,7 +58,8 @@ export async function generateOgImage(title: string): Promise<Buffer> {
                 width: "500px",
                 height: "500px",
                 borderRadius: "50%",
-                background: "radial-gradient(circle, rgba(59,130,246,0.25), transparent 70%)",
+                background:
+                  "radial-gradient(circle, rgba(59,130,246,0.25), transparent 70%)",
               },
             },
           },
@@ -71,7 +74,8 @@ export async function generateOgImage(title: string): Promise<Buffer> {
                 width: "400px",
                 height: "400px",
                 borderRadius: "50%",
-                background: "radial-gradient(circle, rgba(59,130,246,0.18), transparent 70%)",
+                background:
+                  "radial-gradient(circle, rgba(59,130,246,0.18), transparent 70%)",
               },
             },
           },
@@ -206,7 +210,7 @@ export async function generateOgImage(title: string): Promise<Buffer> {
           style: "normal",
         },
       ],
-    }
+    },
   );
 
   return await sharp(Buffer.from(svg)).png().toBuffer();

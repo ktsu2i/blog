@@ -17,7 +17,7 @@ draft: true
 
 ## Paragraph & Inline Text
 
-This is a regular paragraph. Text wraps automatically with comfortable line spacing for readability, even for longer passages. Here is **bold text**, *italic text*, and ***bold italic*** text.
+This is a regular paragraph. Text wraps automatically with comfortable line spacing for readability, even for longer passages. Here is **bold text**, _italic text_, and **_bold italic_** text.
 
 You can also use ~~strikethrough~~ and `inline code`. The latter is handy for short snippets like `const x = 42`.
 
@@ -31,7 +31,7 @@ This is an [internal link](/about), and this is an [external link](https://githu
 
 > A multi-paragraph blockquote.
 >
-> The second paragraph works just like this. You can use **bold** and *italic* inside quotes too.
+> The second paragraph works just like this. You can use **bold** and _italic_ inside quotes too.
 
 ---
 
@@ -92,7 +92,9 @@ export function PostCard({ post }: { post: Post }) {
       <time className="text-sm text-muted">{post.date}</time>
       <div className="flex gap-2 mt-2">
         {post.tags.map((tag) => (
-          <span key={tag} className="badge">{tag}</span>
+          <span key={tag} className="badge">
+            {tag}
+          </span>
         ))}
       </div>
     </article>
@@ -138,20 +140,20 @@ git commit -m "feat: add new post"
 
 ## Table
 
-| Technology | Version | Purpose |
-|------------|---------|---------|
-| Astro | 5.x | Framework |
-| React | 19 | UI Components |
-| Tailwind CSS | v4 | Styling |
-| MDX | 4.x | Content |
+| Technology   | Version | Purpose       |
+| ------------ | ------- | ------------- |
+| Astro        | 5.x     | Framework     |
+| React        | 19      | UI Components |
+| Tailwind CSS | v4      | Styling       |
+| MDX          | 4.x     | Content       |
 
 ### Right-aligned & Centered Table
 
-| Item | Qty | Price |
-|:-----|:---:|------:|
-| Apple | 3 | $1.50 |
-| Orange | 5 | $1.00 |
-| Banana | 2 | $2.00 |
+| Item      |  Qty   |     Price |
+| :-------- | :----: | --------: |
+| Apple     |   3    |     $1.50 |
+| Orange    |   5    |     $1.00 |
+| Banana    |   2    |     $2.00 |
 | **Total** | **10** | **$4.50** |
 
 ---
@@ -177,6 +179,7 @@ Text below
 This text has a footnote[^1]. Here is another one[^2].
 
 [^1]: This is the first footnote.
+
 [^2]: And this is the second footnote.
 
 ---
@@ -196,11 +199,11 @@ const posts: Post[] = await res.json();
 
 The returned data has the following structure:
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `id` | `number` | Unique identifier |
-| `title` | `string` | Post title |
-| `tags` | `string[]` | Array of tags |
+| Field   | Type       | Description       |
+| ------- | ---------- | ----------------- |
+| `id`    | `number`   | Unique identifier |
+| `title` | `string`   | Post title        |
+| `tags`  | `string[]` | Array of tags     |
 
 1. **Parse** the response
 2. **Cast** the type to `Post[]`

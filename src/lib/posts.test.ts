@@ -8,11 +8,21 @@ type Entry = {
   data: { title: string; date: string; description: string; draft: boolean };
 };
 
-function entry(id: string, data: Partial<Entry["data"]> = {}, body?: string): Entry {
+function entry(
+  id: string,
+  data: Partial<Entry["data"]> = {},
+  body?: string,
+): Entry {
   return {
     id,
     body,
-    data: { title: id, date: "2025-01-01", description: "desc", draft: false, ...data },
+    data: {
+      title: id,
+      date: "2025-01-01",
+      description: "desc",
+      draft: false,
+      ...data,
+    },
   };
 }
 
@@ -77,7 +87,9 @@ describe("listLocalPosts", () => {
   });
 
   it("truncates long fallback descriptions to 200 characters", async () => {
-    collections.postsJa = [entry("long", { description: "" }, "あ".repeat(250))];
+    collections.postsJa = [
+      entry("long", { description: "" }, "あ".repeat(250)),
+    ];
 
     const [post] = await listLocalPosts("ja");
 

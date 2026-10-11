@@ -30,7 +30,10 @@ export default defineConfig({
     ],
     rehypePlugins: [
       rehypeSlug,
-      [rehypeExternalLinks, { target: "_blank", rel: ["noopener", "noreferrer"] }],
+      [
+        rehypeExternalLinks,
+        { target: "_blank", rel: ["noopener", "noreferrer"] },
+      ],
       [rehypePrettyCode, { theme: "one-dark-pro" }],
     ],
   },

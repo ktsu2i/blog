@@ -26,7 +26,11 @@ function PostCard({
   const formattedDate = format(new Date(post.date), translations.dateFormat);
   const isJapaneseOnly = locale === "en" && post.locale !== "en";
   const localePath =
-    post.source === POST_SOURCES.BLOG && isJapaneseOnly ? "" : locale === "ja" ? "" : `/${locale}`;
+    post.source === POST_SOURCES.BLOG && isJapaneseOnly
+      ? ""
+      : locale === "ja"
+        ? ""
+        : `/${locale}`;
   const href =
     post.source === POST_SOURCES.BLOG && post.slug
       ? `${localePath}/blog/${post.slug}`
@@ -57,7 +61,9 @@ function PostCard({
             <time className="text-sm text-muted-foreground">
               {formattedDate}
             </time>
-            {post.source === POST_SOURCES.BLOG && <Badge>{POST_SOURCES.BLOG}</Badge>}
+            {post.source === POST_SOURCES.BLOG && (
+              <Badge>{POST_SOURCES.BLOG}</Badge>
+            )}
             {post.source === POST_SOURCES.ZENN && (
               <Badge
                 variant="secondary"
@@ -145,16 +151,16 @@ export default function PostFilter({ posts, locale, translations }: Props) {
         className="flex flex-wrap items-center gap-2"
       >
         {(["all", ...Object.values(POST_SOURCES)] as const).map((source) => (
-            <Button
-              key={source}
-              variant={sourceFilter === source ? "default" : "outline"}
-              size="sm"
-              aria-pressed={sourceFilter === source}
-              onClick={() => setSourceFilter(source)}
-            >
-              {source === "all" ? "All" : source}
-            </Button>
-          ))}
+          <Button
+            key={source}
+            variant={sourceFilter === source ? "default" : "outline"}
+            size="sm"
+            aria-pressed={sourceFilter === source}
+            onClick={() => setSourceFilter(source)}
+          >
+            {source === "all" ? "All" : source}
+          </Button>
+        ))}
       </div>
 
       <p aria-live="polite" className="text-sm text-muted-foreground">

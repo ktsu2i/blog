@@ -17,10 +17,20 @@ describe("MobileNav", () => {
     await user.click(screen.getByRole("button", { name: "メニュー" }));
     const dialog = screen.getByRole("dialog");
 
-    expect(within(dialog).getByRole("link", { name: "Home" })).toHaveAttribute("href", "/");
-    expect(within(dialog).getByRole("link", { name: "Home" })).not.toHaveAttribute("aria-current");
-    expect(within(dialog).getByRole("link", { name: "Blog" })).toHaveAttribute("aria-current", "page");
-    expect(within(dialog).getByRole("link", { name: "About" })).not.toHaveAttribute("aria-current");
+    expect(within(dialog).getByRole("link", { name: "Home" })).toHaveAttribute(
+      "href",
+      "/",
+    );
+    expect(
+      within(dialog).getByRole("link", { name: "Home" }),
+    ).not.toHaveAttribute("aria-current");
+    expect(within(dialog).getByRole("link", { name: "Blog" })).toHaveAttribute(
+      "aria-current",
+      "page",
+    );
+    expect(
+      within(dialog).getByRole("link", { name: "About" }),
+    ).not.toHaveAttribute("aria-current");
 
     // jsdom cannot navigate, so only observe the click handler
     dialog.addEventListener("click", (e) => e.preventDefault());
@@ -34,7 +44,13 @@ describe("MobileNav", () => {
 
     await user.click(screen.getByRole("button", { name: "Menu" }));
 
-    expect(screen.getByRole("link", { name: "Home" })).toHaveAttribute("aria-current", "page");
-    expect(screen.getByRole("link", { name: "Home" })).toHaveAttribute("href", "/en/");
+    expect(screen.getByRole("link", { name: "Home" })).toHaveAttribute(
+      "aria-current",
+      "page",
+    );
+    expect(screen.getByRole("link", { name: "Home" })).toHaveAttribute(
+      "href",
+      "/en/",
+    );
   });
 });

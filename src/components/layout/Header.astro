@@ -36,7 +36,9 @@ const pathname = Astro.url.pathname;
             aria-current={isActive ? "page" : undefined}
             class:list={[
               "text-sm transition-colors hover:text-foreground",
-              isActive ? "text-foreground font-medium" : "text-muted-foreground",
+              isActive
+                ? "text-foreground font-medium"
+                : "text-muted-foreground",
             ]}
           >
             {item.label}

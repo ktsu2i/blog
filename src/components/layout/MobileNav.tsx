@@ -22,10 +22,7 @@ export default function MobileNav({ locale, navItems, pathname }: Props) {
   const homeHref = locale === "ja" ? "/" : "/en/";
   const menuLabel = locale === "ja" ? "メニュー" : "Menu";
 
-  const allItems = [
-    { href: homeHref, label: "Home" },
-    ...navItems,
-  ];
+  const allItems = [{ href: homeHref, label: "Home" }, ...navItems];
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
@@ -54,7 +51,9 @@ export default function MobileNav({ locale, navItems, pathname }: Props) {
                 onClick={() => setOpen(false)}
                 className={cn(
                   "text-base transition-colors hover:text-foreground",
-                  isActive ? "text-foreground font-medium" : "text-muted-foreground",
+                  isActive
+                    ? "text-foreground font-medium"
+                    : "text-muted-foreground",
                 )}
               >
                 {item.label}
