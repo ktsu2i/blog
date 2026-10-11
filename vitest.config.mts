@@ -29,7 +29,7 @@ export default defineConfig({
         // Vendored by the shadcn CLI
         "src/components/ui/**",
       ],
-      reporter: ["text", "json-summary"],
+      reporter: ["text", "json-summary", "lcovonly"],
       thresholds: {
         statements: 100,
         branches: 100,

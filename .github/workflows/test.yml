@@ -16,7 +16,9 @@ jobs:
     name: Test with coverage
     runs-on: ubuntu-latest
     permissions:
+      actions: read
       contents: read
+      pull-requests: write
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -33,3 +35,8 @@ jobs:
       - run: pnpm install --frozen-lockfile
 
       - run: pnpm test:coverage
+
+      - uses: k1LoW/octocov-action@a167dc0dee441b7ffc45e1b862ab55ec0d87f278 # v1.5.2
+        if: ${{ !cancelled() }}
+        with:
+          version: v0.83.3
