@@ -6,6 +6,7 @@ export const en: Translations = {
   "nav.talks": "Talks",
   "nav.about": "About",
   "nav.menu": "Menu",
+  "nav.toggleTheme": "Toggle theme",
 
   "home.subtitle":
     "Software engineer.\nWriting about Go, TypeScript, working with AI, and the talks I give.",
@@ -36,6 +37,9 @@ export const en: Translations = {
 
   "notFound.message": "The page you're looking for doesn't exist",
   "notFound.backHome": "Back to Home",
+
+  "profile.name": "Kaito Tsutsui",
+  "profile.altName": "",
 
   "common.siteName": "ktsu2i.dev",
   "common.defaultTitle": "ktsu2i.dev | Kaito Tsutsui's Blog",

@@ -37,7 +37,7 @@ const typeConfig = {
     <div class="flex flex-col items-start gap-8 sm:flex-row">
       <Image
         src={avatar}
-        alt="筒井海人 Kaito Tsutsui"
+        alt={t["profile.name"]}
         width={128}
         height={128}
         densities={[1, 2]}
@@ -46,15 +46,14 @@ const typeConfig = {
       />
       <div class="space-y-4">
         <h2 class="text-xl font-semibold">
-          {locale === "ja" ? (
+          {t["profile.name"]}
+          {t["profile.altName"] && (
             <>
-              筒井 海人{" "}
+              {" "}
               <span class="text-sm font-normal text-muted-foreground">
-                Kaito Tsutsui
+                {t["profile.altName"]}
               </span>
             </>
-          ) : (
-            "Kaito Tsutsui"
           )}
         </h2>
         <p class="leading-relaxed text-muted-foreground">{t["about.bio"]}</p>

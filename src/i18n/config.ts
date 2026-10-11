@@ -12,6 +12,7 @@ export interface Translations {
   "nav.talks": string;
   "nav.about": string;
   "nav.menu": string;
+  "nav.toggleTheme": string;
 
   // Home
   "home.subtitle": string;
@@ -46,6 +47,10 @@ export interface Translations {
   // 404
   "notFound.message": string;
   "notFound.backHome": string;
+
+  // Profile
+  "profile.name": string;
+  "profile.altName": string;
 
   // Common
   "common.siteName": string;
