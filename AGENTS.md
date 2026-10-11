@@ -17,6 +17,8 @@ pnpm dev            # 開発サーバー起動 (port 3000)
 pnpm build          # ビルド（prebuild で bengo4 記事を自動フェッチ）
 pnpm preview        # ビルド結果のプレビュー
 pnpm fetch:bengo4   # Bengo4 Creators Blog から記事を手動フェッチ
+pnpm test           # Vitest でテスト実行
+pnpm test:coverage  # カバレッジ計測（src/**/*.{ts,tsx} で 100% 必須）
 ```
 
 ## Project Structure
@@ -32,7 +34,7 @@ src/
 │   ├── career.ts        # 経歴データ
 │   ├── talks.ts         # 登壇データ
 │   ├── zenn.ts          # Zenn 記事（手動管理）
-│   └── generated/       # 自動生成ファイル（git 管理対象）
+│   └── generated/       # 自動生成ファイル（gitignore 対象、prebuild で生成）
 │       └── bengo4.json  # fetch-bengo4 スクリプトで生成
 ├── lib/
 │   ├── feed.ts          # 全ソース統合（listAllPosts）
@@ -77,4 +79,5 @@ src/
 - **Content Collections**: Astro の Content Collections + Zod でローカル記事のスキーマを検証
 - **統一 Post 型**: 3ソースを `Post` インターフェースで統一し、`listAllPosts()` で日付降順にマージ
 - **Markdown 処理**: remark-gfm → rehype-slug → rehype-pretty-code (theme: one-dark-pro)
+- **テスト配置**: 実装の隣に `*.test.ts(x)` を置く。`src/pages/` 配下は Astro がルートとして扱うため `src/pages/__tests__/` に置く（`_` 始まりは除外される）。共通 setup とモックは `tests/`
 - **画像ドメイン許可**: `res.cloudinary.com`, `cdn.image.st-hatena.com`
