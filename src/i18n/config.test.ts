@@ -6,9 +6,9 @@ import {
   getLocalePath,
   locales,
   useTranslations,
-} from "@/i18n/config";
-import { ja } from "@/i18n/ja";
-import { en } from "@/i18n/en";
+} from "./config";
+import { ja } from "./ja";
+import { en } from "./en";
 
 describe("i18n config", () => {
   it("exposes the supported locales", () => {

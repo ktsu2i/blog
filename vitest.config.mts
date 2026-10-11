@@ -16,12 +16,14 @@ export default defineConfig({
     },
   },
   test: {
-    include: ["tests/**/*.test.{ts,tsx}"],
+    // Tests sit next to their sources; route tests live in src/pages/__tests__
+    // because Astro treats every other file under src/pages as a route
+    include: ["src/**/*.test.{ts,tsx}"],
     setupFiles: ["./tests/setup.ts"],
     coverage: {
       provider: "v8",
       include: ["src/**/*.{ts,tsx}"],
-      exclude: ["src/**/*.d.ts"],
+      exclude: ["src/**/*.d.ts", "src/**/*.test.{ts,tsx}"],
       reporter: ["text", "json-summary"],
       thresholds: {
         statements: 100,

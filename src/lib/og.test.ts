@@ -19,7 +19,7 @@ function stubFontFetch(css = CSS) {
 }
 
 async function loadOg() {
-  return import("@/lib/og");
+  return import("./og");
 }
 
 beforeEach(() => {

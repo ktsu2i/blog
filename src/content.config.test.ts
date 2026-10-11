@@ -4,7 +4,7 @@ vi.mock("astro/loaders", () => ({
   glob: (options: unknown) => options,
 }));
 
-const { collections } = await import("@/content.config");
+const { collections } = await import("./content.config");
 
 type Loader = {
   base: string;

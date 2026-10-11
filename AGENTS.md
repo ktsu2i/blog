@@ -79,4 +79,5 @@ src/
 - **Content Collections**: Astro の Content Collections + Zod でローカル記事のスキーマを検証
 - **統一 Post 型**: 3ソースを `Post` インターフェースで統一し、`listAllPosts()` で日付降順にマージ
 - **Markdown 処理**: remark-gfm → rehype-slug → rehype-pretty-code (theme: one-dark-pro)
+- **テスト配置**: 実装の隣に `*.test.ts(x)` を置く。`src/pages/` 配下は Astro がルートとして扱うため `src/pages/__tests__/` に置く（`_` 始まりは除外される）。共通 setup とモックは `tests/`
 - **画像ドメイン許可**: `res.cloudinary.com`, `cdn.image.st-hatena.com`

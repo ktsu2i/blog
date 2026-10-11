@@ -1,13 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { getCollection } from "astro:content";
-import { listLocalPosts } from "@/lib/posts";
-import { listAllPosts } from "@/lib/feed";
-import { listExternalPosts } from "@/lib/external";
-import { listZennPosts } from "@/lib/zenn";
-import { cn } from "@/lib/utils";
-import { externalPosts } from "@/data/external";
-import { zennPosts } from "@/data/zenn";
-import bengo4Posts from "@/data/generated/bengo4.json";
+import { listLocalPosts } from "./posts";
 
 type Entry = {
   id: string;
@@ -127,42 +120,5 @@ describe("listLocalPosts", () => {
       ["ja-only", "ja", "/og/ja-only.png"],
       ["both", "en", "/en/og/both.png"],
     ]);
-  });
-});
-
-describe("listZennPosts / listExternalPosts", () => {
-  it("returns the curated Zenn posts", () => {
-    expect(listZennPosts()).toBe(zennPosts);
-  });
-
-  it("combines generated Bengo4 posts with curated external posts", () => {
-    expect(listExternalPosts()).toEqual([...bengo4Posts, ...externalPosts]);
-  });
-});
-
-describe("listAllPosts", () => {
-  it("merges every source sorted by date desc", async () => {
-    collections.postsJa = [entry("future", { date: "2999-01-01" })];
-
-    const posts = await listAllPosts();
-    const times = posts.map((p) => new Date(p.date).getTime());
-
-    expect(posts[0].id).toBe("future");
-    expect(posts).toHaveLength(
-      1 + zennPosts.length + bengo4Posts.length + externalPosts.length,
-    );
-    expect(times).toEqual([...times].sort((a, b) => b - a));
-  });
-
-  it("uses the English collection when requested", async () => {
-    await listAllPosts("en");
-
-    expect(getCollection).toHaveBeenCalledWith("postsEn");
-  });
-});
-
-describe("cn", () => {
-  it("joins conditional classes and resolves Tailwind conflicts", () => {
-    expect(cn("px-2", false && "hidden", ["py-1"], "px-4")).toBe("py-1 px-4");
   });
 });

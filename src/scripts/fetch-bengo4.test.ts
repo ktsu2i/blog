@@ -28,7 +28,7 @@ function stubPages(pages: (Item[] | undefined)[]) {
 
 async function run() {
   vi.resetModules();
-  await import("@/scripts/fetch-bengo4");
+  await import("./fetch-bengo4");
   // The script runs main() on import without exposing its promise;
   // vi.waitFor is avoided because it advances the faked clock
   const exit = vi.mocked(process.exit);
