@@ -9,7 +9,10 @@ const GEIST_SANS_BOLD = fs.readFileSync(
   ),
 );
 
-const AVATAR_BASE64 = `data:image/png;base64,${fs.readFileSync(path.resolve("public/images/avatar.png")).toString("base64")}`;
+// Rendered at 72px; 2x is enough and keeps every OG image's embedded data small
+const AVATAR_DATA_URL = `data:image/jpeg;base64,${(
+  await sharp(path.resolve("src/assets/avatar.jpg")).resize(144).toBuffer()
+).toString("base64")}`;
 
 let notoSansJPBold: ArrayBuffer | null = null;
 
@@ -150,7 +153,7 @@ export async function generateOgImage(title: string): Promise<Buffer> {
                             {
                               type: "img",
                               props: {
-                                src: AVATAR_BASE64,
+                                src: AVATAR_DATA_URL,
                                 width: 72,
                                 height: 72,
                                 style: {

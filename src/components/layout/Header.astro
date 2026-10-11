@@ -26,37 +26,37 @@ const pathname = Astro.url.pathname;
     <a href={getLocalePath("/", locale)} class="text-lg font-bold">
       ktsu2i.dev
     </a>
-    <nav class="hidden items-center gap-6 md:flex">
-      {navItems.map((item) => {
-        const isActive = pathname.startsWith(item.href);
+    <div class="flex items-center gap-1 md:gap-6">
+      <nav class="hidden items-center gap-6 md:flex">
+        {navItems.map((item) => {
+          const isActive = pathname.startsWith(item.href);
 
-        return (
-          <a
-            href={item.href}
-            aria-current={isActive ? "page" : undefined}
-            class:list={[
-              "text-sm transition-colors hover:text-foreground",
-              isActive
-                ? "text-foreground font-medium"
-                : "text-muted-foreground",
-            ]}
-          >
-            {item.label}
-          </a>
-        );
-      })}
+          return (
+            <a
+              href={item.href}
+              aria-current={isActive ? "page" : undefined}
+              class:list={[
+                "text-sm transition-colors hover:text-foreground",
+                isActive
+                  ? "text-foreground font-medium"
+                  : "text-muted-foreground",
+              ]}
+            >
+              {item.label}
+            </a>
+          );
+        })}
+      </nav>
       <LanguageToggle currentLocale={locale} currentPath={pathname} />
       <ThemeToggle client:load />
-    </nav>
-    <div class="flex items-center gap-1 md:hidden">
-      <LanguageToggle currentLocale={locale} currentPath={pathname} />
-      <ThemeToggle client:load />
-      <MobileNav
-        client:media="(max-width: 768px)"
-        locale={locale}
-        navItems={navItems}
-        pathname={pathname}
-      />
+      <div class="md:hidden">
+        <MobileNav
+          client:media="(max-width: 768px)"
+          locale={locale}
+          navItems={navItems}
+          pathname={pathname}
+        />
+      </div>
     </div>
   </div>
 </header>

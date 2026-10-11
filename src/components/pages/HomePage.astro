@@ -1,5 +1,7 @@
 ---
+import { Image } from "astro:assets";
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import avatar from "../../assets/avatar.jpg";
 import PostCard from "../post/PostCard.astro";
 import { listAllPosts } from "../../lib/feed";
 import {
@@ -19,9 +21,13 @@ const recent = posts.slice(0, 4);
   <div class="space-y-12">
     <section class="space-y-6 py-8">
       <div class="flex items-center gap-4">
-        <img
-          src="/images/avatar.png"
+        <Image
+          src={avatar}
           alt=""
+          width={80}
+          height={80}
+          densities={[1, 2]}
+          loading="eager"
           class="size-16 shrink-0 rounded-full bg-muted object-cover sm:size-20"
         />
         <div>
