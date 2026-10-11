@@ -1,0 +1,11 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/aqua-yaml.json
+checksum:
+  enabled: true
+  require_checksum: true
+registries:
+  - type: standard
+    ref: v4.574.0
+packages:
+  - name: rhysd/actionlint@v1.7.12
+  - name: suzuki-shunsuke/ghalint@v1.5.6

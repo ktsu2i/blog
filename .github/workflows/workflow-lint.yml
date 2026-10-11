@@ -4,10 +4,14 @@ on:
   pull_request:
     paths:
       - .github/**
+      - aqua.yaml
+      - aqua-checksums.json
   push:
     branches: [main]
     paths:
       - .github/**
+      - aqua.yaml
+      - aqua-checksums.json
 
 permissions: {}
 
@@ -22,21 +26,14 @@ jobs:
     permissions:
       contents: read
     timeout-minutes: 5
-    env:
-      ACTIONLINT_VERSION: 1.7.12
-      ACTIONLINT_SHA256: 8aca8db96f1b94770f1b0d72b6dddcb1ebb8123cb3712530b08cc387b349a3d8
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
 
-      - name: Install actionlint
-        run: |
-          archive="actionlint_${ACTIONLINT_VERSION}_linux_amd64.tar.gz"
-          curl -fsSLO "https://github.com/rhysd/actionlint/releases/download/v${ACTIONLINT_VERSION}/${archive}"
-          echo "${ACTIONLINT_SHA256}  ${archive}" | sha256sum -c -
-          tar -xzf "${archive}" -C "${RUNNER_TEMP}" actionlint
-          echo "${RUNNER_TEMP}" >> "${GITHUB_PATH}"
+      - uses: aquaproj/aqua-installer@82d0e83878a8657c4a6f2ff1755d3bfbfc67f329 # v4.1.0
+        with:
+          aqua_version: v2.64.0
 
       - run: actionlint -color
 
@@ -46,23 +43,18 @@ jobs:
     permissions:
       contents: read
     timeout-minutes: 5
-    env:
-      GHALINT_VERSION: 1.5.6
-      GHALINT_SHA256: 98ee0e3330de7286f470d1e89c03ff7ce70d7a5998ba0f15969c400447be579c
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
 
-      - name: Install ghalint
-        run: |
-          archive="ghalint_${GHALINT_VERSION}_linux_amd64.tar.gz"
-          curl -fsSLO "https://github.com/suzuki-shunsuke/ghalint/releases/download/v${GHALINT_VERSION}/${archive}"
-          echo "${GHALINT_SHA256}  ${archive}" | sha256sum -c -
-          tar -xzf "${archive}" -C "${RUNNER_TEMP}" ghalint
-          echo "${RUNNER_TEMP}" >> "${GITHUB_PATH}"
+      - uses: aquaproj/aqua-installer@82d0e83878a8657c4a6f2ff1755d3bfbfc67f329 # v4.1.0
+        with:
+          aqua_version: v2.64.0
 
       - run: ghalint run
+        env:
+          GHALINT_LOG_COLOR: always
 
   zizmor:
     name: zizmor
