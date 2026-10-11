@@ -17,6 +17,8 @@ pnpm dev            # 開発サーバー起動 (port 3000)
 pnpm build          # ビルド（prebuild で bengo4 記事を自動フェッチ）
 pnpm preview        # ビルド結果のプレビュー
 pnpm fetch:bengo4   # Bengo4 Creators Blog から記事を手動フェッチ
+pnpm test           # Vitest でテスト実行
+pnpm test:coverage  # カバレッジ計測（src/**/*.{ts,tsx} で 100% 必須）
 ```
 
 ## Project Structure
