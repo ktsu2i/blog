@@ -2,13 +2,11 @@
   "name": "blog",
   "compatibility_date": "2026-02-28",
   "assets": {
-    "directory": "./dist"
+    "directory": "./dist",
   },
   "preview_urls": false,
-  "routes": [
-    { "pattern": "ktsu2i.dev", "custom_domain": true }
-  ],
+  "routes": [{ "pattern": "ktsu2i.dev", "custom_domain": true }],
   "observability": {
-    "enabled": true
-  }
+    "enabled": true,
+  },
 }

@@ -17,12 +17,8 @@ const loaderOf = (collection: unknown) =>
 
 describe("content collections", () => {
   it("loads each locale from its own directory", () => {
-    expect(loaderOf(collections.postsJa).base).toBe(
-      "./src/content/posts/ja",
-    );
-    expect(loaderOf(collections.postsEn).base).toBe(
-      "./src/content/posts/en",
-    );
+    expect(loaderOf(collections.postsJa).base).toBe("./src/content/posts/ja");
+    expect(loaderOf(collections.postsEn).base).toBe("./src/content/posts/en");
   });
 
   it.each([

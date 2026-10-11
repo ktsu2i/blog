@@ -34,7 +34,7 @@ async function fetchOgImage(url: string): Promise<string | undefined> {
     const res = await fetch(url);
     const html = await res.text();
     const match = html.match(
-      /<meta[^>]+property=["']og:image["'][^>]+content=["']([^"']+)["']/
+      /<meta[^>]+property=["']og:image["'][^>]+content=["']([^"']+)["']/,
     );
     return match?.[1];
   } catch {
@@ -49,7 +49,7 @@ async function main() {
 
   if (items.length === 0) {
     throw new Error(
-      `No posts by ${AUTHOR} found in the feed. The feed structure may have changed.`
+      `No posts by ${AUTHOR} found in the feed. The feed structure may have changed.`,
     );
   }
 
@@ -57,15 +57,13 @@ async function main() {
     items.map(async (item) => {
       const urlPath = item.link
         ? new URL(item.link).pathname.replace(/\//g, "-").replace(/^-/, "")
-        : item.guid ?? "";
+        : (item.guid ?? "");
 
       const description = item.contentSnippet
         ? item.contentSnippet.slice(0, 200)
         : "";
 
-      const ogImage = item.link
-        ? await fetchOgImage(item.link)
-        : undefined;
+      const ogImage = item.link ? await fetchOgImage(item.link) : undefined;
 
       return {
         id: `bengo4-${urlPath}`,
@@ -78,7 +76,7 @@ async function main() {
         url: item.link ?? "",
         ...(ogImage ? { ogImage } : {}),
       };
-    })
+    }),
   );
 
   const outputDir = path.join(process.cwd(), "src/data/generated");

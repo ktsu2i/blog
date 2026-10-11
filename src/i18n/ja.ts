@@ -7,7 +7,8 @@ export const ja: Translations = {
   "nav.about": "About",
   "nav.menu": "メニュー",
 
-  "home.subtitle": "ソフトウェアエンジニアです。\nGo や TypeScript、AI 活用など、技術のことや登壇のことを書いています。",
+  "home.subtitle":
+    "ソフトウェアエンジニアです。\nGo や TypeScript、AI 活用など、技術のことや登壇のことを書いています。",
   "home.cta.blog": "ブログを見る",
   "home.cta.about": "About",
   "home.latestPosts": "最新の投稿",
@@ -22,8 +23,7 @@ export const ja: Translations = {
 
   "about.title": "About",
   "about.description": "自己紹介",
-  "about.bio":
-    "ソフトウェアエンジニア / Go / 🍣",
+  "about.bio": "ソフトウェアエンジニア / Go / 🍣",
   "about.career": "Career",
   "about.current": "現在",
   "about.type.work": "正社員",

@@ -2,10 +2,6 @@
   "name": "blog",
   "version": "0.1.0",
   "private": true,
-  "packageManager": "pnpm@11.15.1+sha512.81350b07e53c9538a02f1f2303b4290fa2d7be04e56e2a970c4cc4b417dc761de196edabd49d55c7dc9580db81007c44143e4e3d7e462b3000d23c255122d065",
-  "engines": {
-    "node": ">=24.0.0"
-  },
   "scripts": {
     "dev": "astro dev",
     "prebuild": "tsx src/scripts/fetch-bengo4.ts",
@@ -14,7 +10,10 @@
     "astro": "astro",
     "fetch:bengo4": "tsx src/scripts/fetch-bengo4.ts",
     "test": "vitest run",
-    "test:coverage": "vitest run --coverage"
+    "test:coverage": "vitest run --coverage",
+    "lint": "oxlint --type-aware",
+    "format": "oxfmt && prettier --write \"**/*.astro\"",
+    "format:check": "oxfmt --check && prettier --check \"**/*.astro\""
   },
   "dependencies": {
     "@astrojs/markdown-remark": "7.3.2",
@@ -53,8 +52,12 @@
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0",
     "@vitest/coverage-v8": "5.0.3",
-    "eslint": "10.12.0",
     "jsdom": "30.1.2",
+    "oxfmt": "0.72.0",
+    "oxlint": "1.87.0",
+    "oxlint-tsgolint": "7.0.2004",
+    "prettier": "3.9.10",
+    "prettier-plugin-astro": "1.1.1",
     "shadcn": "4.21.4",
     "tailwindcss": "4.3.3",
     "tsx": "4.23.15",
@@ -62,5 +65,9 @@
     "typescript": "5.9.3",
     "vitest": "5.0.3",
     "wrangler": "4.149.0"
-  }
+  },
+  "engines": {
+    "node": ">=24.0.0"
+  },
+  "packageManager": "pnpm@11.15.1+sha512.81350b07e53c9538a02f1f2303b4290fa2d7be04e56e2a970c4cc4b417dc761de196edabd49d55c7dc9580db81007c44143e4e3d7e462b3000d23c255122d065"
 }

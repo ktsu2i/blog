@@ -15,13 +15,17 @@ const formattedDate = format(new Date(talk.date), t["date.format"]);
 
 <div class="bg-card text-card-foreground flex flex-col gap-6 rounded-xl border py-6 shadow-sm">
   <div class="grid auto-rows-min grid-rows-[auto_auto] items-start gap-2 px-6">
-    <div class="leading-snug font-semibold text-lg line-clamp-2 min-h-[2.75em]">{talk.title}</div>
+    <div class="leading-snug font-semibold text-lg line-clamp-2 min-h-[2.75em]">
+      {talk.title}
+    </div>
     <div class="text-muted-foreground text-sm truncate">
       {talk.event} / {formattedDate}
     </div>
   </div>
   <div class="px-6 space-y-4">
-    <p class="text-sm text-muted-foreground line-clamp-3 min-h-15">{talk.description}</p>
+    <p class="text-sm text-muted-foreground line-clamp-3 min-h-15">
+      {talk.description}
+    </p>
     <div class="aspect-video w-full overflow-hidden rounded-lg border">
       <iframe
         src={talk.embedUrl}
@@ -39,7 +43,22 @@ const formattedDate = format(new Date(talk.date), t["date.format"]);
       class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground h-8 px-3"
     >
       {t["talks.viewOnSpeakerDeck"]}
-      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-3.5"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="14"
+        height="14"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="size-3.5"
+      >
+        <path d="M15 3h6v6" />
+        <path d="M10 14 21 3" />
+        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+      </svg>
     </a>
   </div>
 </div>

@@ -7,10 +7,7 @@ interface Props {
   currentPath: string;
 }
 
-export default function LanguageToggle({
-  currentLocale,
-  currentPath,
-}: Props) {
+export default function LanguageToggle({ currentLocale, currentPath }: Props) {
   const targetLocale: Locale = currentLocale === "ja" ? "en" : "ja";
   const targetPath = getAlternatePath(currentPath, targetLocale);
   const label = currentLocale === "ja" ? "EN" : "JA";

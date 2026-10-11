@@ -60,10 +60,13 @@ describe("PostFilter", () => {
     },
   ];
 
-  const link = (name: string) => screen.getByRole("link", { name: new RegExp(name) });
+  const link = (name: string) =>
+    screen.getByRole("link", { name: new RegExp(name) });
 
   it("renders English listings with locale-aware links and badges", () => {
-    render(<PostFilter posts={posts} locale="en" translations={translations} />);
+    render(
+      <PostFilter posts={posts} locale="en" translations={translations} />,
+    );
 
     expect(screen.getByText("5 posts")).toBeInTheDocument();
     expect(link("English post")).toHaveAttribute("href", "/en/blog/en-post");
@@ -72,23 +75,36 @@ describe("PostFilter", () => {
       "src",
       "/en/og/en-post.png",
     );
-    expect(within(link("English post")).getByText("2025-03-01")).toBeInTheDocument();
+    expect(
+      within(link("English post")).getByText("2025-03-01"),
+    ).toBeInTheDocument();
 
     expect(link("Japanese post")).toHaveAttribute("href", "/blog/ja-post");
-    expect(within(link("Japanese post")).getByText("Japanese only")).toBeInTheDocument();
-    expect(within(link("Japanese post")).queryByRole("img")).not.toBeInTheDocument();
+    expect(
+      within(link("Japanese post")).getByText("Japanese only"),
+    ).toBeInTheDocument();
+    expect(
+      within(link("Japanese post")).queryByRole("img"),
+    ).not.toBeInTheDocument();
 
     expect(link("Zenn post")).toHaveAttribute("href", "https://zenn.dev/x");
     expect(link("Zenn post")).toHaveAttribute("target", "_blank");
     expect(link("Zenn post")).toHaveAttribute("rel", "noopener noreferrer");
     expect(within(link("Zenn post")).getByText("Zenn")).toBeInTheDocument();
-    expect(within(link("External post")).getByText("External")).toBeInTheDocument();
+    expect(
+      within(link("External post")).getByText("External"),
+    ).toBeInTheDocument();
 
-    expect(link("Slugless post")).toHaveAttribute("href", "https://example.com/fallback");
+    expect(link("Slugless post")).toHaveAttribute(
+      "href",
+      "https://example.com/fallback",
+    );
   });
 
   it("uses unprefixed links without the Japanese-only badge on Japanese pages", () => {
-    render(<PostFilter posts={posts} locale="ja" translations={translations} />);
+    render(
+      <PostFilter posts={posts} locale="ja" translations={translations} />,
+    );
 
     expect(link("English post")).toHaveAttribute("href", "/blog/en-post");
     expect(screen.queryByText("Japanese only")).not.toBeInTheDocument();
@@ -96,7 +112,9 @@ describe("PostFilter", () => {
 
   it("filters posts by source", async () => {
     const user = userEvent.setup();
-    render(<PostFilter posts={posts} locale="en" translations={translations} />);
+    render(
+      <PostFilter posts={posts} locale="en" translations={translations} />,
+    );
     const group = screen.getByRole("group", { name: "Filter posts" });
 
     await user.click(within(group).getByRole("button", { name: "Zenn" }));

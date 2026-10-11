@@ -5,9 +5,18 @@ import * as jaFeed from "../feed.xml";
 import * as enFeed from "../en/feed.xml";
 
 const entries = [
-  { id: "old", data: { title: "Old", date: "2024-01-01", description: "o", draft: false } },
-  { id: "draft", data: { title: "Draft", date: "2025-03-01", description: "d", draft: true } },
-  { id: "new", data: { title: "New", date: "2025-02-01", description: "n", draft: false } },
+  {
+    id: "old",
+    data: { title: "Old", date: "2024-01-01", description: "o", draft: false },
+  },
+  {
+    id: "draft",
+    data: { title: "Draft", date: "2025-03-01", description: "d", draft: true },
+  },
+  {
+    id: "new",
+    data: { title: "New", date: "2025-02-01", description: "n", draft: false },
+  },
 ];
 
 beforeEach(() => {
