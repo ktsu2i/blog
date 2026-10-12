@@ -1,0 +1,67 @@
+---
+import { buttonVariants } from "@/components/ui/button";
+import { POST_SOURCES, type PostSource } from "@/lib/types";
+import { cn } from "@/lib/utils";
+
+type SourceFilter = "all" | PostSource;
+
+interface Props {
+  // Id of the server-rendered list whose children carry data-source
+  listId: string;
+  counts: Record<SourceFilter, number>;
+  translations: {
+    count: string;
+    filterLabel: string;
+  };
+}
+
+const { listId, counts, translations } = Astro.props;
+const sources: SourceFilter[] = ["all", ...Object.values(POST_SOURCES)];
+// Outline by default, the default variant's look while aria-pressed, so the
+// script only has to flip aria-pressed
+const buttonClass = cn(
+  buttonVariants({ variant: "outline", size: "sm" }),
+  "group aria-pressed:border-0 aria-pressed:bg-primary aria-pressed:text-primary-foreground aria-pressed:shadow-none aria-pressed:hover:bg-primary/90 aria-pressed:hover:text-primary-foreground dark:aria-pressed:bg-primary dark:aria-pressed:hover:bg-primary/90",
+);
+---
+
+<div
+  class="space-y-6"
+  data-post-filter
+  data-count-template={translations.count}
+>
+  <div
+    role="group"
+    aria-label={translations.filterLabel}
+    class="flex flex-wrap items-center gap-2"
+  >
+    {sources.map((source) => (
+      <button
+        type="button"
+        class={buttonClass}
+        aria-pressed={source === "all" ? "true" : "false"}
+        aria-controls={listId}
+        data-source={source}
+        data-count={counts[source]}
+      >
+        {source === "all" ? "All" : source}
+        <span
+          aria-hidden="true"
+          class="rounded-full bg-muted px-1.5 text-xs text-muted-foreground tabular-nums group-aria-pressed:bg-primary-foreground/20 group-aria-pressed:text-inherit"
+        >
+          {counts[source]}
+        </span>
+      </button>
+    ))}
+  </div>
+
+  <p aria-live="polite" class="sr-only">
+    {translations.count.replace("{count}", String(counts.all))}
+  </p>
+</div>
+
+<script>
+  import { initPostFilters } from "@/lib/post-filter";
+
+  initPostFilters();
+</script>
