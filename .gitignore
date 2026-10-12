@@ -45,3 +45,8 @@ public/remark-link-card-plus/
 # playwright
 /test-results/
 /playwright-report/
+
+# claude code
+.claude/worktrees/
+.claude/settings.local.json
+CLAUDE.local.md
