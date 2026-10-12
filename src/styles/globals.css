@@ -197,6 +197,19 @@
   @apply rounded-lg border border-border;
 }
 
+/* Mermaid diagrams (inline SVG rendered at build time) */
+.prose figure.mermaid {
+  @apply my-8 flex justify-center overflow-x-auto;
+}
+
+.prose figure.mermaid svg {
+  @apply h-auto max-w-full;
+}
+
+.prose figure.mermaid text {
+  font-family: var(--font-geist-sans);
+}
+
 /* Inline code */
 .prose code:not(pre code) {
   @apply rounded-md px-1.5 py-0.5 text-sm font-medium before:content-none after:content-none;

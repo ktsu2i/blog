@@ -138,6 +138,90 @@ git commit -m "feat: add new post"
 
 ---
 
+## Mermaid
+
+### フローチャート (Flowchart)
+
+```mermaid
+graph LR
+  A[記事を書く] --> B{レビュー}
+  B -->|OK| C[公開]
+  B -->|NG| D[修正する]
+```
+
+### シーケンス図 (Sequence Diagram)
+
+```mermaid
+sequenceDiagram
+  participant Browser
+  participant Cloudflare
+  Browser->>Cloudflare: GET /blog/
+  Cloudflare-->>Browser: 静的な HTML
+```
+
+### 状態遷移図 (State Diagram)
+
+```mermaid
+stateDiagram-v2
+  [*] --> 下書き
+  下書き --> レビュー中: 提出
+  レビュー中 --> 下書き: 差し戻し
+  レビュー中 --> 公開: 承認
+  公開 --> [*]
+```
+
+### クラス図 (Class Diagram)
+
+```mermaid
+classDiagram
+  Post <|-- LocalPost
+  Post <|-- ExternalPost
+  Post: +String title
+  Post: +Date date
+  Post: +String url
+  LocalPost: +String slug
+  LocalPost: +render()
+  ExternalPost: +String source
+```
+
+### ER 図 (ER Diagram)
+
+```mermaid
+erDiagram
+  AUTHOR ||--o{ POST : writes
+  POST ||--o{ TAG_ON_POST : has
+  TAG ||--o{ TAG_ON_POST : "is on"
+  AUTHOR {
+    string id PK
+    string name
+  }
+  POST {
+    string slug PK
+    string author_id FK
+    date published_at
+  }
+  TAG {
+    string name PK
+  }
+  TAG_ON_POST {
+    string post_slug FK
+    string tag_name FK
+  }
+```
+
+### XY チャート (XY Chart)
+
+```mermaid
+xychart-beta
+  title "月別の記事数"
+  x-axis [1月, 2月, 3月, 4月, 5月, 6月]
+  y-axis "記事数" 0 --> 10
+  bar [2, 3, 1, 4, 3, 5]
+  line [2, 3, 1, 4, 3, 5]
+```
+
+---
+
 ## テーブル (Table)
 
 | 技術         | バージョン | 用途              |
