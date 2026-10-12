@@ -50,3 +50,6 @@ public/remark-link-card-plus/
 .claude/worktrees/
 .claude/settings.local.json
 CLAUDE.local.md
+
+# lighthouse ci
+/.lighthouseci/
