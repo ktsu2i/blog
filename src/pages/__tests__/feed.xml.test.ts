@@ -7,7 +7,8 @@ import * as enFeed from "../en/feed.xml";
 const entries = [
   {
     id: "old",
-    data: { title: "Old", date: "2024-01-01", description: "o", draft: false },
+    body: "Excerpt from the body",
+    data: { title: "Old", date: "2024-01-01", description: "", draft: false },
   },
   {
     id: "draft",
@@ -36,5 +37,11 @@ describe.each([
     expect(xml).not.toContain("Draft");
     expect(xml.indexOf(`${base}new/`)).toBeGreaterThan(-1);
     expect(xml.indexOf(`${base}new/`)).toBeLessThan(xml.indexOf(`${base}old/`));
+  });
+
+  it("falls back to the body when the description is empty", async () => {
+    const xml = await (await feed.GET(context)).text();
+
+    expect(xml).toContain("<description>Excerpt from the body</description>");
   });
 });

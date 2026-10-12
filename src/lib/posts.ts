@@ -29,6 +29,14 @@ function extractDescription(body: string): string {
   return `${plain.slice(0, DESCRIPTION_MAX_LENGTH)}...`;
 }
 
+/** Frontmatter description, falling back to an excerpt of the body */
+export function getPostDescription(entry: {
+  body?: string;
+  data: { description?: string };
+}): string {
+  return entry.data.description || extractDescription(entry.body ?? "");
+}
+
 type PostCollection = "postsJa" | "postsEn";
 
 /** Drafts are visible only outside production builds */
@@ -57,7 +65,7 @@ export async function listLocalPosts(locale: Locale = "ja"): Promise<Post[]> {
     slug: entry.id,
     title: entry.data.title,
     date: entry.data.date,
-    description: entry.data.description || extractDescription(entry.body ?? ""),
+    description: getPostDescription(entry),
     draft: entry.data.draft,
     ogImage: getLocalePath(`/og/${entry.id}.png`, postLocale),
     locale: postLocale,
