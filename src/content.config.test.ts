@@ -4,7 +4,7 @@ vi.mock("astro/loaders", () => ({
   glob: (options: unknown) => options,
 }));
 
-const { collections } = await import("./content.config");
+const { collections, postSchema } = await import("./content.config");
 
 type Loader = {
   base: string;
@@ -31,28 +31,68 @@ describe("content collections", () => {
     expect(generateId({ entry })).toBe(expected);
   });
 
-  it("applies frontmatter defaults", () => {
-    const schema = collections.postsJa.schema as {
-      parse: (value: unknown) => unknown;
-    };
+  it("uses the post schema for both locales", () => {
+    expect(collections.postsJa.schema).toBe(postSchema);
+    expect(collections.postsEn.schema).toBe(postSchema);
+  });
+});
 
-    expect(schema.parse({ title: "t", date: "2025-01-01" })).toEqual({
+describe("postSchema", () => {
+  const valid = { title: "t", date: "2025-01-01" };
+
+  it("applies frontmatter defaults", () => {
+    expect(postSchema.parse(valid)).toEqual({
       title: "t",
       date: "2025-01-01",
       description: "",
       draft: false,
     });
-    expect(() => schema.parse({ date: "2025-01-01" })).toThrow();
+  });
+
+  it("accepts every known key", () => {
+    const frontmatter = {
+      title: "t",
+      ogTitle: "og",
+      date: "2025-01-01",
+      description: "d",
+      draft: true,
+    };
+
+    expect(postSchema.parse(frontmatter)).toEqual(frontmatter);
+  });
+
+  it.each(["title", "date"])("requires %s", (key) => {
+    const { [key as keyof typeof valid]: _, ...rest } = valid;
+
+    expect(postSchema.safeParse(rest).success).toBe(false);
+  });
+
+  it.each(["ogtitle", "Title", "tags"])("rejects the unknown key %s", (key) => {
+    expect(postSchema.safeParse({ ...valid, [key]: "x" }).success).toBe(false);
+  });
+
+  it.each(["", "  "])("rejects the blank title %j", (title) => {
+    expect(postSchema.safeParse({ ...valid, title }).success).toBe(false);
+  });
+
+  it.each(["", "  "])("rejects the blank ogTitle %j", (ogTitle) => {
+    expect(postSchema.safeParse({ ...valid, ogTitle }).success).toBe(false);
   });
 
   it.each(["2025-02-30", "2025/01/01", "not a date", ""])(
     "rejects the invalid date %j",
     (date) => {
-      const schema = collections.postsJa.schema as {
-        parse: (value: unknown) => unknown;
-      };
-
-      expect(() => schema.parse({ title: "t", date })).toThrow();
+      expect(postSchema.safeParse({ ...valid, date }).success).toBe(false);
     },
   );
+
+  it.each([
+    ["title", 1],
+    ["description", null],
+    ["draft", "true"],
+  ])("rejects a mistyped %s", (key, value) => {
+    expect(postSchema.safeParse({ ...valid, [key]: value }).success).toBe(
+      false,
+    );
+  });
 });

@@ -2,13 +2,16 @@ import { defineCollection } from "astro:content";
 import { z } from "astro/zod";
 import { glob } from "astro/loaders";
 
-const postSchema = z.object({
-  title: z.string(),
-  ogTitle: z.string().optional(),
-  date: z.iso.date(),
-  description: z.string().optional().default(""),
-  draft: z.boolean().optional().default(false),
-});
+// Strict so that typos like `ogtitle` fail the build instead of being dropped
+export const postSchema = z
+  .object({
+    title: z.string().trim().min(1),
+    ogTitle: z.string().trim().min(1).optional(),
+    date: z.iso.date(),
+    description: z.string().optional().default(""),
+    draft: z.boolean().optional().default(false),
+  })
+  .strict();
 
 function generatePostId({ entry }: { entry: string }): string {
   const id = entry.replace(/\.(?:md|mdx)$/, "");
