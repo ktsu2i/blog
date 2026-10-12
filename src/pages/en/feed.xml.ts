@@ -1,6 +1,7 @@
 import rss from "@astrojs/rss";
 import type { APIContext } from "astro";
 import { getCollection } from "astro:content";
+import { getPostDescription } from "../../lib/posts";
 
 export async function GET(context: APIContext) {
   const posts = await getCollection("postsEn");
@@ -19,7 +20,7 @@ export async function GET(context: APIContext) {
     items: sortedPosts.map((post) => ({
       title: post.data.title,
       pubDate: new Date(post.data.date),
-      description: post.data.description,
+      description: getPostDescription(post),
       link: `/en/blog/${post.id}/`,
     })),
   });
