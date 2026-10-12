@@ -120,7 +120,7 @@ src/
 - **統一 Post 型**: 3ソースを `Post` インターフェースで統一し、`listAllPosts()` で日付降順にマージ
 - **Markdown 処理**: remark-gfm → remark-mermaid（` ```mermaid ` を beautiful-mermaid でビルド時にインライン SVG 化。色はサイトの CSS 変数を参照するのでダークモードにも追従。対応は flowchart / state / sequence / class / ER / xychart のみで、未対応・構文エラーはビルドを失敗させる）→ remark-x-embed（単独行の X 投稿 URL を oEmbed 埋め込みに変換、失敗時はリンクカードにフォールバック）→ remark-link-card-plus → rehype-slug、シンタックスハイライトは Astro 組み込みの Shiki（github-dark）
 - **テスト配置**: 実装の隣に `*.test.ts(x)` を置く。`src/pages/` 配下は Astro がルートとして扱うため `src/pages/__tests__/` に置く（`_` 始まりは除外される）。共通 setup とモックは `tests/`。VRT は `tests/vrt/`（ホームの記事一覧は記事追加で変わるためマスク）、a11y テストは `tests/a11y/`
-- **Lighthouse CI / Performance Budget**: `lighthouserc.json` で主要ページを計測。a11y・SEO は 100 点、best-practices は 95 点、リソースサイズ（`resource-summary:*`）の budget を超えると CI が落ちる。Performance スコアと Core Web Vitals は計測ブレが大きいため warn のみ。talks は Speaker Deck 埋め込みがあるため script / third-party の budget を別枠にしている。レポートは CI の artifact（`lighthouse-report`）に保存
+- **Lighthouse CI / Performance Budget**: `lighthouserc.json` で主要ページを計測。a11y・SEO は 100 点、best-practices は 95 点、リソースサイズ（`resource-summary:*`）の budget を超えると CI が落ちる。Performance スコアと Core Web Vitals は計測ブレが大きいため warn のみ。talks の Speaker Deck はサムネイルを表示し、クリック時に iframe を読み込む facade パターンにしているため全ページ共通の budget で計測する。レポートは CI の artifact（`lighthouse-report`）に保存
 - **Git フック**: lefthook（`lefthook.yaml`）。`pnpm install` 時に自動でフックが入り、pre-commit でステージ済みファイルに oxlint / oxfmt / Prettier を実行し、整形結果は自動で再ステージする
 - **YAML の拡張子**: `.yml` は禁止で、`.yaml` に統一する（lefthook の `forbid-yml` ジョブでチェック）
-- **画像ドメイン許可**: `res.cloudinary.com`, `cdn.image.st-hatena.com`
+- **画像ドメイン許可**: `res.cloudinary.com`, `cdn.image.st-hatena.com`, `files.speakerdeck.com`（登壇スライドのサムネイル）

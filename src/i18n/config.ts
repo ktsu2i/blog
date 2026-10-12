@@ -43,6 +43,7 @@ export interface Translations {
   "talks.title": string;
   "talks.description": string;
   "talks.viewOnSpeakerDeck": string;
+  "talks.playSlides": string;
 
   // 404
   "notFound.message": string;

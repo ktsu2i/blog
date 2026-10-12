@@ -43,12 +43,7 @@
             "resource-summary:total:size": [
               "error",
               { "maxNumericValue": 2048000 }
-            ]
-          }
-        },
-        {
-          "matchingUrlPattern": "^(?!.*/talks/)",
-          "assertions": {
+            ],
             "resource-summary:script:size": [
               "error",
               { "maxNumericValue": 153600 }
@@ -56,19 +51,6 @@
             "resource-summary:third-party:size": [
               "error",
               { "maxNumericValue": 768000 }
-            ]
-          }
-        },
-        {
-          "matchingUrlPattern": "/talks/",
-          "assertions": {
-            "resource-summary:script:size": [
-              "error",
-              { "maxNumericValue": 512000 }
-            ],
-            "resource-summary:third-party:size": [
-              "error",
-              { "maxNumericValue": 1536000 }
             ]
           }
         }

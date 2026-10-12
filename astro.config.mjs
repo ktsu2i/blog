@@ -115,6 +115,10 @@ export default defineConfig({
     ],
   },
   image: {
-    domains: ["res.cloudinary.com", "cdn.image.st-hatena.com"],
+    domains: [
+      "res.cloudinary.com",
+      "cdn.image.st-hatena.com",
+      "files.speakerdeck.com",
+    ],
   },
 });

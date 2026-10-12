@@ -12,6 +12,8 @@ const talksData: Record<Locale, Talk[]> = {
         "https://speakerdeck.com/bengo4com/20260221-cloudsign-go-concerence-mini-2026-in-sendai",
       embedUrl:
         "https://speakerdeck.com/player/caad8d737da64cecacbeff26a5f0b343?title=false",
+      thumbnailUrl:
+        "https://files.speakerdeck.com/presentations/caad8d737da64cecacbeff26a5f0b343/slide_0.jpg",
       description:
         "静的解析ツール capslock と Claude Code Action を組み合わせて、Go パッケージのサプライチェーン攻撃対策を自動化する方法について発表しました。",
     },
@@ -24,6 +26,8 @@ const talksData: Record<Locale, Talk[]> = {
         "https://speakerdeck.com/bengo4com/20250822-cloudsign-coefl-go-jp2-tsutsui",
       embedUrl:
         "https://speakerdeck.com/player/41bd3405621a4598963d5753725494d0?title=false",
+      thumbnailUrl:
+        "https://files.speakerdeck.com/presentations/41bd3405621a4598963d5753725494d0/slide_0.jpg",
       description:
         "Go におけるガベージコレクターの挙動やアルゴリズムに関して発表しました。",
     },
@@ -38,6 +42,8 @@ const talksData: Record<Locale, Talk[]> = {
         "https://speakerdeck.com/bengo4com/20260221-cloudsign-go-concerence-mini-2026-in-sendai",
       embedUrl:
         "https://speakerdeck.com/player/caad8d737da64cecacbeff26a5f0b343?title=false",
+      thumbnailUrl:
+        "https://files.speakerdeck.com/presentations/caad8d737da64cecacbeff26a5f0b343/slide_0.jpg",
       description:
         "Presented on automating Go package supply chain attack prevention using capslock and Claude Code Action.",
     },
@@ -50,6 +56,8 @@ const talksData: Record<Locale, Talk[]> = {
         "https://speakerdeck.com/bengo4com/20250822-cloudsign-coefl-go-jp2-tsutsui",
       embedUrl:
         "https://speakerdeck.com/player/41bd3405621a4598963d5753725494d0?title=false",
+      thumbnailUrl:
+        "https://files.speakerdeck.com/presentations/41bd3405621a4598963d5753725494d0/slide_0.jpg",
       description: "Presented on Go garbage collector behavior and algorithms.",
     },
   ],
