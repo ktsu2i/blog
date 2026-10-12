@@ -1,0 +1,28 @@
+---
+import { Moon, Sun } from "lucide-react";
+import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+
+interface Props {
+  label: string;
+}
+
+const { label } = Astro.props;
+---
+
+<!-- Icons follow the html.dark class via CSS, so no state is needed -->
+<button
+  type="button"
+  class={cn(buttonVariants({ variant: "ghost", size: "icon" }))}
+  aria-label={label}
+  data-theme-toggle
+>
+  <Sun className="hidden size-5 dark:block" />
+  <Moon className="size-5 dark:hidden" />
+</button>
+
+<script>
+  import { initThemeToggles } from "@/lib/theme";
+
+  initThemeToggles();
+</script>
