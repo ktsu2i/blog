@@ -65,6 +65,7 @@ src/
 │   ├── external.ts      # 外部記事（bengo4.json + data/external.ts）の読み込み
 │   ├── types.ts         # 型定義（Post, PostSource, Talk, CareerEntry 等）
 │   ├── og.ts            # OG 画像生成ユーティリティ
+│   ├── remark-x-embed.ts # X の投稿 URL を oEmbed で埋め込む remark プラグイン
 │   └── utils.ts         # 汎用ユーティリティ
 ├── pages/
 │   ├── index.astro      # トップページ（最新4件を2列グリッド表示）
@@ -115,7 +116,7 @@ src/
 - **Islands Architecture**: インタラクティブな UI（PostFilter, ThemeToggle, MobileNav）のみ React、それ以外は Astro コンポーネント
 - **Content Collections**: Astro の Content Collections + Zod でローカル記事のスキーマを検証
 - **統一 Post 型**: 3ソースを `Post` インターフェースで統一し、`listAllPosts()` で日付降順にマージ
-- **Markdown 処理**: remark-gfm → rehype-slug、シンタックスハイライトは Astro 組み込みの Shiki（github-dark）
+- **Markdown 処理**: remark-gfm → remark-x-embed（単独行の X 投稿 URL を oEmbed 埋め込みに変換、失敗時はリンクカードにフォールバック）→ remark-link-card-plus → rehype-slug、シンタックスハイライトは Astro 組み込みの Shiki（github-dark）
 - **テスト配置**: 実装の隣に `*.test.ts(x)` を置く。`src/pages/` 配下は Astro がルートとして扱うため `src/pages/__tests__/` に置く（`_` 始まりは除外される）。共通 setup とモックは `tests/`。VRT は `tests/vrt/`（ホームの記事一覧は記事追加で変わるためマスク）、a11y テストは `tests/a11y/`
 - **Git フック**: lefthook（`lefthook.yaml`）。`pnpm install` 時に自動でフックが入り、pre-commit でステージ済みファイルに oxlint / oxfmt / Prettier を実行し、整形結果は自動で再ステージする
 - **YAML の拡張子**: `.yml` は禁止で、`.yaml` に統一する（lefthook の `forbid-yml` ジョブでチェック）
