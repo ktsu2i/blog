@@ -1,0 +1,83 @@
+---
+import { MenuIcon, XIcon } from "lucide-react";
+import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+
+interface NavItem {
+  href: string;
+  label: string;
+}
+
+interface Props {
+  homeItem: NavItem;
+  menuLabel: string;
+  closeLabel: string;
+  navItems: NavItem[];
+  pathname: string;
+}
+
+const { homeItem, menuLabel, closeLabel, navItems, pathname } = Astro.props;
+const allItems = [homeItem, ...navItems];
+---
+
+<button
+  type="button"
+  class={cn(buttonVariants({ variant: "ghost", size: "icon" }))}
+  aria-haspopup="dialog"
+  aria-controls="mobile-nav"
+>
+  <MenuIcon className="size-5" />
+  <span class="sr-only">{menuLabel}</span>
+</button>
+
+<!-- Slides in from the right; transition-discrete keeps it displayed while the
+     exit transition runs, @starting-style drives the entry -->
+<dialog
+  id="mobile-nav"
+  aria-labelledby="mobile-nav-title"
+  data-mobile-nav
+  class="inset-y-0 right-0 left-auto h-full max-h-none w-3/4 max-w-none translate-x-full flex-col gap-4 border-l bg-background text-foreground shadow-lg transition-all transition-discrete duration-300 ease-in-out backdrop:bg-black/0 backdrop:transition-all backdrop:transition-discrete backdrop:duration-300 open:flex open:translate-x-0 open:duration-500 open:backdrop:bg-black/50 sm:max-w-sm starting:open:translate-x-full starting:open:backdrop:bg-black/0"
+>
+  <!-- Radix focused the close button on open; keep that -->
+  <form method="dialog" class="contents">
+    <button
+      autofocus
+      class="absolute top-4 right-4 cursor-pointer rounded-xs opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:outline-hidden"
+    >
+      <XIcon className="size-4" />
+      <span class="sr-only">{closeLabel}</span>
+    </button>
+  </form>
+  <div class="flex flex-col gap-1.5 p-4">
+    <h2 id="mobile-nav-title" class="font-semibold text-foreground">
+      {menuLabel}
+    </h2>
+  </div>
+  <nav class="flex flex-col gap-3 px-4">
+    {allItems.map((item) => {
+      const isActive =
+        item === homeItem
+          ? pathname === item.href
+          : pathname.startsWith(item.href);
+
+      return (
+        <a
+          href={item.href}
+          aria-current={isActive ? "page" : undefined}
+          class:list={[
+            "text-base transition-colors hover:text-foreground",
+            isActive ? "text-foreground font-medium" : "text-muted-foreground",
+          ]}
+        >
+          {item.label}
+        </a>
+      );
+    })}
+  </nav>
+</dialog>
+
+<script>
+  import { initMobileNavs } from "@/lib/mobile-nav";
+
+  initMobileNavs();
+</script>

@@ -12,6 +12,7 @@ export interface Translations {
   "nav.talks": string;
   "nav.about": string;
   "nav.menu": string;
+  "nav.close": string;
   "nav.toggleTheme": string;
 
   // Home

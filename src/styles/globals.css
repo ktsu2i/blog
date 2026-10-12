@@ -137,6 +137,10 @@
   body {
     @apply bg-background text-foreground;
   }
+  /* Modal dialogs don't lock page scroll on their own */
+  html:has(dialog:modal) {
+    @apply overflow-hidden;
+  }
   /* Links and native focusables don't go through <Button>, so give them the ring too */
   a:focus-visible,
   summary:focus-visible,
