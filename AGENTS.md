@@ -66,6 +66,7 @@ src/
 │   ├── external.ts      # 外部記事（bengo4.json + data/external.ts）の読み込み
 │   ├── theme.ts         # ThemeToggle のクライアントスクリプト（html.dark の切り替えと保存）
 │   ├── types.ts         # 型定義（Post, PostSource, Talk, CareerEntry 等）
+│   ├── mobile-nav.ts    # MobileNav のクライアントスクリプト（<dialog> の開閉）
 │   ├── og.ts            # OG 画像生成ユーティリティ
 │   ├── post-filter.ts   # PostFilter のクライアントスクリプト（ソース別の表示切り替え）
 │   ├── remark-mermaid.ts # mermaid コードブロックをビルド時に SVG 化する remark プラグイン
@@ -117,7 +118,7 @@ src/
 
 ## Key Architecture Decisions
 
-- **Islands Architecture**: React アイランドはモバイルの MobileNav（`client:media`）のみ。ThemeToggle と PostFilter は Astro コンポーネント + 素の `<script>`（ロジックは `src/lib/theme.ts` / `src/lib/post-filter.ts`）で、デスクトップでは React ランタイムを読み込まない。新しいインタラクションも素の JS で書けるなら React にしない
+- **Islands Architecture**: クライアントで動く React アイランドはない。ThemeToggle・PostFilter・MobileNav は Astro コンポーネント + 素の `<script>`（ロジックは `src/lib/theme.ts` / `src/lib/post-filter.ts` / `src/lib/mobile-nav.ts`）。MobileNav はネイティブの `<dialog>`（`showModal()`）で、Esc・フォーカス制御はブラウザ任せ、背景スクロールのロックは `globals.css` の `html:has(dialog:modal)`。React は shadcn/ui などの SSR にだけ使い、新しいインタラクションも素の JS で書けるなら React にしない
 - **Content Collections**: Astro の Content Collections + Zod でローカル記事のスキーマを検証
 - **統一 Post 型**: 3ソースを `Post` インターフェースで統一し、`listAllPosts()` で日付降順にマージ
 - **Markdown 処理**: remark-gfm → remark-mermaid（` ```mermaid ` を beautiful-mermaid でビルド時にインライン SVG 化。色はサイトの CSS 変数を参照するのでダークモードにも追従。対応は flowchart / state / sequence / class / ER / xychart のみで、未対応・構文エラーはビルドを失敗させる）→ remark-x-embed（単独行の X 投稿 URL を oEmbed 埋め込みに変換、失敗時はリンクカードにフォールバック）→ remark-link-card-plus → rehype-slug、シンタックスハイライトは Astro 組み込みの Shiki（github-dark）

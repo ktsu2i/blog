@@ -6,6 +6,7 @@ export const en: Translations = {
   "nav.talks": "Talks",
   "nav.about": "About",
   "nav.menu": "Menu",
+  "nav.close": "Close",
   "nav.toggleTheme": "Toggle theme",
 
   "home.subtitle":

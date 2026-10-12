@@ -6,6 +6,7 @@ export const ja: Translations = {
   "nav.talks": "Talks",
   "nav.about": "About",
   "nav.menu": "メニュー",
+  "nav.close": "閉じる",
   "nav.toggleTheme": "テーマを切り替え",
 
   "home.subtitle":
