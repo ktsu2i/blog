@@ -34,6 +34,7 @@ export const ja: Translations = {
   "talks.title": "Talks",
   "talks.description": "カンファレンスやイベントでの登壇・発表一覧です。",
   "talks.viewOnSpeakerDeck": "Speaker Deck で見る",
+  "talks.playSlides": "スライドを表示",
 
   "notFound.message": "お探しのページは見つかりませんでした",
   "notFound.backHome": "ホームに戻る",

@@ -34,6 +34,7 @@ export const en: Translations = {
   "talks.title": "Talks",
   "talks.description": "Conference and meetup presentations.",
   "talks.viewOnSpeakerDeck": "View on Speaker Deck",
+  "talks.playSlides": "Show slides",
 
   "notFound.message": "The page you're looking for doesn't exist",
   "notFound.backHome": "Back to Home",

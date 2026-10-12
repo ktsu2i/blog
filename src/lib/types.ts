@@ -31,6 +31,7 @@ export interface Talk {
   date: string;
   speakerdeckUrl: string;
   embedUrl: string;
+  thumbnailUrl: string;
   description: string;
 }
 
