@@ -1,5 +1,5 @@
 import { rename, rmdir } from "node:fs/promises";
-import { defineConfig } from "astro/config";
+import { defineConfig, fontProviders } from "astro/config";
 import react from "@astrojs/react";
 import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
@@ -32,6 +32,63 @@ export default defineConfig({
       prefixDefaultLocale: false,
     },
   },
+  fonts: [
+    {
+      provider: fontProviders.local(),
+      name: "Geist Sans",
+      cssVariable: "--font-geist-sans",
+      options: {
+        variants: [400, 500, 600, 700].map((weight) => ({
+          weight,
+          style: "normal",
+          src: [
+            `@fontsource/geist-sans/files/geist-sans-latin-${weight}-normal.woff2`,
+          ],
+        })),
+      },
+      // Geist has narrow CJK punctuation (、。「」 etc.); keep it to Latin only
+      unicodeRange: [
+        "U+0000-00FF",
+        "U+0131",
+        "U+0152-0153",
+        "U+02BB-02BC",
+        "U+02C6",
+        "U+02DA",
+        "U+02DC",
+        "U+0304",
+        "U+0308",
+        "U+0329",
+        "U+2000-206F",
+        "U+20AC",
+        "U+2122",
+        "U+2191",
+        "U+2193",
+        "U+2212",
+        "U+2215",
+        "U+FEFF",
+        "U+FFFD",
+      ],
+      // Japanese glyphs come from system fonts; Noto Sans JP as a web font costs ~600KB
+      fallbacks: [
+        "Hiragino Sans",
+        "Hiragino Kaku Gothic ProN",
+        "Noto Sans JP",
+        "Noto Sans CJK JP",
+        "Yu Gothic UI",
+        "Meiryo",
+        "sans-serif",
+      ],
+    },
+    {
+      provider: fontProviders.npm({ remote: false }),
+      name: "Geist Mono",
+      cssVariable: "--font-geist-mono",
+      options: { package: "@fontsource/geist-mono" },
+      weights: [400],
+      styles: ["normal"],
+      fallbacks: ["ui-monospace", "monospace"],
+    },
+  ],
   integrations: [
     react(),
     mdx(),

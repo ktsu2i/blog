@@ -187,9 +187,6 @@ importers:
       '@fontsource/geist-sans':
         specifier: 5.3.0
         version: 5.3.0
-      '@fontsource/noto-sans-jp':
-        specifier: 5.3.0
-        version: 5.3.0
       '@tailwindcss/typography':
         specifier: 0.5.20
         version: 0.5.20(tailwindcss@4.3.3)
@@ -1250,9 +1247,6 @@ packages:
 
   '@fontsource/geist-sans@5.3.0':
     resolution: {integrity: sha512-AmG7cE1AvE4NHROPaOl1sN+a02cB5xy6pA/ZV76HXqWTCsJTV2SCBc9DTFHfJqnVOODm7HhXIYtUIb75NP5QXQ==}
-
-  '@fontsource/noto-sans-jp@5.3.0':
-    resolution: {integrity: sha512-OZbBzZ8LrFRs2RFT2Cc0HUV2C2ZeSfyEXhDJWR0EZuZaraJfRubpvrFmUnCljuBDEkw8Vn6CE/+nf9dj9b+0lg==}
 
   '@formatjs/ecma402-abstract@2.3.6':
     resolution: {integrity: sha512-HJnTFeRM2kVFVr5gr5kH1XP6K0JcJtE7Lzvtr3FS/so5f1kpsqqqxy5JF+FRaO6H2qmcMfAUIox7AJteieRtVw==}
@@ -8037,8 +8031,6 @@ snapshots:
   '@fontsource/geist-mono@5.3.0': {}
 
   '@fontsource/geist-sans@5.3.0': {}
-
-  '@fontsource/noto-sans-jp@5.3.0': {}
 
   '@formatjs/ecma402-abstract@2.3.6':
     dependencies:
