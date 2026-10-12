@@ -8,9 +8,11 @@ const desktop = { width: 1280, height: 800 };
 const mobile = { width: 375, height: 667 };
 
 export default defineConfig({
-  testDir: "tests/vrt",
+  testDir: "tests",
+  testMatch: ["vrt/**/*.spec.ts", "a11y/**/*.spec.ts"],
   // Baselines are rendered on Linux regardless of the host OS
-  snapshotPathTemplate: "{testDir}/__screenshots__/{arg}-{projectName}{ext}",
+  snapshotPathTemplate:
+    "{testDir}/{testFileDir}/__screenshots__/{arg}-{projectName}{ext}",
   forbidOnly: !!process.env.CI,
   reporter: process.env.CI ? [["github"], ["list"]] : "list",
   use: {
