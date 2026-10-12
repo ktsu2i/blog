@@ -26,6 +26,7 @@ pnpm typecheck      # astro check で .astro を含む型チェック（CI で�
 pnpm format         # Oxfmt で整形（.astro は Oxfmt 未対応のため Prettier）
 pnpm format:check   # 整形チェック（CI で実行）
 pnpm knip           # 未使用ファイル・export・依存の検出（CI で実行、設定は knip.json）
+pnpm exec lefthook run pre-commit --all-files  # pre-commit フックを全ファイルに実行
 actionlint          # ワークフローの lint（aqua で導入: aqua i -l）
 ghalint run         # ワークフローのセキュリティポリシーチェック（aqua で導入）
 ```
@@ -115,4 +116,6 @@ src/
 - **統一 Post 型**: 3ソースを `Post` インターフェースで統一し、`listAllPosts()` で日付降順にマージ
 - **Markdown 処理**: remark-gfm → rehype-slug、シンタックスハイライトは Astro 組み込みの Shiki（github-dark）
 - **テスト配置**: 実装の隣に `*.test.ts(x)` を置く。`src/pages/` 配下は Astro がルートとして扱うため `src/pages/__tests__/` に置く（`_` 始まりは除外される）。共通 setup とモックは `tests/`。VRT は `tests/vrt/`（ホームの記事一覧は記事追加で変わるためマスク）
+- **Git フック**: lefthook（`lefthook.yaml`）。`pnpm install` 時に自動でフックが入り、pre-commit でステージ済みファイルに oxlint / oxfmt / Prettier を実行し、整形結果は自動で再ステージする
+- **YAML の拡張子**: `.yml` は禁止で、`.yaml` に統一する（lefthook の `forbid-yml` ジョブでチェック）
 - **画像ドメイン許可**: `res.cloudinary.com`, `cdn.image.st-hatena.com`
