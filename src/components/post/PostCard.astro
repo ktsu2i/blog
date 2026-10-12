@@ -10,9 +10,11 @@ import {
 
 interface Props {
   post: Post;
+  // Above-the-fold card whose image is likely the LCP element
+  priority?: boolean;
 }
 
-const { post } = Astro.props;
+const { post, priority = false } = Astro.props;
 const locale = (Astro.currentLocale ?? defaultLocale) as Locale;
 const t = useTranslations(locale);
 const formattedDate = format(new Date(post.date), t["date.format"]);
@@ -39,7 +41,8 @@ const showJapaneseOnly = isJapaneseOnly;
           src={post.ogImage}
           alt={post.title}
           class="h-full w-full object-cover ring-1 ring-inset ring-border/60"
-          loading="lazy"
+          loading={priority ? "eager" : "lazy"}
+          fetchpriority={priority ? "high" : undefined}
         />
       </div>
     )}

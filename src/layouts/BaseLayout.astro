@@ -1,15 +1,8 @@
 ---
+import { Font } from "astro:assets";
 import avatar from "../assets/avatar.jpg";
 import Header from "../components/layout/Header.astro";
 import Footer from "../components/layout/Footer.astro";
-import "@fontsource/geist-sans/400.css";
-import "@fontsource/geist-sans/500.css";
-import "@fontsource/geist-sans/600.css";
-import "@fontsource/geist-sans/700.css";
-import "@fontsource/geist-mono/400.css";
-import "@fontsource/noto-sans-jp/400.css";
-import "@fontsource/noto-sans-jp/600.css";
-import "@fontsource/noto-sans-jp/700.css";
 import "../styles/globals.css";
 import {
   type Locale,
@@ -70,6 +63,8 @@ const personSchema = {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/png" href="/images/favicon.png" />
     <link rel="apple-touch-icon" href="/images/apple-touch-icon.png" />
+    <Font cssVariable="--font-geist-sans" preload />
+    <Font cssVariable="--font-geist-mono" />
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
     <meta property="og:title" content={pageTitle} />

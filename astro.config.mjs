@@ -1,5 +1,5 @@
 import { rename, rmdir } from "node:fs/promises";
-import { defineConfig } from "astro/config";
+import { defineConfig, fontProviders } from "astro/config";
 import react from "@astrojs/react";
 import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
@@ -32,6 +32,41 @@ export default defineConfig({
       prefixDefaultLocale: false,
     },
   },
+  fonts: [
+    {
+      provider: fontProviders.local(),
+      name: "Geist Sans",
+      cssVariable: "--font-geist-sans",
+      options: {
+        variants: [400, 500, 600, 700].map((weight) => ({
+          weight,
+          style: "normal",
+          src: [
+            `@fontsource/geist-sans/files/geist-sans-latin-${weight}-normal.woff2`,
+          ],
+        })),
+      },
+      // Japanese glyphs come from system fonts; Noto Sans JP as a web font costs ~600KB
+      fallbacks: [
+        "Hiragino Sans",
+        "Hiragino Kaku Gothic ProN",
+        "Noto Sans JP",
+        "Noto Sans CJK JP",
+        "Yu Gothic UI",
+        "Meiryo",
+        "sans-serif",
+      ],
+    },
+    {
+      provider: fontProviders.npm({ remote: false }),
+      name: "Geist Mono",
+      cssVariable: "--font-geist-mono",
+      options: { package: "@fontsource/geist-mono" },
+      weights: [400],
+      styles: ["normal"],
+      fallbacks: ["ui-monospace", "monospace"],
+    },
+  ],
   integrations: [
     react(),
     mdx(),
