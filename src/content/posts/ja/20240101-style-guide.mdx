@@ -138,6 +138,29 @@ git commit -m "feat: add new post"
 
 ---
 
+## Mermaid
+
+### フローチャート (Flowchart)
+
+```mermaid
+graph LR
+  A[記事を書く] --> B{レビュー}
+  B -->|OK| C[公開]
+  B -->|NG| D[修正する]
+```
+
+### シーケンス図 (Sequence Diagram)
+
+```mermaid
+sequenceDiagram
+  participant Browser
+  participant Cloudflare
+  Browser->>Cloudflare: GET /blog/
+  Cloudflare-->>Browser: 静的な HTML
+```
+
+---
+
 ## テーブル (Table)
 
 | 技術         | バージョン | 用途              |
