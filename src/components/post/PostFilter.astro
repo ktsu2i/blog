@@ -10,6 +10,7 @@ interface Props {
   listId: string;
   counts: Record<SourceFilter, number>;
   translations: {
+    all: string;
     count: string;
     filterLabel: string;
   };
@@ -44,7 +45,7 @@ const buttonClass = cn(
         data-source={source}
         data-count={counts[source]}
       >
-        {source === "all" ? "All" : source}
+        {source === "all" ? translations.all : source}
         <span
           aria-hidden="true"
           class="rounded-full bg-muted px-1.5 text-xs text-muted-foreground tabular-nums group-aria-pressed:bg-primary-foreground/20 group-aria-pressed:text-inherit"
