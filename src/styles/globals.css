@@ -315,3 +315,14 @@
 .remark-link-card-plus__image {
   @apply w-full h-full object-cover !rounded-none !shadow-none !my-0;
 }
+
+/* ── X Embed (remark-x-embed) ── */
+
+.x-embed {
+  @apply my-6 flex justify-center;
+}
+
+/* Fallback blockquote shown until widgets.js replaces it */
+.x-embed > .twitter-tweet {
+  @apply w-full max-w-[550px];
+}

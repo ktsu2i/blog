@@ -43,3 +43,18 @@ const formattedDate = format(new Date(post.data.date), t["date.format"]);
     </div>
   </article>
 </BaseLayout>
+
+<script>
+  // Render X embeds; widgets.js reads data-theme only on first render
+  const tweets = document.querySelectorAll(".twitter-tweet");
+  if (tweets.length > 0) {
+    const dark = document.documentElement.classList.contains("dark");
+    for (const tweet of tweets) {
+      tweet.setAttribute("data-theme", dark ? "dark" : "light");
+    }
+    const script = document.createElement("script");
+    script.src = "https://platform.twitter.com/widgets.js";
+    script.async = true;
+    document.body.append(script);
+  }
+</script>

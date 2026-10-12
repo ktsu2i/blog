@@ -6,6 +6,7 @@ import sitemap from "@astrojs/sitemap";
 import tailwindcss from "@tailwindcss/vite";
 import remarkGfm from "remark-gfm";
 import remarkLinkCard from "remark-link-card-plus";
+import remarkXEmbed from "./src/lib/remark-x-embed";
 import rehypeSlug from "rehype-slug";
 import rehypeExternalLinks from "rehype-external-links";
 
@@ -43,6 +44,7 @@ export default defineConfig({
   markdown: {
     remarkPlugins: [
       remarkGfm,
+      remarkXEmbed,
       [remarkLinkCard, { cache: true, shortenUrl: true }],
     ],
     rehypePlugins: [
