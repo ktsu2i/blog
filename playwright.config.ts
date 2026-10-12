@@ -30,9 +30,9 @@ export default defineConfig({
   ],
   webServer: [
     {
-      command: "astro build && astro preview --port 4321 --ignore-lock",
+      // CI downloads dist from the build job; locally always rebuild so a stale preview is never compared
+      command: `${process.env.CI ? "" : "astro build && "}astro preview --port 4321 --ignore-lock`,
       url: "http://localhost:4321",
-      // Always rebuild so a stale preview is never compared
       timeout: 180_000,
     },
     {
