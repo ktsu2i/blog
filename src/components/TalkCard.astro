@@ -43,20 +43,25 @@ const formattedDate = format(new Date(talk.date), t["date.format"]);
           height={360}
           class="h-full w-full object-cover"
         />
-        <span class="absolute inset-0 flex items-center justify-center bg-black/20 transition-colors group-hover:bg-black/30">
-          <span class="flex size-14 items-center justify-center rounded-full bg-background/90 text-foreground shadow-md transition-transform group-hover:scale-110 group-focus-visible:scale-110">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              class="ml-1 size-6"
-              aria-hidden="true"
-            >
-              <path d="M7 4.5v15a1 1 0 0 0 1.5.86l12-7.5a1 1 0 0 0 0-1.72l-12-7.5A1 1 0 0 0 7 4.5Z" />
-            </svg>
-          </span>
+        <span class="absolute right-2 bottom-2 inline-flex items-center gap-1.5 rounded-md border bg-background/90 px-2 py-1 text-xs font-medium text-foreground shadow-sm transition-colors group-hover:bg-accent group-focus-visible:bg-accent">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="size-3.5"
+            aria-hidden="true"
+          >
+            <path d="M2 3h20" />
+            <path d="M21 3v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V3" />
+            <path d="m7 21 5-5 5 5" />
+          </svg>
+          {t["talks.playSlides"]}
         </span>
       </button>
     </div>
