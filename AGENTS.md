@@ -21,6 +21,7 @@ pnpm test           # Vitest でテスト実行
 pnpm test:coverage  # カバレッジ計測（src/**/*.{ts,tsx} で 100% 必須、components/ui は除外）
 pnpm test:vrt       # Playwright で VRT（要 Docker。ブラウザは公式イメージ内で動かし OS 差を排除）
 pnpm test:vrt:update # VRT のベースライン（tests/vrt/__screenshots__/）を更新
+pnpm test:a11y      # Playwright + axe-core で a11y テスト（WCAG 2.2 AA、VRT と同じ Docker ブラウザ・4 プロジェクトで実行）
 pnpm lint           # Oxlint（type-aware）で lint
 pnpm typecheck      # astro check で .astro を含む型チェック（CI で実行）
 pnpm format         # Oxfmt で整形（.astro は Oxfmt 未対応のため Prettier）
@@ -115,7 +116,7 @@ src/
 - **Content Collections**: Astro の Content Collections + Zod でローカル記事のスキーマを検証
 - **統一 Post 型**: 3ソースを `Post` インターフェースで統一し、`listAllPosts()` で日付降順にマージ
 - **Markdown 処理**: remark-gfm → rehype-slug、シンタックスハイライトは Astro 組み込みの Shiki（github-dark）
-- **テスト配置**: 実装の隣に `*.test.ts(x)` を置く。`src/pages/` 配下は Astro がルートとして扱うため `src/pages/__tests__/` に置く（`_` 始まりは除外される）。共通 setup とモックは `tests/`。VRT は `tests/vrt/`（ホームの記事一覧は記事追加で変わるためマスク）
+- **テスト配置**: 実装の隣に `*.test.ts(x)` を置く。`src/pages/` 配下は Astro がルートとして扱うため `src/pages/__tests__/` に置く（`_` 始まりは除外される）。共通 setup とモックは `tests/`。VRT は `tests/vrt/`（ホームの記事一覧は記事追加で変わるためマスク）、a11y テストは `tests/a11y/`
 - **Git フック**: lefthook（`lefthook.yaml`）。`pnpm install` 時に自動でフックが入り、pre-commit でステージ済みファイルに oxlint / oxfmt / Prettier を実行し、整形結果は自動で再ステージする
 - **YAML の拡張子**: `.yml` は禁止で、`.yaml` に統一する（lefthook の `forbid-yml` ジョブでチェック）
 - **画像ドメイン許可**: `res.cloudinary.com`, `cdn.image.st-hatena.com`

@@ -16,8 +16,9 @@
     "format:check": "oxfmt --check && prettier --check \"**/*.astro\"",
     "knip": "knip",
     "typecheck": "astro check",
-    "test:vrt": "playwright test",
-    "test:vrt:update": "playwright test --update-snapshots"
+    "test:vrt": "playwright test tests/vrt",
+    "test:vrt:update": "playwright test tests/vrt --update-snapshots",
+    "test:a11y": "playwright test tests/a11y"
   },
   "dependencies": {
     "@astrojs/markdown-remark": "7.3.2",
@@ -49,6 +50,7 @@
   },
   "devDependencies": {
     "@astrojs/check": "0.9.10",
+    "@axe-core/playwright": "4.13.0",
     "@playwright/test": "1.64.0",
     "@shadcn/lint": "0.2.1",
     "@testing-library/jest-dom": "7.0.1",
