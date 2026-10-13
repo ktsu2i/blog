@@ -20,8 +20,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  actionlint:
-    name: actionlint
+  jactionlint:
+    name: jactionlint
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -35,7 +35,7 @@ jobs:
         with:
           aqua_version: v2.64.0
 
-      - run: actionlint -color
+      - run: jactionlint --color
 
   ghalint:
     name: ghalint

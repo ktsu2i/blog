@@ -29,7 +29,7 @@ pnpm format         # Oxfmt で整形（.astro は Oxfmt 未対応のため Pret
 pnpm format:check   # 整形チェック（CI で実行）
 pnpm knip           # 未使用ファイル・export・依存の検出（CI で実行、設定は knip.json）
 pnpm exec lefthook run pre-commit --all-files  # pre-commit フックを全ファイルに実行
-actionlint          # ワークフローの lint（aqua で導入: aqua i -l）
+jactionlint         # ワークフローの lint（actionlint のフォーク、aqua で導入: aqua i -l）
 ghalint run         # ワークフローのセキュリティポリシーチェック（aqua で導入）
 ```
 
