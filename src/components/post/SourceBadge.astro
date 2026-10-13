@@ -1,0 +1,18 @@
+---
+import { badgeVariants } from "@/components/ui/badge";
+import { POST_SOURCES, type PostSource } from "../../lib/types";
+
+interface Props {
+  source: PostSource;
+}
+
+const { source } = Astro.props;
+
+const variants = {
+  [POST_SOURCES.BLOG]: "default",
+  [POST_SOURCES.ZENN]: "zenn",
+  [POST_SOURCES.EXTERNAL]: "external",
+} as const satisfies Record<PostSource, string>;
+---
+
+<span class={badgeVariants({ variant: variants[source] })}>{source}</span>

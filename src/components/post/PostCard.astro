@@ -1,5 +1,7 @@
 ---
 import { format } from "date-fns";
+import { badgeVariants } from "@/components/ui/badge";
+import SourceBadge from "./SourceBadge.astro";
 import { POST_SOURCES, type Post } from "../../lib/types";
 import {
   type Locale,
@@ -49,23 +51,9 @@ const showJapaneseOnly = isJapaneseOnly;
     <div class="grid auto-rows-min grid-rows-[auto_auto] items-start gap-2 px-6">
       <div class="flex items-center gap-2">
         <time class="text-sm text-muted-foreground">{formattedDate}</time>
-        {post.source === POST_SOURCES.BLOG && (
-          <span class="inline-flex items-center justify-center rounded-full bg-primary text-primary-foreground px-2 py-0.5 text-xs font-medium">
-            {POST_SOURCES.BLOG}
-          </span>
-        )}
-        {post.source === POST_SOURCES.ZENN && (
-          <span class="inline-flex items-center justify-center rounded-full bg-secondary text-blue-600 dark:text-blue-400 px-2 py-0.5 text-xs font-medium">
-            {POST_SOURCES.ZENN}
-          </span>
-        )}
-        {post.source === POST_SOURCES.EXTERNAL && (
-          <span class="inline-flex items-center justify-center rounded-full bg-secondary text-emerald-700 dark:text-emerald-300 px-2 py-0.5 text-xs font-medium">
-            {POST_SOURCES.EXTERNAL}
-          </span>
-        )}
+        <SourceBadge source={post.source} />
         {showJapaneseOnly && (
-          <span class="inline-flex items-center justify-center rounded-full bg-orange-500/15 text-orange-800 dark:text-orange-300 border border-orange-500/20 px-2 py-0.5 text-xs font-medium">
+          <span class={badgeVariants({ variant: "notice" })}>
             {t["blog.japaneseOnly"]}
           </span>
         )}
