@@ -9,7 +9,7 @@ const mobile = { width: 375, height: 667 };
 
 export default defineConfig({
   testDir: "tests",
-  testMatch: ["vrt/**/*.spec.ts", "a11y/**/*.spec.ts"],
+  testMatch: ["vrt/**/*.spec.ts", "a11y/**/*.spec.ts", "csp/**/*.spec.ts"],
   // Baselines are rendered on Linux regardless of the host OS
   snapshotPathTemplate:
     "{testDir}/{testFileDir}/__screenshots__/{arg}-{projectName}{ext}",

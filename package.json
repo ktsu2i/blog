@@ -19,6 +19,7 @@
     "test:vrt": "playwright test tests/vrt",
     "test:vrt:update": "playwright test tests/vrt --update-snapshots",
     "test:a11y": "playwright test tests/a11y",
+    "test:csp": "playwright test tests/csp",
     "test:lighthouse": "astro build && lhci autorun"
   },
   "dependencies": {

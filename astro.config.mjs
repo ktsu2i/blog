@@ -114,6 +114,27 @@ export default defineConfig({
       ],
     ],
   },
+  security: {
+    csp: {
+      directives: [
+        "default-src 'self'",
+        "base-uri 'self'",
+        "object-src 'none'",
+        "form-action 'self'",
+        "img-src 'self' data: https:",
+        "font-src 'self'",
+        "connect-src 'self'",
+        "frame-src https://speakerdeck.com https://platform.twitter.com https://syndication.twitter.com",
+      ],
+      scriptDirective: {
+        resources: ["'self'", "https://platform.twitter.com"],
+      },
+      // Shiki and mermaid SVGs emit inline styles that Astro does not hash
+      styleDirective: {
+        resources: ["'self'", "'unsafe-inline'"],
+      },
+    },
+  },
   image: {
     domains: [
       "res.cloudinary.com",

@@ -22,6 +22,7 @@ pnpm test:coverage  # カバレッジ計測（src/**/*.{ts,tsx} で 100% 必須�
 pnpm test:vrt       # Playwright で VRT（要 Docker。ブラウザは公式イメージ内で動かし OS 差を排除）
 pnpm test:vrt:update # VRT のベースライン（tests/vrt/__screenshots__/）を更新
 pnpm test:a11y      # Playwright + axe-core で a11y テスト（WCAG 2.2 AA、VRT と同じ Docker ブラウザ・4 プロジェクトで実行）
+pnpm test:csp       # Playwright で CSP 違反（securitypolicyviolation）がないかをテスト（VRT と同じ Docker ブラウザ）
 pnpm test:lighthouse # Lighthouse CI（ビルド後に dist を配信して計測、設定と Performance Budget は lighthouserc.json）
 pnpm lint           # Oxlint（type-aware）で lint
 pnpm typecheck      # astro check で .astro を含む型チェック（CI で実行）
@@ -122,8 +123,9 @@ src/
 - **Content Collections**: Astro の Content Collections + Zod でローカル記事のスキーマを検証
 - **統一 Post 型**: 3ソースを `Post` インターフェースで統一し、`listAllPosts()` で日付降順にマージ
 - **Markdown 処理**: remark-gfm → remark-mermaid（` ```mermaid ` を beautiful-mermaid でビルド時にインライン SVG 化。色はサイトの CSS 変数を参照するのでダークモードにも追従。対応は flowchart / state / sequence / class / ER / xychart のみで、未対応・構文エラーはビルドを失敗させる）→ remark-x-embed（単独行の X 投稿 URL を oEmbed 埋め込みに変換、失敗時はリンクカードにフォールバック）→ remark-link-card-plus → rehype-slug、シンタックスハイライトは Astro 組み込みの Shiki（github-dark）
-- **テスト配置**: 実装の隣に `*.test.ts(x)` を置く。`src/pages/` 配下は Astro がルートとして扱うため `src/pages/__tests__/` に置く（`_` 始まりは除外される）。共通 setup とモックは `tests/`。VRT は `tests/vrt/`（ホームの記事一覧は記事追加で変わるためマスク）、a11y テストは `tests/a11y/`
+- **テスト配置**: 実装の隣に `*.test.ts(x)` を置く。`src/pages/` 配下は Astro がルートとして扱うため `src/pages/__tests__/` に置く（`_` 始まりは除外される）。共通 setup とモックは `tests/`。VRT は `tests/vrt/`（ホームの記事一覧は記事追加で変わるためマスク）、a11y テストは `tests/a11y/`、CSP テストは `tests/csp/`
 - **Lighthouse CI / Performance Budget**: `lighthouserc.json` で主要ページを計測。a11y・SEO は 100 点、best-practices は 95 点、リソースサイズ（`resource-summary:*`）の budget を超えると CI が落ちる。Performance スコアと Core Web Vitals は計測ブレが大きいため warn のみ。talks の Speaker Deck はサムネイルを表示し、クリック時に iframe を読み込む facade パターンにしているため全ページ共通の budget で計測する。レポートは CI の artifact（`lighthouse-report`）に保存
 - **Git フック**: lefthook（`lefthook.yaml`）。`pnpm install` 時に自動でフックが入り、pre-commit でステージ済みファイルに oxlint / oxfmt / Prettier を実行し、整形結果は自動で再ステージする
 - **YAML の拡張子**: `.yml` は禁止で、`.yaml` に統一する（lefthook の `forbid-yml` ジョブでチェック）
+- **セキュリティヘッダー**: CSP は Astro の `security.csp`（`astro.config.mjs`）で `<meta>` として出力し、インラインスクリプトはビルド時にハッシュ化される。外部のスクリプト・iframe（X 埋め込み、Speaker Deck など）を追加したら `scriptDirective` / `frame-src` に追記する。style は Shiki や mermaid SVG のインライン style のため `'unsafe-inline'`。`<meta>` では指定できない `frame-ancestors` と HSTS などは `public/_headers` で Cloudflare が付与する（`astro preview` には反映されないので `wrangler dev` で確認）
 - **画像ドメイン許可**: `res.cloudinary.com`, `cdn.image.st-hatena.com`, `files.speakerdeck.com`（登壇スライドのサムネイル）
