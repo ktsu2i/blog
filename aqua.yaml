@@ -7,5 +7,5 @@ registries:
   - type: standard
     ref: v4.574.0
 packages:
-  - name: rhysd/actionlint@v1.7.12
+  - name: jdx/jactionlint@v2.1.0
   - name: suzuki-shunsuke/ghalint@v1.5.6
