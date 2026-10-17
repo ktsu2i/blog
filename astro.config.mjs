@@ -2,8 +2,10 @@ import { rename, rmdir } from "node:fs/promises";
 import { defineConfig, fontProviders } from "astro/config";
 import react from "@astrojs/react";
 import mdx from "@astrojs/mdx";
+import geistMonoUnicode from "@fontsource/geist-mono/unicode.json" with { type: "json" };
 import sitemap from "@astrojs/sitemap";
 import tailwindcss from "@tailwindcss/vite";
+import { unified } from "@astrojs/markdown-remark";
 import remarkGfm from "remark-gfm";
 import remarkLinkCard from "remark-link-card-plus";
 import remarkXEmbed from "./src/lib/remark-x-embed";
@@ -81,12 +83,22 @@ export default defineConfig({
       ],
     },
     {
-      provider: fontProviders.npm({ remote: false }),
+      // npm() emits file:// URLs that Astro 7.4 fails to read
+      provider: fontProviders.local(),
       name: "Geist Mono",
       cssVariable: "--font-geist-mono",
-      options: { package: "@fontsource/geist-mono" },
-      weights: [400],
-      styles: ["normal"],
+      options: {
+        variants: Object.entries(geistMonoUnicode).map(
+          ([subset, unicodeRange]) => ({
+            weight: 400,
+            style: "normal",
+            src: [
+              `@fontsource/geist-mono/files/geist-mono-${subset}-400-normal.woff2`,
+            ],
+            unicodeRange: unicodeRange.split(","),
+          }),
+        ),
+      },
       fallbacks: ["ui-monospace", "monospace"],
     },
   ],
@@ -100,19 +112,21 @@ export default defineConfig({
     plugins: [tailwindcss()],
   },
   markdown: {
-    remarkPlugins: [
-      remarkGfm,
-      remarkMermaid,
-      remarkXEmbed,
-      [remarkLinkCard, { cache: true, shortenUrl: true }],
-    ],
-    rehypePlugins: [
-      rehypeSlug,
-      [
-        rehypeExternalLinks,
-        { target: "_blank", rel: ["noopener", "noreferrer"] },
+    processor: unified({
+      remarkPlugins: [
+        remarkGfm,
+        remarkMermaid,
+        remarkXEmbed,
+        [remarkLinkCard, { cache: true, shortenUrl: true }],
       ],
-    ],
+      rehypePlugins: [
+        rehypeSlug,
+        [
+          rehypeExternalLinks,
+          { target: "_blank", rel: ["noopener", "noreferrer"] },
+        ],
+      ],
+    }),
   },
   image: {
     domains: [
