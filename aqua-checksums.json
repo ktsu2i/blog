@@ -1,33 +1,33 @@
 {
   "checksums": [
     {
-      "id": "github_release/github.com/jdx/jactionlint/v2.1.0/jactionlint_2.1.0_darwin_amd64.tar.gz",
-      "checksum": "A88F2BE76DEF62DD4FD9AED38C81D0DB4144763012128A89800BE80B1EE82E89",
+      "id": "github_release/github.com/jdx/jactionlint/v2.2.0/jactionlint_2.2.0_darwin_amd64.tar.gz",
+      "checksum": "74EFA76B1C200A2B7778C28E9AA0C3BA1C843863006A2F8916F252F8C048D42B",
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/jdx/jactionlint/v2.1.0/jactionlint_2.1.0_darwin_arm64.tar.gz",
-      "checksum": "3766A4B0890D3EB36FE58760289885712131C7974DE4BC9FABB9A3FAA599E931",
+      "id": "github_release/github.com/jdx/jactionlint/v2.2.0/jactionlint_2.2.0_darwin_arm64.tar.gz",
+      "checksum": "622B29B15A59618BC032163073209FFC434252E9A19EAFD451E69207A50F266A",
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/jdx/jactionlint/v2.1.0/jactionlint_2.1.0_linux_amd64.tar.gz",
-      "checksum": "BAEBFC5792135438FB3BB5EA266C3BF2538A089753616F1988EF618E4C0C3CB1",
+      "id": "github_release/github.com/jdx/jactionlint/v2.2.0/jactionlint_2.2.0_linux_amd64.tar.gz",
+      "checksum": "8137D5BFE266DD5E48D2AF2306827785CE07C6988E04B1C3D6AD4776E97D27D2",
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/jdx/jactionlint/v2.1.0/jactionlint_2.1.0_linux_arm64.tar.gz",
-      "checksum": "EC0C6496D8A2F37B2AE2A1AF0FBF98D58DF1F7C98A27CF9FDD64C20AD317234B",
+      "id": "github_release/github.com/jdx/jactionlint/v2.2.0/jactionlint_2.2.0_linux_arm64.tar.gz",
+      "checksum": "6D4C3831CC360B14550FB2F4605B4DE9D2761515CD3FD5C1DA718528B314647D",
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/jdx/jactionlint/v2.1.0/jactionlint_2.1.0_windows_amd64.zip",
-      "checksum": "5925A118DF6DB8C5BE418ACB05BD815D3C14CA98D91A9ECBA6156753B87D4AE7",
+      "id": "github_release/github.com/jdx/jactionlint/v2.2.0/jactionlint_2.2.0_windows_amd64.zip",
+      "checksum": "97300770D2BEA28110736E34EDFC9A21D80840090AF64DC4B6116B6467F537A4",
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/jdx/jactionlint/v2.1.0/jactionlint_2.1.0_windows_arm64.zip",
-      "checksum": "DF3657E37DA05B0FB1E3F05ADB450E63C30B890FD4F434B03897915F5562B3CF",
+      "id": "github_release/github.com/jdx/jactionlint/v2.2.0/jactionlint_2.2.0_windows_arm64.zip",
+      "checksum": "C23E76E2382F9D5AE6B2A0D74DF80B2E13179A62BEE4885F5CA4EEDF2A85B588",
       "algorithm": "sha256"
     },
     {
@@ -61,8 +61,8 @@
       "algorithm": "sha256"
     },
     {
-      "id": "registries/github_content/github.com/aquaproj/aqua-registry/v4.574.0/registry.yaml",
-      "checksum": "1FB686C55CCBE57DEB5ACABEBB75040B50EE51CF141135F65D3FA788A57F434D",
+      "id": "registries/github_content/github.com/aquaproj/aqua-registry/v4.575.0/registry.yaml",
+      "checksum": "340BC6F1FA7124077830D090576F9DC538212FDD7869F8DE973E81B0124EFFA1",
       "algorithm": "sha256"
     }
   ]
