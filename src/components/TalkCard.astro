@@ -1,4 +1,5 @@
 ---
+import { ExternalLink, Presentation } from "lucide-react";
 import { Image } from "astro:assets";
 import { format } from "date-fns";
 import { buttonVariants } from "@/components/ui/button";
@@ -49,23 +50,7 @@ const formattedDate = format(new Date(talk.date), t["date.format"]);
           class="h-full w-full object-cover"
         />
         <span class="absolute right-2 bottom-2 inline-flex items-center gap-1.5 rounded-md border bg-background/90 px-2 py-1 text-xs font-medium text-foreground shadow-sm transition-colors group-hover:bg-accent group-focus-visible:bg-accent">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="14"
-            height="14"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="size-3.5"
-            aria-hidden="true"
-          >
-            <path d="M2 3h20" />
-            <path d="M21 3v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V3" />
-            <path d="m7 21 5-5 5 5" />
-          </svg>
+          <Presentation className="size-3.5" />
           {t["talks.playSlides"]}
         </span>
       </button>
@@ -79,22 +64,7 @@ const formattedDate = format(new Date(talk.date), t["date.format"]);
       class={buttonVariants({ variant: "outline", size: "sm" })}
     >
       {t["talks.viewOnSpeakerDeck"]}
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="14"
-        height="14"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        class="size-3.5"
-      >
-        <path d="M15 3h6v6" />
-        <path d="M10 14 21 3" />
-        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-      </svg>
+      <ExternalLink className="size-3.5" />
     </a>
   </div>
 </div>
