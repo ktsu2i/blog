@@ -134,6 +134,7 @@ export default defineConfig({
       "res.cloudinary.com",
       "cdn.image.st-hatena.com",
       "files.speakerdeck.com",
+      "tech.pepabo.com",
     ],
   },
 });
