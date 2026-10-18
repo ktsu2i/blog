@@ -34,14 +34,14 @@ describe("i18n config", () => {
   });
 
   it("prefixes paths only for non-default locales", () => {
-    expect(getLocalePath("/blog", "ja")).toBe("/blog");
-    expect(getLocalePath("/blog", "en")).toBe("/en/blog");
+    expect(getLocalePath("/blog/", "ja")).toBe("/blog/");
+    expect(getLocalePath("/blog/", "en")).toBe("/en/blog/");
   });
 
   it.each([
     ["/blog/post/", "en", "/en/blog/post/"],
     ["/en/blog/post/", "ja", "/blog/post/"],
-    ["/en", "ja", "/"],
+    ["/en/", "ja", "/"],
     ["/", "en", "/en/"],
   ] as const)("maps %s to its %s alternate", (path, locale, expected) => {
     expect(getAlternatePath(path, locale)).toBe(expected);

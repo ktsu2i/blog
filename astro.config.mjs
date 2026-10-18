@@ -27,6 +27,7 @@ const localizedNotFound = {
 
 export default defineConfig({
   site: "https://ktsu2i.dev",
+  trailingSlash: "always",
   server: { port: 3000 },
   i18n: {
     defaultLocale: "ja",

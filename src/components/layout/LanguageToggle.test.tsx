@@ -14,11 +14,11 @@ describe("LanguageToggle", () => {
   });
 
   it("links English pages to their Japanese version", () => {
-    render(<LanguageToggle currentLocale="en" currentPath="/en/about" />);
+    render(<LanguageToggle currentLocale="en" currentPath="/en/about/" />);
 
     expect(screen.getByRole("link", { name: "JA" })).toHaveAttribute(
       "href",
-      "/about",
+      "/about/",
     );
   });
 });

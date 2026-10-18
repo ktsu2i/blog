@@ -18,13 +18,13 @@ async function expectNoViolations(page: Page) {
 
 for (const [name, path] of [
   ["home", "/"],
-  ["blog", "/blog"],
-  ["post", "/blog/start-blog"],
-  ["about", "/about"],
-  ["talks", "/talks"],
-  ["404", "/404"],
-  ["home-en", "/en"],
-  ["post-en", "/en/blog/start-blog"],
+  ["blog", "/blog/"],
+  ["post", "/blog/start-blog/"],
+  ["about", "/about/"],
+  ["talks", "/talks/"],
+  ["404", "/404/"],
+  ["home-en", "/en/"],
+  ["post-en", "/en/blog/start-blog/"],
 ] as const) {
   test(name, async ({ page }) => {
     await page.goto(path);

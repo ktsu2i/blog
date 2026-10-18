@@ -13,9 +13,9 @@ const locale = (Astro.currentLocale ?? defaultLocale) as Locale;
 const t = useTranslations(locale);
 
 const navItems = [
-  { href: getLocalePath("/blog", locale), label: t["nav.blog"] },
-  { href: getLocalePath("/talks", locale), label: t["nav.talks"] },
-  { href: getLocalePath("/about", locale), label: t["nav.about"] },
+  { href: getLocalePath("/blog/", locale), label: t["nav.blog"] },
+  { href: getLocalePath("/talks/", locale), label: t["nav.talks"] },
+  { href: getLocalePath("/about/", locale), label: t["nav.about"] },
 ];
 
 const homeItem = { href: getLocalePath("/", locale), label: t["nav.home"] };

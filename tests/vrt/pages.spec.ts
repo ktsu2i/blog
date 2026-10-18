@@ -17,9 +17,9 @@ test("home", async ({ page }) => {
 });
 
 for (const [name, path] of [
-  ["about", "/about"],
-  ["post", "/blog/start-blog"],
-  ["404", "/404"],
+  ["about", "/about/"],
+  ["post", "/blog/start-blog/"],
+  ["404", "/404/"],
 ] as const) {
   test(name, async ({ page }) => {
     await page.goto(path);
