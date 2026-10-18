@@ -7,7 +7,7 @@ export const ja: Translations = {
   "nav.about": "About",
   "nav.menu": "メニュー",
   "nav.close": "閉じる",
-  "nav.toggleTheme": "テーマを切り替え",
+  "nav.darkMode": "ダークモード",
 
   "language.code": "JA",
   "language.name": "日本語",
@@ -54,6 +54,7 @@ export const ja: Translations = {
   "common.defaultTitle": "ktsu2i.dev | 筒井海人のブログ",
   "common.siteDescription":
     "筒井海人の個人ブログ。ソフトウェアエンジニアリングに関する技術記事や登壇情報を掲載しています。",
+  "common.opensInNewTab": "（新しいタブで開く）",
 
   "date.format": "yyyy年M月d日",
 };

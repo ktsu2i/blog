@@ -18,6 +18,7 @@ const rssHref = locale === "ja" ? "/feed.xml" : "/en/feed.xml";
           class="hover:text-foreground transition-colors"
         >
           GitHub
+          <span class="sr-only">{t["common.opensInNewTab"]}</span>
         </a>
         <span class="h-4 w-px shrink-0 bg-border" aria-hidden="true"></span>
         <a
@@ -26,7 +27,7 @@ const rssHref = locale === "ja" ? "/feed.xml" : "/en/feed.xml";
           rel="noopener noreferrer"
           class="hover:text-foreground transition-colors"
         >
-          X
+          X<span class="sr-only">{t["common.opensInNewTab"]}</span>
         </a>
         <span class="h-4 w-px shrink-0 bg-border" aria-hidden="true"></span>
         <a
@@ -36,6 +37,7 @@ const rssHref = locale === "ja" ? "/feed.xml" : "/en/feed.xml";
           class="hover:text-foreground transition-colors"
         >
           LinkedIn
+          <span class="sr-only">{t["common.opensInNewTab"]}</span>
         </a>
         <span class="h-4 w-px shrink-0 bg-border" aria-hidden="true"></span>
         <a href={rssHref} class="hover:text-foreground transition-colors">

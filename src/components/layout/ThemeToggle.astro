@@ -10,11 +10,12 @@ interface Props {
 const { label } = Astro.props;
 ---
 
-<!-- Icons follow the html.dark class via CSS, so no state is needed -->
+<!-- Icons follow html.dark via CSS; aria-pressed is synced by the script -->
 <button
   type="button"
   class={cn(buttonVariants({ variant: "ghost", size: "icon" }))}
   aria-label={label}
+  aria-pressed="false"
   data-theme-toggle
 >
   <Sun className="hidden size-5 dark:block" />

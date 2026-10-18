@@ -61,7 +61,10 @@ const isExternal = post.source !== POST_SOURCES.BLOG;
         <span class="inline">
           {post.title}
           {isExternal && (
-            <ExternalLink className="ml-1 inline-block size-4 align-text-bottom text-muted-foreground" />
+            <>
+              <ExternalLink className="ml-1 inline-block size-4 align-text-bottom text-muted-foreground" />
+              <span class="sr-only">{t["common.opensInNewTab"]}</span>
+            </>
           )}
         </span>
       </div>
