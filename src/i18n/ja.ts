@@ -55,6 +55,4 @@ export const ja: Translations = {
   "common.siteDescription":
     "筒井海人の個人ブログ。ソフトウェアエンジニアリングに関する技術記事や登壇情報を掲載しています。",
   "common.opensInNewTab": "（新しいタブで開く）",
-
-  "date.format": "yyyy年M月d日",
 };

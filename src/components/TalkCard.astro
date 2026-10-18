@@ -1,9 +1,9 @@
 ---
 import { ExternalLink, Presentation } from "lucide-react";
 import { Image } from "astro:assets";
-import { format } from "date-fns";
 import { buttonVariants } from "@/components/ui/button";
 import type { Talk } from "../lib/types";
+import { formatDate, toDateAttr } from "../lib/utils";
 import { getCurrentLocale, useTranslations } from "../i18n/config";
 
 interface Props {
@@ -13,7 +13,6 @@ interface Props {
 const { talk } = Astro.props;
 const locale = getCurrentLocale(Astro);
 const t = useTranslations(locale);
-const formattedDate = format(new Date(talk.date), t["date.format"]);
 ---
 
 <div class="bg-card text-card-foreground flex flex-col gap-6 rounded-xl border py-6 shadow-sm">
@@ -26,7 +25,9 @@ const formattedDate = format(new Date(talk.date), t["date.format"]);
       <span class="hidden sm:inline" aria-hidden="true">
         /
       </span>
-      <span class="shrink-0">{formattedDate}</span>
+      <time datetime={toDateAttr(talk.date)} class="shrink-0">
+        {formatDate(talk.date, locale)}
+      </time>
     </div>
   </div>
   <div class="px-6 space-y-4">

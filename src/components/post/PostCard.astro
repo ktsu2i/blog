@@ -1,9 +1,9 @@
 ---
 import { ExternalLink } from "lucide-react";
-import { format } from "date-fns";
 import { badgeVariants } from "@/components/ui/badge";
 import SourceBadge from "./SourceBadge.astro";
 import { POST_SOURCES, type Post } from "../../lib/types";
+import { formatDate, toDateAttr } from "../../lib/utils";
 import {
   getCurrentLocale,
   useTranslations,
@@ -19,7 +19,6 @@ interface Props {
 const { post, priority = false } = Astro.props;
 const locale = getCurrentLocale(Astro);
 const t = useTranslations(locale);
-const formattedDate = format(new Date(post.date), t["date.format"]);
 const isJapaneseOnly = locale === "en" && post.locale !== "en";
 const href =
   post.source === POST_SOURCES.BLOG && post.slug
@@ -49,7 +48,12 @@ const isExternal = post.source !== POST_SOURCES.BLOG;
     )}
     <div class="grid auto-rows-min grid-rows-[auto_auto] items-start gap-2 px-6">
       <div class="flex items-center gap-2">
-        <time class="text-sm text-muted-foreground">{formattedDate}</time>
+        <time
+          datetime={toDateAttr(post.date)}
+          class="text-sm text-muted-foreground"
+        >
+          {formatDate(post.date, locale)}
+        </time>
         <SourceBadge source={post.source} />
         {isJapaneseOnly && (
           <span class={badgeVariants({ variant: "notice" })}>
