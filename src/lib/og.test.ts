@@ -1,42 +1,15 @@
-import fs from "node:fs";
-import path from "node:path";
 import sharp from "sharp";
-import { beforeEach, describe, expect, it, vi } from "vitest";
-
-const FONT = fs.readFileSync(
-  path.resolve(
-    "node_modules/@fontsource/geist-sans/files/geist-sans-latin-700-normal.woff",
-  ),
-);
-const CSS =
-  "@font-face { src: url(https://fonts.example/noto.woff) format('woff'); }";
-
-function stubFontFetch(css = CSS) {
-  const fetchMock = vi.fn(async (url: string) =>
-    url.startsWith("https://fonts.googleapis.com")
-      ? new Response(css)
-      : new Response(FONT),
-  );
-  vi.stubGlobal("fetch", fetchMock);
-  return fetchMock;
-}
-
-async function loadOg() {
-  return import("./og");
-}
-
-beforeEach(() => {
-  vi.resetModules();
-});
+import { describe, expect, it, vi } from "vitest";
+import { generateOgImage } from "./og";
 
 describe("generateOgImage", () => {
-  it("renders a 1200x630 PNG and caches the downloaded font", async () => {
-    const fetchMock = stubFontFetch();
-    const { generateOgImage } = await loadOg();
+  it("renders a 1200x630 PNG from local fonts without network access", async () => {
+    const fetchMock = vi.fn();
+    vi.stubGlobal("fetch", fetchMock);
 
     const short = await generateOgImage("Short title");
     const multiline = await generateOgImage(
-      "A considerably longer title that wraps\nonto a second line",
+      "日本語のタイトルが長くなって折り返す場合\nonto a second line",
     );
 
     for (const png of [short, multiline]) {
@@ -44,18 +17,16 @@ describe("generateOgImage", () => {
       expect(meta.format).toBe("png");
       expect([meta.width, meta.height]).toEqual([1200, 630]);
     }
-    expect(fetchMock).toHaveBeenCalledTimes(2);
-    expect(fetchMock).toHaveBeenLastCalledWith(
-      "https://fonts.example/noto.woff",
-    );
+    expect(fetchMock).not.toHaveBeenCalled();
   });
 
-  it("throws when the font CSS has no URL", async () => {
-    stubFontFetch("/* empty */");
-    const { generateOgImage } = await loadOg();
+  it("renders kanji outside the common japanese subset", async () => {
+    // Missing glyphs all fall back to the same box, so distinct images mean real glyphs
+    const [a, b] = await Promise.all([
+      generateOgImage("髙"),
+      generateOgImage("﨑"),
+    ]);
 
-    await expect(generateOgImage("x")).rejects.toThrow(
-      "Failed to parse Noto Sans JP font URL",
-    );
+    expect(a.equals(b)).toBe(false);
   });
 });

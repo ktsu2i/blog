@@ -1,4 +1,4 @@
-import satori from "satori";
+import satori, { type Font, type SatoriOptions } from "satori";
 import sharp from "sharp";
 import fs from "node:fs";
 import path from "node:path";
@@ -9,30 +9,43 @@ const GEIST_SANS_BOLD = fs.readFileSync(
   ),
 );
 
+const NOTO_SANS_JP_DIR = path.resolve(
+  "node_modules/@fontsource/noto-sans-jp/files",
+);
+// The "japanese" file only bundles common kanji; the numbered subsets cover the full font
+const NOTO_SANS_JP_BOLD = fs
+  .readdirSync(NOTO_SANS_JP_DIR)
+  .filter((file) =>
+    /^noto-sans-jp-(\d+|latin|latin-ext|cyrillic|vietnamese)-700-normal\.woff$/.test(
+      file,
+    ),
+  )
+  .sort()
+  .map((file) => fs.readFileSync(path.join(NOTO_SANS_JP_DIR, file)));
+
+// Satori keeps one font per name and weight, so each subset needs its own name
+// to act as a fallback. It also caches parsed fonts per array, so share one.
+const FONTS: SatoriOptions["fonts"] = [
+  {
+    name: "Geist Sans",
+    data: GEIST_SANS_BOLD,
+    weight: 700,
+    style: "normal",
+  },
+  ...NOTO_SANS_JP_BOLD.map((data, i): Font => ({
+    name: `Noto Sans JP ${i}`,
+    data,
+    weight: 700,
+    style: "normal",
+  })),
+];
+
 // Rendered at 72px; 2x is enough and keeps every OG image's embedded data small
 const AVATAR_DATA_URL = `data:image/jpeg;base64,${(
   await sharp(path.resolve("src/assets/avatar.jpg")).resize(144).toBuffer()
 ).toString("base64")}`;
 
-let notoSansJPBold: ArrayBuffer | null = null;
-
-async function loadNotoSansJP(): Promise<ArrayBuffer> {
-  if (notoSansJPBold) return notoSansJPBold;
-
-  const res = await fetch(
-    "https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@700&display=swap",
-  );
-  const css = await res.text();
-  const fontUrl = css.match(/src:\s*url\(([^)]+)\)/)?.[1];
-  if (!fontUrl) throw new Error("Failed to parse Noto Sans JP font URL");
-
-  const fontRes = await fetch(fontUrl);
-  notoSansJPBold = await fontRes.arrayBuffer();
-  return notoSansJPBold;
-}
-
 export async function generateOgImage(title: string): Promise<Buffer> {
-  const notoFont = await loadNotoSansJP();
   const lines = title.split("\n");
   const fontSize = title.replace(/\n/g, "").length > 30 ? 44 : 52;
 
@@ -199,20 +212,7 @@ export async function generateOgImage(title: string): Promise<Buffer> {
     {
       width: 1200,
       height: 630,
-      fonts: [
-        {
-          name: "Geist Sans",
-          data: GEIST_SANS_BOLD,
-          weight: 700,
-          style: "normal",
-        },
-        {
-          name: "Noto Sans JP",
-          data: notoFont,
-          weight: 700,
-          style: "normal",
-        },
-      ],
+      fonts: FONTS,
     },
   );
 
