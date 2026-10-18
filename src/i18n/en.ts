@@ -7,7 +7,7 @@ export const en: Translations = {
   "nav.about": "About",
   "nav.menu": "Menu",
   "nav.close": "Close",
-  "nav.toggleTheme": "Toggle theme",
+  "nav.darkMode": "Dark mode",
 
   "language.code": "EN",
   "language.name": "English",
@@ -55,6 +55,7 @@ export const en: Translations = {
   "common.defaultTitle": "ktsu2i.dev | Kaito Tsutsui's Blog",
   "common.siteDescription":
     "Personal blog of Kaito Tsutsui, a software engineer. Articles and talks about software engineering.",
+  "common.opensInNewTab": "(opens in a new tab)",
 
   "date.format": "MMM d, yyyy",
 };

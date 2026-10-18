@@ -13,7 +13,7 @@ export interface Translations {
   "nav.about": string;
   "nav.menu": string;
   "nav.close": string;
-  "nav.toggleTheme": string;
+  "nav.darkMode": string;
 
   // Language, written in that language for the toggle that switches to it
   "language.code": string;
@@ -68,6 +68,7 @@ export interface Translations {
   "common.siteName": string;
   "common.defaultTitle": string;
   "common.siteDescription": string;
+  "common.opensInNewTab": string;
 
   // Date format
   "date.format": string;
