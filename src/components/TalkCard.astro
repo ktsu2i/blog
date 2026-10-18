@@ -1,6 +1,7 @@
 ---
 import { Image } from "astro:assets";
 import { format } from "date-fns";
+import { buttonVariants } from "@/components/ui/button";
 import type { Talk } from "../lib/types";
 import { type Locale, defaultLocale, useTranslations } from "../i18n/config";
 
@@ -75,7 +76,7 @@ const formattedDate = format(new Date(talk.date), t["date.format"]);
       href={talk.speakerdeckUrl}
       target="_blank"
       rel="noopener noreferrer"
-      class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground h-8 px-3"
+      class={buttonVariants({ variant: "outline", size: "sm" })}
     >
       {t["talks.viewOnSpeakerDeck"]}
       <svg
