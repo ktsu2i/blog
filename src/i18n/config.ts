@@ -30,6 +30,12 @@ export interface Translations {
   "blog.filter.label": string;
   "blog.japaneseOnly": string;
 
+  // Post
+  "post.nav.label": string;
+  "post.newer": string;
+  "post.older": string;
+  "post.backToBlog": string;
+
   // About
   "about.title": string;
   "about.description": string;

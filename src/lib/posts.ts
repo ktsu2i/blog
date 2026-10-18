@@ -89,3 +89,13 @@ export async function listLocalPosts(locale: Locale = "ja"): Promise<Post[]> {
 
   return posts;
 }
+
+/** Neighbors of the post in a list sorted by date desc */
+export function getAdjacentPosts(
+  posts: Post[],
+  id: string,
+): { newer?: Post; older?: Post } {
+  const index = posts.findIndex((post) => post.id === id);
+  if (index === -1) return {};
+  return { newer: posts[index - 1], older: posts[index + 1] };
+}

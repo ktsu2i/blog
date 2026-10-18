@@ -43,7 +43,7 @@ src/
 ├── components/
 │   ├── layout/          # Header, Footer, MobileNav, ThemeToggle, LanguageToggle
 │   ├── pages/           # ページ本体（HomePage, BlogPage, BlogPostPage, AboutPage, TalksPage）
-│   ├── post/            # PostCard, PostFilter
+│   ├── post/            # PostCard, PostFilter, PostNav（記事末尾の前後記事・一覧へ戻るリンク）
 │   ├── TalkCard.astro
 │   └── ui/              # shadcn/ui コンポーネント
 ├── data/
