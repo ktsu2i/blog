@@ -3,6 +3,7 @@ import type { APIContext } from "astro";
 import { getCollection } from "astro:content";
 import * as jaFeed from "../feed.xml";
 import * as enFeed from "../en/feed.xml";
+import { useTranslations } from "../../i18n/config";
 
 const entries = [
   {
@@ -29,7 +30,15 @@ const context = { site: new URL("https://ktsu2i.dev") } as APIContext;
 describe.each([
   ["ja", jaFeed, "postsJa", "https://ktsu2i.dev/blog/"],
   ["en", enFeed, "postsEn", "https://ktsu2i.dev/en/blog/"],
-])("%s RSS feed", (_, feed, collection, base) => {
+] as const)("%s RSS feed", (locale, feed, collection, base) => {
+  it("uses the localized site description", async () => {
+    const xml = await (await feed.GET(context)).text();
+
+    expect(xml).toContain(
+      `<description>${useTranslations(locale)["common.siteDescription"]}</description>`,
+    );
+  });
+
   it("lists published posts newest first", async () => {
     const xml = await (await feed.GET(context)).text();
 

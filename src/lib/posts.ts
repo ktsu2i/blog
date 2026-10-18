@@ -1,6 +1,7 @@
 import { type CollectionEntry, getCollection } from "astro:content";
 import { POST_SOURCES, type Post } from "./types";
 import { type Locale, getLocalePath } from "../i18n/config";
+import { compareByDateDesc } from "./utils";
 
 const DESCRIPTION_MAX_LENGTH = 200;
 
@@ -85,7 +86,7 @@ export async function listLocalPosts(locale: Locale = "ja"): Promise<Post[]> {
     posts.push(...jaOnly);
   }
 
-  posts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+  posts.sort(compareByDateDesc);
 
   return posts;
 }
