@@ -84,7 +84,7 @@ export function getAlternatePath(
   currentPath: string,
   targetLocale: Locale,
 ): string {
-  const stripped = currentPath.replace(/^\/en/, "") || "/";
+  const stripped = currentPath.replace(/^\/en\//, "/");
   if (targetLocale === defaultLocale) return stripped;
   return `/en${stripped}`;
 }

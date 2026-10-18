@@ -125,5 +125,6 @@ src/
 - **テスト配置**: 実装の隣に `*.test.ts(x)` を置く。`src/pages/` 配下は Astro がルートとして扱うため `src/pages/__tests__/` に置く（`_` 始まりは除外される）。共通 setup とモックは `tests/`。VRT は `tests/vrt/`（ホームの記事一覧は記事追加で変わるためマスク）、a11y テストは `tests/a11y/`
 - **Lighthouse CI / Performance Budget**: `lighthouserc.json` で主要ページを計測。a11y・SEO は 100 点、best-practices は 95 点、リソースサイズ（`resource-summary:*`）の budget を超えると CI が落ちる。Performance スコアと Core Web Vitals は計測ブレが大きいため warn のみ。talks の Speaker Deck はサムネイルを表示し、クリック時に iframe を読み込む facade パターンにしているため全ページ共通の budget で計測する。レポートは CI の artifact（`lighthouse-report`）に保存
 - **Git フック**: lefthook（`lefthook.yaml`）。`pnpm install` 時に自動でフックが入り、pre-commit でステージ済みファイルに oxlint / oxfmt / Prettier を実行し、整形結果は自動で再ステージする
+- **末尾スラッシュ**: `trailingSlash: "always"`。内部リンクは必ず `/` で終わらせる（`getLocalePath("/blog/", locale)` のように呼び出し側で付ける）。付け忘れると本番では Workers Assets の 307 リダイレクトが挟まり、dev / preview では 404 になる
 - **YAML の拡張子**: `.yml` は禁止で、`.yaml` に統一する（lefthook の `forbid-yml` ジョブでチェック）
 - **画像ドメイン許可**: `res.cloudinary.com`, `cdn.image.st-hatena.com`, `files.speakerdeck.com`（登壇スライドのサムネイル）
