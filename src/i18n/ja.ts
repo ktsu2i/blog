@@ -9,6 +9,9 @@ export const ja: Translations = {
   "nav.close": "閉じる",
   "nav.toggleTheme": "テーマを切り替え",
 
+  "language.code": "JA",
+  "language.name": "日本語",
+
   "home.subtitle":
     "ソフトウェアエンジニアです。\nGo や TypeScript、AI 活用など、技術のことや登壇のことを書いています。",
   "home.cta.blog": "ブログを見る",
