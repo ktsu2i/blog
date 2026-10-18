@@ -2,6 +2,7 @@
 import { Image } from "astro:assets";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import avatar from "../../assets/avatar.jpg";
+import { buttonVariants } from "@/components/ui/button";
 import PostCard from "../post/PostCard.astro";
 import { listAllPosts } from "../../lib/feed";
 import {
@@ -43,15 +44,12 @@ const recent = posts.slice(0, 4);
         {t["home.subtitle"]}
       </p>
       <div class="flex gap-3">
-        <a
-          href={getLocalePath("/blog/", locale)}
-          class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all bg-primary text-primary-foreground hover:bg-primary/90 h-9 px-4 py-2"
-        >
+        <a href={getLocalePath("/blog/", locale)} class={buttonVariants()}>
           {t["home.cta.blog"]}
         </a>
         <a
           href={getLocalePath("/about/", locale)}
-          class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2"
+          class={buttonVariants({ variant: "outline" })}
         >
           {t["home.cta.about"]}
         </a>

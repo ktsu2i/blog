@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import { buttonVariants } from "@/components/ui/button";
 import {
   type Locale,
   defaultLocale,
@@ -22,10 +23,7 @@ const t = useTranslations(locale);
     <div class="space-y-4">
       <p class="text-lg text-muted-foreground">{t["notFound.message"]}</p>
 
-      <a
-        href={getLocalePath("/", locale)}
-        class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all bg-primary text-primary-foreground hover:bg-primary/90 h-9 px-4 py-2"
-      >
+      <a href={getLocalePath("/", locale)} class={buttonVariants()}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="16"
