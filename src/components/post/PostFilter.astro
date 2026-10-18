@@ -11,6 +11,7 @@ interface Props {
   translations: {
     all: string;
     filterLabel: string;
+    sources: Record<PostSource, string>;
   };
 }
 
@@ -38,7 +39,7 @@ const buttonClass = cn(
       aria-controls={listId}
       data-source={source}
     >
-      {source === "all" ? translations.all : source}
+      {source === "all" ? translations.all : translations.sources[source]}
     </button>
   ))}
 </div>

@@ -25,6 +25,10 @@ export const en: Translations = {
   "blog.filter.label": "Filter posts by source",
   "blog.japaneseOnly": "Japanese only",
 
+  "source.blog": "Blog",
+  "source.zenn": "Zenn",
+  "source.external": "External",
+
   "post.nav.label": "Adjacent posts",
   "post.newer": "Newer post",
   "post.older": "Older post",

@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
+  SOURCE_LABEL_KEYS,
   defaultLocale,
   getAlternatePath,
   getCurrentLocale,
@@ -10,6 +11,7 @@ import {
 } from "./config";
 import { ja } from "./ja";
 import { en } from "./en";
+import { POST_SOURCES } from "../lib/types";
 
 describe("i18n config", () => {
   it("exposes the supported locales", () => {
@@ -34,6 +36,14 @@ describe("i18n config", () => {
     expect(useTranslations("ja")).toBe(ja);
     expect(useTranslations("en")).toBe(en);
   });
+
+  it.each(Object.values(POST_SOURCES))(
+    "has a label for the %s source",
+    (source) => {
+      expect(ja[SOURCE_LABEL_KEYS[source]]).toBeTruthy();
+      expect(en[SOURCE_LABEL_KEYS[source]]).toBeTruthy();
+    },
+  );
 
   it("keeps both translation tables in sync", () => {
     expect(Object.keys(en).sort()).toEqual(Object.keys(ja).sort());

@@ -3,7 +3,11 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import PostCard from "../post/PostCard.astro";
 import PostFilter from "../post/PostFilter.astro";
 import { listAllPosts } from "../../lib/feed";
-import { getCurrentLocale, useTranslations } from "../../i18n/config";
+import {
+  SOURCE_LABEL_KEYS,
+  getCurrentLocale,
+  useTranslations,
+} from "../../i18n/config";
 
 const locale = getCurrentLocale(Astro);
 const t = useTranslations(locale);
@@ -22,6 +26,11 @@ const listId = "post-list";
       translations={{
         all: t["blog.filter.all"],
         filterLabel: t["blog.filter.label"],
+        sources: {
+          Blog: t[SOURCE_LABEL_KEYS.Blog],
+          Zenn: t[SOURCE_LABEL_KEYS.Zenn],
+          External: t[SOURCE_LABEL_KEYS.External],
+        },
       }}
     />
     <div id={listId} class="grid gap-4 md:grid-cols-2">

@@ -1,5 +1,6 @@
 import { ja } from "./ja";
 import { en } from "./en";
+import { POST_SOURCES, type PostSource } from "../lib/types";
 
 export const locales = ["ja", "en"] as const;
 export type Locale = (typeof locales)[number];
@@ -32,6 +33,11 @@ export interface Translations {
   "blog.filter.all": string;
   "blog.filter.label": string;
   "blog.japaneseOnly": string;
+
+  // Post source labels
+  "source.blog": string;
+  "source.zenn": string;
+  "source.external": string;
 
   // Post
   "post.nav.label": string;
@@ -79,6 +85,12 @@ export type Localized<T, K extends keyof T> = Omit<T, K> & {
 };
 
 const translations: Record<Locale, Translations> = { ja, en };
+
+export const SOURCE_LABEL_KEYS = {
+  [POST_SOURCES.BLOG]: "source.blog",
+  [POST_SOURCES.ZENN]: "source.zenn",
+  [POST_SOURCES.EXTERNAL]: "source.external",
+} as const satisfies Record<PostSource, keyof Translations>;
 
 export function getCurrentLocale(astro: { currentLocale?: string }): Locale {
   return (astro.currentLocale ?? defaultLocale) as Locale;

@@ -1,12 +1,18 @@
 ---
 import { badgeVariants } from "@/components/ui/badge";
 import { POST_SOURCES, type PostSource } from "../../lib/types";
+import {
+  SOURCE_LABEL_KEYS,
+  getCurrentLocale,
+  useTranslations,
+} from "../../i18n/config";
 
 interface Props {
   source: PostSource;
 }
 
 const { source } = Astro.props;
+const t = useTranslations(getCurrentLocale(Astro));
 
 const variants = {
   [POST_SOURCES.BLOG]: "default",
@@ -15,4 +21,6 @@ const variants = {
 } as const satisfies Record<PostSource, string>;
 ---
 
-<span class={badgeVariants({ variant: variants[source] })}>{source}</span>
+<span class={badgeVariants({ variant: variants[source] })}>
+  {t[SOURCE_LABEL_KEYS[source]]}
+</span>
