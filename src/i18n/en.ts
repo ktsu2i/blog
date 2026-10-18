@@ -55,6 +55,4 @@ export const en: Translations = {
   "common.siteDescription":
     "Personal blog of Kaito Tsutsui, a software engineer. Articles and talks about software engineering.",
   "common.opensInNewTab": "(opens in a new tab)",
-
-  "date.format": "MMM d, yyyy",
 };

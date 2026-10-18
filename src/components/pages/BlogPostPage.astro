@@ -1,6 +1,5 @@
 ---
 import { type CollectionEntry, render } from "astro:content";
-import { format } from "date-fns";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import SourceBadge from "../post/SourceBadge.astro";
 import PostNav from "../post/PostNav.astro";
@@ -10,6 +9,7 @@ import {
   listLocalPosts,
 } from "../../lib/posts";
 import { POST_SOURCES } from "../../lib/types";
+import { formatDate, toDateAttr } from "../../lib/utils";
 import {
   getCurrentLocale,
   getLocalePath,
@@ -24,7 +24,6 @@ const { post } = Astro.props;
 const locale = getCurrentLocale(Astro);
 const t = useTranslations(locale);
 const { Content } = await render(post);
-const formattedDate = format(new Date(post.data.date), t["date.format"]);
 const { newer, older } = getAdjacentPosts(
   await listLocalPosts(locale),
   post.id,
@@ -42,7 +41,12 @@ const { newer, older } = getAdjacentPosts(
     <header class="space-y-4">
       <h1 class="text-3xl font-bold tracking-tight">{post.data.title}</h1>
       <div class="flex flex-wrap items-center gap-2">
-        <time class="text-sm text-muted-foreground">{formattedDate}</time>
+        <time
+          datetime={toDateAttr(post.data.date)}
+          class="text-sm text-muted-foreground"
+        >
+          {formatDate(post.data.date, locale)}
+        </time>
         <SourceBadge source={POST_SOURCES.BLOG} />
       </div>
     </header>

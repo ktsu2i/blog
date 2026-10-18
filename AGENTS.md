@@ -73,7 +73,7 @@ src/
 │   ├── remark-mermaid.ts # mermaid コードブロックをビルド時に SVG 化する remark プラグイン
 │   ├── remark-x-embed.ts # X の投稿 URL を oEmbed で埋め込む remark プラグイン
 │   ├── rss.ts           # RSS フィード生成（ja / en の feed.xml.ts から呼ぶ）
-│   └── utils.ts         # 汎用ユーティリティ（cn、日付降順の比較関数 compareByDateDesc）
+│   └── utils.ts         # 汎用ユーティリティ（cn、日付降順の比較関数 compareByDateDesc、JST 固定の日付表示 formatDate / toDateAttr）
 ├── pages/
 │   ├── index.astro      # トップページ（最新4件を2列グリッド表示）
 │   ├── blog/            # ブログ一覧・個別記事ページ

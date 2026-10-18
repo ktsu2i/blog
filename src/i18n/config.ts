@@ -68,9 +68,6 @@ export interface Translations {
   "common.defaultTitle": string;
   "common.siteDescription": string;
   "common.opensInNewTab": string;
-
-  // Date format
-  "date.format": string;
 }
 
 // Entry type whose K fields are written per locale under `localized`
