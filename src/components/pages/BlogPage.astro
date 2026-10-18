@@ -3,20 +3,11 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import PostCard from "../post/PostCard.astro";
 import PostFilter from "../post/PostFilter.astro";
 import { listAllPosts } from "../../lib/feed";
-import { POST_SOURCES } from "../../lib/types";
 import { getCurrentLocale, useTranslations } from "../../i18n/config";
 
 const locale = getCurrentLocale(Astro);
 const t = useTranslations(locale);
 const posts = await listAllPosts(locale);
-const countBySource = (source: string) =>
-  posts.filter((post) => post.source === source).length;
-const counts = {
-  all: posts.length,
-  [POST_SOURCES.BLOG]: countBySource(POST_SOURCES.BLOG),
-  [POST_SOURCES.ZENN]: countBySource(POST_SOURCES.ZENN),
-  [POST_SOURCES.EXTERNAL]: countBySource(POST_SOURCES.EXTERNAL),
-};
 const listId = "post-list";
 ---
 
@@ -28,10 +19,8 @@ const listId = "post-list";
     </div>
     <PostFilter
       listId={listId}
-      counts={counts}
       translations={{
         all: t["blog.filter.all"],
-        count: t["blog.count"],
         filterLabel: t["blog.filter.label"],
       }}
     />
