@@ -1,6 +1,5 @@
 import type { Locale } from "../i18n/config";
 
-// 投稿のソース種別
 export const POST_SOURCES = {
   BLOG: "Blog",
   ZENN: "Zenn",
@@ -9,21 +8,20 @@ export const POST_SOURCES = {
 
 export type PostSource = (typeof POST_SOURCES)[keyof typeof POST_SOURCES];
 
-// 統一投稿型（ローカル記事・外部記事共通）
+// Post shape shared by local and external sources
 export interface Post {
   id: string;
   source: PostSource;
   title: string;
   date: string; // ISO 8601
   description: string;
-  slug?: string; // local 用
-  url?: string; // external 用
-  draft?: boolean; // local 用
-  ogImage?: string; // OG画像URL
+  slug?: string; // local only
+  url?: string; // external only
+  draft?: boolean; // local only
+  ogImage?: string;
   locale?: Locale;
 }
 
-// SpeakerDeck トーク型
 export interface Talk {
   id: string;
   title: string;
@@ -35,7 +33,6 @@ export interface Talk {
   description: string;
 }
 
-// 経歴型
 export type CareerEntry = {
   id: string;
   period: string;
