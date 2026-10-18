@@ -31,6 +31,7 @@ describe.each([
   ["en", "postsEn", "https://ktsu2i.dev/en/blog/"],
 ] as const)("buildRssFeed (%s)", (locale, collection, base) => {
   it("lists published posts newest first", async () => {
+    vi.stubEnv("PROD", true);
     const xml = await (await buildRssFeed(context, locale)).text();
 
     expect(getCollection).toHaveBeenCalledWith(collection);

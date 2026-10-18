@@ -38,7 +38,7 @@ export function getPostDescription(entry: {
   return entry.data.description || extractDescription(entry.body ?? "");
 }
 
-type PostCollection = "postsJa" | "postsEn";
+export type PostCollection = "postsJa" | "postsEn";
 
 /** Drafts are visible only outside production builds */
 function isPublished(entry: { data: { draft: boolean } }): boolean {
