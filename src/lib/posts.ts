@@ -5,25 +5,23 @@ import { compareByDateDesc } from "./utils";
 
 const DESCRIPTION_MAX_LENGTH = 200;
 
-/** Markdown 記法を除去してプレーンテキストを返す */
+/** Strip Markdown syntax and return plain text */
 function stripMarkdown(md: string): string {
   return md
-    .replace(/```[\s\S]*?```/g, "") // コードブロック
-    .replace(/`[^`]*`/g, "") // インラインコード
-    .replace(/!\[[^\]]*\]\([^)]*\)/g, "") // 画像
-    .replace(/\[[^\]]*\]\([^)]*\)/g, (m) =>
-      m.replace(/\[([^\]]*)\]\([^)]*\)/, "$1"),
-    ) // リンク → テキスト
-    .replace(/^#{1,6}\s+/gm, "") // 見出し
-    .replace(/^[-*>]+\s/gm, "") // リスト・引用
-    .replace(/[*_~]+/g, "") // 強調・取り消し線
-    .replace(/^---+$/gm, "") // 水平線
-    .replace(/\n+/g, " ") // 改行 → スペース
-    .replace(/\s+/g, " ") // 連続空白
+    .replace(/```[\s\S]*?```/g, "") // code blocks
+    .replace(/`[^`]*`/g, "") // inline code
+    .replace(/!\[[^\]]*\]\([^)]*\)/g, "") // images
+    .replace(/\[([^\]]*)\]\([^)]*\)/g, "$1") // links -> text
+    .replace(/^#{1,6}\s+/gm, "") // headings
+    .replace(/^[-*>]+\s/gm, "") // lists, blockquotes
+    .replace(/[*_~]+/g, "") // emphasis, strikethrough
+    .replace(/^---+$/gm, "") // horizontal rules
+    .replace(/\n+/g, " ") // newlines -> spaces
+    .replace(/\s+/g, " ") // collapse whitespace
     .trim();
 }
 
-/** 本文から description を抽出する (frontmatter 未設定時のフォールバック) */
+/** Excerpt of the body, used when frontmatter has no description */
 function extractDescription(body: string): string {
   const plain = stripMarkdown(body);
   if (plain.length <= DESCRIPTION_MAX_LENGTH) return plain;
