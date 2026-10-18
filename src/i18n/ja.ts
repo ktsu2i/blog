@@ -23,6 +23,11 @@ export const ja: Translations = {
   "blog.filter.label": "記事のソースで絞り込む",
   "blog.japaneseOnly": "日本語のみ",
 
+  "post.nav.label": "前後の記事",
+  "post.newer": "次の記事",
+  "post.older": "前の記事",
+  "post.backToBlog": "ブログ一覧に戻る",
+
   "about.title": "About",
   "about.description": "自己紹介",
   "about.bio": "ソフトウェアエンジニア / Go / 🍣",

@@ -1,6 +1,10 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { getCollection } from "astro:content";
-import { listLocalPosts, listPublishedEntries } from "./posts";
+import {
+  getAdjacentPosts,
+  listLocalPosts,
+  listPublishedEntries,
+} from "./posts";
 
 type Entry = {
   id: string;
@@ -153,5 +157,42 @@ describe("listPublishedEntries", () => {
     const entries = await listPublishedEntries("postsJa");
 
     expect(entries.map((e) => e.id)).toEqual(["pub"]);
+  });
+});
+
+describe("getAdjacentPosts", () => {
+  it("returns the newer and older neighbors", async () => {
+    collections.postsJa = [
+      entry("a", { date: "2025-03-01" }),
+      entry("b", { date: "2025-02-01" }),
+      entry("c", { date: "2025-01-01" }),
+    ];
+    const posts = await listLocalPosts();
+
+    const { newer, older } = getAdjacentPosts(posts, "b");
+
+    expect(newer?.id).toBe("a");
+    expect(older?.id).toBe("c");
+  });
+
+  it("omits neighbors past either end", async () => {
+    collections.postsJa = [
+      entry("a", { date: "2025-02-01" }),
+      entry("b", { date: "2025-01-01" }),
+    ];
+    const posts = await listLocalPosts();
+
+    expect(getAdjacentPosts(posts, "a")).toEqual({
+      newer: undefined,
+      older: posts[1],
+    });
+    expect(getAdjacentPosts(posts, "b")).toEqual({
+      newer: posts[0],
+      older: undefined,
+    });
+  });
+
+  it("returns nothing for an unknown id", () => {
+    expect(getAdjacentPosts([], "missing")).toEqual({});
   });
 });

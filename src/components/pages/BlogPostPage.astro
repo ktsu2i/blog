@@ -3,7 +3,12 @@ import { type CollectionEntry, render } from "astro:content";
 import { format } from "date-fns";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import SourceBadge from "../post/SourceBadge.astro";
-import { getPostDescription } from "../../lib/posts";
+import PostNav from "../post/PostNav.astro";
+import {
+  getAdjacentPosts,
+  getPostDescription,
+  listLocalPosts,
+} from "../../lib/posts";
 import { POST_SOURCES } from "../../lib/types";
 import {
   getCurrentLocale,
@@ -20,6 +25,10 @@ const locale = getCurrentLocale(Astro);
 const t = useTranslations(locale);
 const { Content } = await render(post);
 const formattedDate = format(new Date(post.data.date), t["date.format"]);
+const { newer, older } = getAdjacentPosts(
+  await listLocalPosts(locale),
+  post.id,
+);
 ---
 
 <BaseLayout
@@ -41,6 +50,7 @@ const formattedDate = format(new Date(post.data.date), t["date.format"]);
       <Content />
     </div>
   </article>
+  <PostNav newer={newer} older={older} />
 </BaseLayout>
 
 <script>
