@@ -2,20 +2,15 @@
 import { afterEach, describe, expect, it } from "vitest";
 import { initPostFilters } from "./post-filter";
 
-const counts = { all: 4, Blog: 2, Zenn: 1, External: 1 };
-
-function setup({ template = "{count} posts", withStatus = true } = {}) {
-  const buttons = Object.entries(counts)
+function setup() {
+  const buttons = ["all", "Blog", "Zenn", "External"]
     .map(
-      ([source, count]) =>
-        `<button aria-pressed="${source === "all"}" aria-controls="post-list" data-source="${source}" data-count="${count}">${source}</button>`,
+      (source) =>
+        `<button aria-pressed="${source === "all"}" aria-controls="post-list" data-source="${source}">${source}</button>`,
     )
     .join("");
   document.body.innerHTML = `
-    <div data-post-filter ${template ? `data-count-template="${template}"` : ""}>
-      <div role="group">${buttons}</div>
-      ${withStatus ? `<p aria-live="polite">4 posts</p>` : ""}
-    </div>
+    <div role="group" data-post-filter>${buttons}</div>
     <div id="post-list">
       <a data-source="Blog">Blog 1</a>
       <a data-source="Blog">Blog 2</a>
@@ -36,8 +31,6 @@ const visible = () =>
     .filter((item) => !item.hidden)
     .map((item) => item.textContent);
 
-const status = () => document.querySelector("[aria-live]")?.textContent;
-
 afterEach(() => {
   document.body.innerHTML = "";
 });
@@ -49,33 +42,14 @@ describe("initPostFilters", () => {
     button("Blog").click();
     expect(button("Blog")).toHaveAttribute("aria-pressed", "true");
     expect(button("all")).toHaveAttribute("aria-pressed", "false");
-    expect(status()).toBe("2 posts");
     expect(visible()).toEqual(["Blog 1", "Blog 2"]);
 
     button("Zenn").click();
     expect(button("Blog")).toHaveAttribute("aria-pressed", "false");
-    expect(status()).toBe("1 posts");
     expect(visible()).toEqual(["Zenn 1"]);
 
     button("all").click();
     expect(button("all")).toHaveAttribute("aria-pressed", "true");
-    expect(status()).toBe("4 posts");
     expect(visible()).toHaveLength(4);
-  });
-
-  it("still filters when the status region is missing", () => {
-    setup({ withStatus: false });
-
-    button("External").click();
-    expect(visible()).toEqual(["External 1"]);
-  });
-
-  it("falls back to empty strings for missing data attributes", () => {
-    setup({ template: "" });
-    const external = button("External");
-    delete external.dataset.count;
-
-    external.click();
-    expect(status()).toBe("");
   });
 });

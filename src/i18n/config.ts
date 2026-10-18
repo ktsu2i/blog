@@ -29,7 +29,6 @@ export interface Translations {
   // Blog
   "blog.title": string;
   "blog.description": string;
-  "blog.count": string;
   "blog.filter.all": string;
   "blog.filter.label": string;
   "blog.japaneseOnly": string;

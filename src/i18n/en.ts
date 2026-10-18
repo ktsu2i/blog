@@ -21,7 +21,6 @@ export const en: Translations = {
 
   "blog.title": "Blog",
   "blog.description": "Posts from this site and external sources in one place.",
-  "blog.count": "{count} posts",
   "blog.filter.all": "All",
   "blog.filter.label": "Filter posts by source",
   "blog.japaneseOnly": "Japanese only",
