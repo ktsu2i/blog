@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { career, getCareer } from "./career";
+import { getCareer } from "./career";
 
 describe("getCareer", () => {
   it("provides entries for both locales with matching ids", () => {
@@ -10,7 +10,12 @@ describe("getCareer", () => {
     expect(en.map((e) => e.id)).toEqual(ja.map((e) => e.id));
   });
 
-  it("keeps the legacy export pointing at Japanese data", () => {
-    expect(career).toBe(getCareer("ja"));
+  it("merges the localized text into each entry", () => {
+    const [ja] = getCareer("ja");
+    const [en] = getCareer("en");
+
+    expect(ja).not.toHaveProperty("localized");
+    expect(en.tags).toEqual(ja.tags);
+    expect(en.period).not.toBe(ja.period);
   });
 });

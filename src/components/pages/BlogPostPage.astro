@@ -6,8 +6,7 @@ import SourceBadge from "../post/SourceBadge.astro";
 import { getPostDescription } from "../../lib/posts";
 import { POST_SOURCES } from "../../lib/types";
 import {
-  type Locale,
-  defaultLocale,
+  getCurrentLocale,
   getLocalePath,
   useTranslations,
 } from "../../i18n/config";
@@ -17,7 +16,7 @@ interface Props {
 }
 
 const { post } = Astro.props;
-const locale = (Astro.currentLocale ?? defaultLocale) as Locale;
+const locale = getCurrentLocale(Astro);
 const t = useTranslations(locale);
 const { Content } = await render(post);
 const formattedDate = format(new Date(post.data.date), t["date.format"]);

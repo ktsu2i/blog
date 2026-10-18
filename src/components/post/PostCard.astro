@@ -4,8 +4,7 @@ import { badgeVariants } from "@/components/ui/badge";
 import SourceBadge from "./SourceBadge.astro";
 import { POST_SOURCES, type Post } from "../../lib/types";
 import {
-  type Locale,
-  defaultLocale,
+  getCurrentLocale,
   useTranslations,
   getLocalePath,
 } from "../../i18n/config";
@@ -17,7 +16,7 @@ interface Props {
 }
 
 const { post, priority = false } = Astro.props;
-const locale = (Astro.currentLocale ?? defaultLocale) as Locale;
+const locale = getCurrentLocale(Astro);
 const t = useTranslations(locale);
 const formattedDate = format(new Date(post.date), t["date.format"]);
 const isJapaneseOnly = locale === "en" && post.locale !== "en";

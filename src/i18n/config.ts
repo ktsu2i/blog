@@ -63,7 +63,16 @@ export interface Translations {
   "date.format": string;
 }
 
+// Entry type whose K fields are written per locale under `localized`
+export type Localized<T, K extends keyof T> = Omit<T, K> & {
+  localized: Record<Locale, Pick<T, K>>;
+};
+
 const translations: Record<Locale, Translations> = { ja, en };
+
+export function getCurrentLocale(astro: { currentLocale?: string }): Locale {
+  return (astro.currentLocale ?? defaultLocale) as Locale;
+}
 
 export function getLocaleFromUrl(url: URL): Locale {
   const [, locale] = url.pathname.split("/");

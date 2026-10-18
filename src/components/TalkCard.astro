@@ -3,14 +3,14 @@ import { Image } from "astro:assets";
 import { format } from "date-fns";
 import { buttonVariants } from "@/components/ui/button";
 import type { Talk } from "../lib/types";
-import { type Locale, defaultLocale, useTranslations } from "../i18n/config";
+import { getCurrentLocale, useTranslations } from "../i18n/config";
 
 interface Props {
   talk: Talk;
 }
 
 const { talk } = Astro.props;
-const locale = (Astro.currentLocale ?? defaultLocale) as Locale;
+const locale = getCurrentLocale(Astro);
 const t = useTranslations(locale);
 const formattedDate = format(new Date(talk.date), t["date.format"]);
 ---

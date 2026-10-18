@@ -1,6 +1,7 @@
 import rss from "@astrojs/rss";
 import type { APIContext } from "astro";
 import { getCollection } from "astro:content";
+import { useTranslations } from "../i18n/config";
 import { getPostDescription } from "../lib/posts";
 
 export async function GET(context: APIContext) {
@@ -14,7 +15,7 @@ export async function GET(context: APIContext) {
     );
 
   return rss({
-    title: "ktsu2i.dev",
+    title: useTranslations("ja")["common.siteName"],
     description: "ktsu2i のブログ & ポートフォリオサイト",
     site: context.site!,
     items: sortedPosts.map((post) => ({

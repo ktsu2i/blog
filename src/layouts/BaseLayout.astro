@@ -5,8 +5,7 @@ import Header from "../components/layout/Header.astro";
 import Footer from "../components/layout/Footer.astro";
 import "../styles/globals.css";
 import {
-  type Locale,
-  defaultLocale,
+  getCurrentLocale,
   useTranslations,
   getAlternatePath,
 } from "../i18n/config";
@@ -19,7 +18,7 @@ interface Props {
   ogImage?: string;
 }
 
-const locale = (Astro.currentLocale ?? defaultLocale) as Locale;
+const locale = getCurrentLocale(Astro);
 const t = useTranslations(locale);
 
 const {
@@ -30,8 +29,9 @@ const {
   ogImage,
 } = Astro.props;
 
-const siteUrl = import.meta.env.SITE || "https://ktsu2i.dev";
-const pageTitle = title ? `${title} | ktsu2i.dev` : t["common.defaultTitle"];
+const siteUrl = Astro.site!.origin;
+const siteName = t["common.siteName"];
+const pageTitle = title ? `${title} | ${siteName}` : t["common.defaultTitle"];
 const ogLocale = locale === "ja" ? "ja_JP" : "en_US";
 const currentPath = Astro.url.pathname;
 const canonicalUrl = new URL(currentPath, siteUrl).href;
@@ -70,7 +70,7 @@ const personSchema = {
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalUrl} />
-    <meta property="og:site_name" content="ktsu2i.dev" />
+    <meta property="og:site_name" content={siteName} />
     <meta property="og:locale" content={ogLocale} />
     <meta property="og:type" content={ogType} />
     {publishedTime && (
@@ -92,7 +92,7 @@ const personSchema = {
       rel="alternate"
       type="application/rss+xml"
       href={`${siteUrl}${rssHref}`}
-      title="ktsu2i.dev"
+      title={siteName}
     />
     <script
       type="application/ld+json"

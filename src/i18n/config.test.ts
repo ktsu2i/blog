@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   defaultLocale,
   getAlternatePath,
+  getCurrentLocale,
   getLocaleFromUrl,
   getLocalePath,
   locales,
@@ -22,6 +23,11 @@ describe("i18n config", () => {
     ["https://ktsu2i.dev/", "ja"],
   ])("detects the locale of %s", (url, expected) => {
     expect(getLocaleFromUrl(new URL(url))).toBe(expected);
+  });
+
+  it("falls back to the default locale when Astro has none", () => {
+    expect(getCurrentLocale({ currentLocale: "en" })).toBe("en");
+    expect(getCurrentLocale({ currentLocale: undefined })).toBe(defaultLocale);
   });
 
   it("returns the translation table for each locale", () => {
