@@ -15,6 +15,10 @@ export interface Translations {
   "nav.close": string;
   "nav.toggleTheme": string;
 
+  // Language, written in that language for the toggle that switches to it
+  "language.code": string;
+  "language.name": string;
+
   // Home
   "home.subtitle": string;
   "home.cta.blog": string;

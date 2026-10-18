@@ -1,0 +1,31 @@
+---
+import { buttonVariants } from "@/components/ui/button";
+import { getAlternatePath, useTranslations } from "@/i18n/config";
+import type { Locale } from "@/i18n/config";
+import { cn } from "@/lib/utils";
+
+interface Props {
+  currentLocale: Locale;
+  currentPath: string;
+}
+
+const { currentLocale, currentPath } = Astro.props;
+const targetLocale: Locale = currentLocale === "ja" ? "en" : "ja";
+const target = useTranslations(targetLocale);
+const code = target["language.code"];
+---
+
+<!-- Named in the target language; the name starts with the visible code so
+     voice control users can say what they see -->
+<a
+  href={getAlternatePath(currentPath, targetLocale)}
+  hreflang={targetLocale}
+  lang={targetLocale}
+  aria-label={`${code} ${target["language.name"]}`}
+  class={cn(
+    buttonVariants({ variant: "ghost", size: "icon" }),
+    "text-xs font-semibold",
+  )}
+>
+  {code}
+</a>
