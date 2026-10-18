@@ -16,6 +16,7 @@ interface Props {
   ogType?: string;
   publishedTime?: string;
   ogImage?: string;
+  noindex?: boolean;
 }
 
 const locale = getCurrentLocale(Astro);
@@ -27,6 +28,7 @@ const {
   ogType = "website",
   publishedTime,
   ogImage,
+  noindex = false,
 } = Astro.props;
 
 const siteUrl = Astro.site!.origin;
@@ -39,8 +41,7 @@ const jaUrl = `${siteUrl}${getAlternatePath(currentPath, "ja")}`;
 const enUrl = `${siteUrl}${getAlternatePath(currentPath, "en")}`;
 const rssHref = locale === "ja" ? "/feed.xml" : "/en/feed.xml";
 
-const personSchema = {
-  "@context": "https://schema.org",
+const person = {
   "@type": "Person",
   name: "筒井海人",
   alternateName: "Kaito Tsutsui",
@@ -54,6 +55,21 @@ const personSchema = {
     "https://zenn.dev/ktsu2i",
   ],
 };
+const schemas: object[] = [{ "@context": "https://schema.org", ...person }];
+if (ogType === "article") {
+  schemas.push({
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: title,
+    description,
+    datePublished: publishedTime,
+    image: ogImage && `${siteUrl}${ogImage}`,
+    url: canonicalUrl,
+    mainEntityOfPage: canonicalUrl,
+    inLanguage: locale,
+    author: { "@type": "Person", name: person.name, url: person.url },
+  });
+}
 ---
 
 <!doctype html>
@@ -84,20 +100,25 @@ const personSchema = {
     <meta name="twitter:title" content={pageTitle} />
     <meta name="twitter:description" content={description} />
     {ogImage && <meta name="twitter:image" content={`${siteUrl}${ogImage}`} />}
-    <link rel="alternate" hreflang="ja" href={jaUrl} />
-    <link rel="alternate" hreflang="en" href={enUrl} />
-    <link rel="alternate" hreflang="x-default" href={jaUrl} />
-    <link rel="canonical" href={canonicalUrl} />
+    {noindex ? (
+      <meta name="robots" content="noindex" />
+    ) : (
+      <>
+        <link rel="alternate" hreflang="ja" href={jaUrl} />
+        <link rel="alternate" hreflang="en" href={enUrl} />
+        <link rel="alternate" hreflang="x-default" href={jaUrl} />
+        <link rel="canonical" href={canonicalUrl} />
+      </>
+    )}
     <link
       rel="alternate"
       type="application/rss+xml"
       href={`${siteUrl}${rssHref}`}
       title={siteName}
     />
-    <script
-      type="application/ld+json"
-      set:html={JSON.stringify(personSchema)}
-    />
+    {schemas.map((schema) => (
+      <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+    ))}
     <script is:inline>
       (function () {
         const stored = localStorage.getItem("theme");
