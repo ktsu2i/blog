@@ -1,5 +1,10 @@
 {
   "$schema": "https://unpkg.com/knip@6/schema.json",
   "ignore": ["src/components/ui/**"],
-  "ignoreDependencies": ["@fontsource/geist-sans", "shadcn", "wrangler"]
+  "ignoreDependencies": [
+    "@fontsource/geist-sans",
+    "@fontsource/noto-sans-jp",
+    "shadcn",
+    "wrangler"
+  ]
 }
