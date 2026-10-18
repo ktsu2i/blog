@@ -3,7 +3,12 @@ import { Image } from "astro:assets";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import avatar from "../../assets/avatar.jpg";
 import { getCareer } from "../../data/career";
-import { Briefcase, GraduationCap, Building2 } from "lucide-react";
+import {
+  ArrowUpRight,
+  Briefcase,
+  GraduationCap,
+  Building2,
+} from "lucide-react";
 import { getCurrentLocale, useTranslations } from "../../i18n/config";
 
 const locale = getCurrentLocale(Astro);
@@ -82,18 +87,7 @@ const typeConfig = {
             <span class="text-sm font-semibold">GitHub</span>
             <span class="block text-xs text-muted-foreground">@ktsu2i</span>
           </div>
-          <svg
-            viewBox="0 0 24 24"
-            class="size-4 shrink-0 text-muted-foreground transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-foreground"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            aria-hidden="true"
-          >
-            <path d="M7 17L17 7M17 7H7M17 7V17" />
-          </svg>
+          <ArrowUpRight className="size-4 shrink-0 text-muted-foreground transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-foreground" />
         </a>
 
         <!-- X -->
@@ -116,18 +110,7 @@ const typeConfig = {
             <span class="text-sm font-semibold">X</span>
             <span class="block text-xs text-muted-foreground">@ktsu2i</span>
           </div>
-          <svg
-            viewBox="0 0 24 24"
-            class="size-4 shrink-0 text-muted-foreground transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-foreground"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            aria-hidden="true"
-          >
-            <path d="M7 17L17 7M17 7H7M17 7V17" />
-          </svg>
+          <ArrowUpRight className="size-4 shrink-0 text-muted-foreground transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-foreground" />
         </a>
 
         <!-- LinkedIn -->
@@ -150,18 +133,7 @@ const typeConfig = {
             <span class="text-sm font-semibold">LinkedIn</span>
             <span class="block text-xs text-muted-foreground">ktsu2i</span>
           </div>
-          <svg
-            viewBox="0 0 24 24"
-            class="size-4 shrink-0 text-muted-foreground transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-foreground"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            aria-hidden="true"
-          >
-            <path d="M7 17L17 7M17 7H7M17 7V17" />
-          </svg>
+          <ArrowUpRight className="size-4 shrink-0 text-muted-foreground transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-foreground" />
         </a>
       </div>
     </section>
