@@ -2,6 +2,7 @@ import satori, { type Font, type SatoriOptions } from "satori";
 import sharp from "sharp";
 import fs from "node:fs";
 import path from "node:path";
+import { OG_IMAGE_HEIGHT, OG_IMAGE_WIDTH } from "./types";
 
 const GEIST_SANS_BOLD = fs.readFileSync(
   path.resolve(
@@ -210,8 +211,8 @@ export async function generateOgImage(title: string): Promise<Buffer> {
       },
     },
     {
-      width: 1200,
-      height: 630,
+      width: OG_IMAGE_WIDTH,
+      height: OG_IMAGE_HEIGHT,
       fonts: FONTS,
     },
   );

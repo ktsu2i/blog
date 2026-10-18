@@ -8,6 +8,7 @@ export const postSchema = z
     title: z.string().trim().min(1),
     ogTitle: z.string().trim().min(1).optional(),
     date: z.iso.date(),
+    updated: z.iso.date().optional(),
     description: z.string().optional().default(""),
     draft: z.boolean().optional().default(false),
   })

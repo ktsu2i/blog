@@ -36,7 +36,9 @@ const { newer, older } = getAdjacentPosts(
   description={getPostDescription(post)}
   ogType="article"
   publishedTime={post.data.date}
+  modifiedTime={post.data.updated}
   ogImage={getLocalePath(`/og/${post.id}.png`, locale)}
+  ogImageAlt={post.data.ogTitle ?? post.data.title}
 >
   <article class="space-y-8">
     <header class="space-y-4">

@@ -54,6 +54,7 @@ describe("postSchema", () => {
       title: "t",
       ogTitle: "og",
       date: "2025-01-01",
+      updated: "2025-02-01",
       description: "d",
       draft: true,
     };
@@ -83,6 +84,13 @@ describe("postSchema", () => {
     "rejects the invalid date %j",
     (date) => {
       expect(postSchema.safeParse({ ...valid, date }).success).toBe(false);
+    },
+  );
+
+  it.each(["2025-02-30", "2025/01/01", ""])(
+    "rejects the invalid updated %j",
+    (updated) => {
+      expect(postSchema.safeParse({ ...valid, updated }).success).toBe(false);
     },
   );
 

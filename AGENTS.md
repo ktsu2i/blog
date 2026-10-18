@@ -95,7 +95,7 @@ src/
 
 - `src/content/posts/ja/` / `src/content/posts/en/` に MDX ファイルを作成（ファイル名 `YYYYMMDD-slug.mdx`、slug は日付部分を除いたもの）
 - 英語版がない記事は英語ページにも日本語記事として表示される
-- Frontmatter: `title`(必須), `date`(必須、`YYYY-MM-DD` 形式で検証), `description`(任意、未設定・空なら本文先頭から自動生成), `draft`(任意), `ogTitle`(任意)
+- Frontmatter: `title`(必須), `date`(必須、`YYYY-MM-DD` 形式で検証), `updated`(任意、更新日。`YYYY-MM-DD` 形式で、JSON-LD の `dateModified` と `article:modified_time` に使う。未設定なら `date`), `description`(任意、未設定・空なら本文先頭から自動生成), `draft`(任意), `ogTitle`(任意)
 - OG 画像は `/og/[slug].png`（英語は `/en/og/[slug].png`）で自動生成される
 
 ### 2. Zenn 記事

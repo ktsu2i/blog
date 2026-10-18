@@ -7,6 +7,10 @@ export const POST_SOURCES = {
   EXTERNAL: "External",
 } as const;
 
+// Size of the generated OG images
+export const OG_IMAGE_WIDTH = 1200;
+export const OG_IMAGE_HEIGHT = 630;
+
 export type PostSource = (typeof POST_SOURCES)[keyof typeof POST_SOURCES];
 
 // Unified post type for local and external posts

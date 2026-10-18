@@ -4,6 +4,7 @@ import avatar from "../assets/avatar.jpg";
 import Header from "../components/layout/Header.astro";
 import Footer from "../components/layout/Footer.astro";
 import "../styles/globals.css";
+import { OG_IMAGE_HEIGHT, OG_IMAGE_WIDTH } from "../lib/types";
 import {
   getCurrentLocale,
   useTranslations,
@@ -15,7 +16,9 @@ interface Props {
   description?: string;
   ogType?: string;
   publishedTime?: string;
+  modifiedTime?: string;
   ogImage?: string;
+  ogImageAlt?: string;
   noindex?: boolean;
 }
 
@@ -27,7 +30,9 @@ const {
   description = t["common.siteDescription"],
   ogType = "website",
   publishedTime,
+  modifiedTime = publishedTime,
   ogImage,
+  ogImageAlt = title ?? t["common.siteName"],
   noindex = false,
 } = Astro.props;
 
@@ -39,6 +44,7 @@ const currentPath = Astro.url.pathname;
 const canonicalUrl = new URL(currentPath, siteUrl).href;
 const jaUrl = `${siteUrl}${getAlternatePath(currentPath, "ja")}`;
 const enUrl = `${siteUrl}${getAlternatePath(currentPath, "en")}`;
+const ogImageUrl = ogImage && `${siteUrl}${ogImage}`;
 const rssHref = locale === "ja" ? "/feed.xml" : "/en/feed.xml";
 
 const person = {
@@ -63,11 +69,13 @@ if (ogType === "article") {
     headline: title,
     description,
     datePublished: publishedTime,
-    image: ogImage && `${siteUrl}${ogImage}`,
+    dateModified: modifiedTime,
+    image: ogImageUrl,
     url: canonicalUrl,
     mainEntityOfPage: canonicalUrl,
     inLanguage: locale,
     author: { "@type": "Person", name: person.name, url: person.url },
+    publisher: { "@type": "Person", name: person.name, url: person.url },
   });
 }
 ---
@@ -93,14 +101,29 @@ if (ogType === "article") {
     {publishedTime && (
       <meta property="article:published_time" content={publishedTime} />
     )}
-    {ogImage && <meta property="og:image" content={`${siteUrl}${ogImage}`} />}
+    {modifiedTime && (
+      <meta property="article:modified_time" content={modifiedTime} />
+    )}
+    {ogImageUrl && (
+      <>
+        <meta property="og:image" content={ogImageUrl} />
+        <meta property="og:image:width" content={String(OG_IMAGE_WIDTH)} />
+        <meta property="og:image:height" content={String(OG_IMAGE_HEIGHT)} />
+        <meta property="og:image:alt" content={ogImageAlt} />
+      </>
+    )}
     <meta
       name="twitter:card"
       content={ogImage ? "summary_large_image" : "summary"}
     />
     <meta name="twitter:title" content={pageTitle} />
     <meta name="twitter:description" content={description} />
-    {ogImage && <meta name="twitter:image" content={`${siteUrl}${ogImage}`} />}
+    {ogImageUrl && (
+      <>
+        <meta name="twitter:image" content={ogImageUrl} />
+        <meta name="twitter:image:alt" content={ogImageAlt} />
+      </>
+    )}
     {noindex ? (
       <meta name="robots" content="noindex" />
     ) : (
