@@ -1,7 +1,8 @@
 ---
-import { type Locale, defaultLocale } from "../../i18n/config";
+import { getCurrentLocale, useTranslations } from "../../i18n/config";
 
-const locale = (Astro.currentLocale ?? defaultLocale) as Locale;
+const locale = getCurrentLocale(Astro);
+const t = useTranslations(locale);
 const currentYear = new Date().getFullYear();
 const rssHref = locale === "ja" ? "/feed.xml" : "/en/feed.xml";
 ---
@@ -42,7 +43,7 @@ const rssHref = locale === "ja" ? "/feed.xml" : "/en/feed.xml";
         </a>
       </div>
       <p class="text-sm text-muted-foreground">
-        &copy; {currentYear} ktsu2i.dev
+        &copy; {currentYear} {t["common.siteName"]}
       </p>
     </div>
   </div>

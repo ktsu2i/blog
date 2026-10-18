@@ -2,13 +2,12 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { buttonVariants } from "@/components/ui/button";
 import {
-  type Locale,
-  defaultLocale,
+  getCurrentLocale,
   useTranslations,
   getLocalePath,
 } from "../../i18n/config";
 
-const locale = (Astro.currentLocale ?? defaultLocale) as Locale;
+const locale = getCurrentLocale(Astro);
 const t = useTranslations(locale);
 ---
 

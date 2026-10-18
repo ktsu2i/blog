@@ -2,9 +2,9 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import TalkCard from "../TalkCard.astro";
 import { getTalks } from "../../data/talks";
-import { type Locale, defaultLocale, useTranslations } from "../../i18n/config";
+import { getCurrentLocale, useTranslations } from "../../i18n/config";
 
-const locale = (Astro.currentLocale ?? defaultLocale) as Locale;
+const locale = getCurrentLocale(Astro);
 const t = useTranslations(locale);
 const talks = getTalks(locale);
 ---

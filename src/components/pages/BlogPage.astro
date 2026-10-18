@@ -4,9 +4,9 @@ import PostCard from "../post/PostCard.astro";
 import PostFilter from "../post/PostFilter.astro";
 import { listAllPosts } from "../../lib/feed";
 import { POST_SOURCES } from "../../lib/types";
-import { type Locale, defaultLocale, useTranslations } from "../../i18n/config";
+import { getCurrentLocale, useTranslations } from "../../i18n/config";
 
-const locale = (Astro.currentLocale ?? defaultLocale) as Locale;
+const locale = getCurrentLocale(Astro);
 const t = useTranslations(locale);
 const posts = await listAllPosts(locale);
 const countBySource = (source: string) =>

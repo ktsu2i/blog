@@ -6,13 +6,12 @@ import { buttonVariants } from "@/components/ui/button";
 import PostCard from "../post/PostCard.astro";
 import { listAllPosts } from "../../lib/feed";
 import {
-  type Locale,
-  defaultLocale,
+  getCurrentLocale,
   useTranslations,
   getLocalePath,
 } from "../../i18n/config";
 
-const locale = (Astro.currentLocale ?? defaultLocale) as Locale;
+const locale = getCurrentLocale(Astro);
 const t = useTranslations(locale);
 const posts = await listAllPosts(locale);
 const recent = posts.slice(0, 4);
