@@ -176,8 +176,7 @@ const typeConfig = {
 
         <div class="space-y-0">
           {career.map((entry) => {
-            const type = entry.type || "work";
-            const config = typeConfig[type];
+            const config = typeConfig[entry.type];
 
             return (
               <div class="relative flex gap-6 pb-10 last:pb-0">
@@ -191,9 +190,11 @@ const typeConfig = {
                         : "border-border bg-background text-muted-foreground",
                     ]}
                   >
-                    {type === "work" && <Briefcase className="size-4" />}
-                    {type === "internship" && <Building2 className="size-4" />}
-                    {type === "education" && (
+                    {entry.type === "work" && <Briefcase className="size-4" />}
+                    {entry.type === "internship" && (
+                      <Building2 className="size-4" />
+                    )}
+                    {entry.type === "education" && (
                       <GraduationCap className="size-4" />
                     )}
                   </div>
@@ -217,16 +218,14 @@ const typeConfig = {
                         {t["about.current"]}
                       </span>
                     )}
-                    {config && (
-                      <span
-                        class:list={[
-                          "inline-flex items-center rounded-full border px-2 py-0.5 text-xs font-medium",
-                          config.color,
-                        ]}
-                      >
-                        {config.label}
-                      </span>
-                    )}
+                    <span
+                      class:list={[
+                        "inline-flex items-center rounded-full border px-2 py-0.5 text-xs font-medium",
+                        config.color,
+                      ]}
+                    >
+                      {config.label}
+                    </span>
                   </div>
 
                   <!-- Title & subtitle -->

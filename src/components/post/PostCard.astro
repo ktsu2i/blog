@@ -26,7 +26,6 @@ const href =
     ? getLocalePath(`/blog/${post.slug}/`, isJapaneseOnly ? "ja" : locale)
     : post.url;
 const isExternal = post.source !== POST_SOURCES.BLOG;
-const showJapaneseOnly = isJapaneseOnly;
 ---
 
 <a
@@ -52,7 +51,7 @@ const showJapaneseOnly = isJapaneseOnly;
       <div class="flex items-center gap-2">
         <time class="text-sm text-muted-foreground">{formattedDate}</time>
         <SourceBadge source={post.source} />
-        {showJapaneseOnly && (
+        {isJapaneseOnly && (
           <span class={badgeVariants({ variant: "notice" })}>
             {t["blog.japaneseOnly"]}
           </span>
