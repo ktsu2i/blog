@@ -129,4 +129,4 @@ src/
 - **Git フック**: lefthook（`lefthook.yaml`）。`pnpm install` 時に自動でフックが入り、pre-commit でステージ済みファイルに oxlint / oxfmt / Prettier を実行し、整形結果は自動で再ステージする
 - **末尾スラッシュ**: `trailingSlash: "always"`。内部リンクは必ず `/` で終わらせる（`getLocalePath("/blog/", locale)` のように呼び出し側で付ける）。付け忘れると本番では Workers Assets の 307 リダイレクトが挟まり、dev / preview では 404 になる
 - **YAML の拡張子**: `.yml` は禁止で、`.yaml` に統一する（lefthook の `forbid-yml` ジョブでチェック）
-- **画像ドメイン許可**: `res.cloudinary.com`, `cdn.image.st-hatena.com`, `files.speakerdeck.com`（登壇スライドのサムネイル）
+- **画像ドメイン許可**: `res.cloudinary.com`, `cdn.image.st-hatena.com`, `tech.pepabo.com`（記事カードの OG 画像）, `files.speakerdeck.com`（登壇スライドのサムネイル）。PostCard / TalkCard は `astro:assets` の `<Image>` でビルド時に WebP 化して自サイトから配信するので、外部記事の OG 画像のドメインは追加が必要（未登録だと原寸のまま外部から読み込む）。ローカル記事の `/og/*.png` はエンドポイントの出力なので変換されない
