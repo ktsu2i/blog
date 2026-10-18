@@ -68,6 +68,7 @@ src/
 │   ├── types.ts         # 型定義（Post, PostSource, Talk, CareerEntry 等）
 │   ├── mobile-nav.ts    # MobileNav のクライアントスクリプト（<dialog> の開閉）
 │   ├── og.ts            # OG 画像生成ユーティリティ
+│   ├── og-route.ts      # OG 画像ルートの共通処理（ja / en の [slug].png.ts と site.png.ts から呼ぶ）
 │   ├── post-filter.ts   # PostFilter のクライアントスクリプト（ソース別の表示切り替え）
 │   ├── remark-mermaid.ts # mermaid コードブロックをビルド時に SVG 化する remark プラグイン
 │   ├── remark-x-embed.ts # X の投稿 URL を oEmbed で埋め込む remark プラグイン
