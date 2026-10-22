@@ -1,5 +1,5 @@
 ---
-import { ExternalLink, Presentation } from "lucide-react";
+import { ExternalLink } from "lucide-react";
 import { Image } from "astro:assets";
 import { buttonVariants } from "@/components/ui/button";
 import type { Talk } from "../lib/types";
@@ -37,7 +37,7 @@ const t = useTranslations(locale);
     <div class="aspect-video w-full overflow-hidden rounded-lg border">
       <button
         type="button"
-        class="group relative block h-full w-full cursor-pointer"
+        class="block h-full w-full cursor-pointer transition-[filter] hover:brightness-90 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring"
         data-speakerdeck-facade
         data-embed-url={talk.embedUrl}
         data-title={talk.title}
@@ -50,10 +50,6 @@ const t = useTranslations(locale);
           height={360}
           class="h-full w-full object-cover"
         />
-        <span class="absolute right-2 bottom-2 inline-flex items-center gap-1.5 rounded-md border bg-background/90 px-2 py-1 text-xs font-medium text-foreground shadow-sm transition-colors group-hover:bg-accent group-focus-visible:bg-accent">
-          <Presentation className="size-3.5" />
-          {t["talks.playSlides"]}
-        </span>
       </button>
     </div>
   </div>
