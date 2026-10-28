@@ -1,6 +1,7 @@
 ---
 import { Image } from "astro:assets";
 import { ExternalLink } from "lucide-react";
+import { badgeVariants } from "@/components/ui/badge";
 import SourceBadge from "./SourceBadge.astro";
 import { POST_SOURCES, type Post } from "../../lib/types";
 import { formatDate, toDateAttr } from "../../lib/utils";
@@ -24,6 +25,8 @@ const href =
     ? getLocalePath(`/blog/${post.slug}/`, locale)
     : post.url;
 const isExternal = post.source !== POST_SOURCES.BLOG;
+// Local posts exist in both languages; Zenn and external posts are Japanese
+const isJapaneseOnly = locale === "en" && isExternal;
 // Local OG images come from an endpoint that astro:assets cannot transform
 const responsiveImage = post.ogImage?.startsWith("https://")
   ? {
@@ -65,6 +68,11 @@ const responsiveImage = post.ogImage?.startsWith("https://")
           {formatDate(post.date, locale)}
         </time>
         <SourceBadge source={post.source} />
+        {isJapaneseOnly && (
+          <span class={badgeVariants({ variant: "notice" })}>
+            {t["blog.japaneseOnly"]}
+          </span>
+        )}
       </div>
       <div class="leading-snug font-semibold text-lg">
         <span class="inline">
