@@ -1,5 +1,3 @@
-import type { Locale } from "../i18n/config";
-
 // Post source kinds
 export const POST_SOURCES = {
   BLOG: "Blog",
@@ -20,7 +18,6 @@ export interface Post {
   url?: string; // external only
   draft?: boolean; // local only
   ogImage?: string; // OG image URL
-  locale?: Locale;
 }
 
 // Speaker Deck talk

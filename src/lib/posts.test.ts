@@ -60,7 +60,6 @@ describe("listLocalPosts", () => {
       description: "desc",
       draft: false,
       ogImage: "/og/new.png",
-      locale: "ja",
     });
   });
 
@@ -118,23 +117,21 @@ describe("listLocalPosts", () => {
     expect(posts.map((p) => p.id)).toEqual(["pub"]);
   });
 
-  it("merges Japanese-only posts into English listings", async () => {
+  it("lists only English entries for English pages", async () => {
     vi.stubEnv("PROD", true);
     collections.postsEn = [
-      entry("both", { date: "2025-01-01" }),
-      entry("en-draft", { draft: true }),
+      entry("old", { date: "2025-01-01" }),
+      entry("new", { date: "2025-02-01" }),
+      entry("draft", { draft: true }),
     ];
-    collections.postsJa = [
-      entry("both", { date: "2025-01-01" }),
-      entry("ja-only", { date: "2025-02-01" }),
-      entry("ja-draft", { draft: true }),
-    ];
+    collections.postsJa = [entry("ja", { date: "2025-03-01" })];
 
     const posts = await listLocalPosts("en");
 
-    expect(posts.map((p) => [p.id, p.locale, p.ogImage])).toEqual([
-      ["ja-only", "ja", "/og/ja-only.png"],
-      ["both", "en", "/en/og/both.png"],
+    expect(getCollection).toHaveBeenCalledWith("postsEn");
+    expect(posts.map((p) => [p.id, p.ogImage])).toEqual([
+      ["new", "/en/og/new.png"],
+      ["old", "/en/og/old.png"],
     ]);
   });
 });

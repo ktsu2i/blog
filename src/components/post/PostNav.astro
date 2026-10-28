@@ -32,7 +32,7 @@ const links = [
     <nav aria-label={t["post.nav.label"]} class="grid gap-4 sm:grid-cols-2">
       {links.map(({ post, label, align }) => (
         <a
-          href={getLocalePath(`/blog/${post.slug}/`, post.locale ?? locale)}
+          href={getLocalePath(`/blog/${post.slug}/`, locale)}
           class={cn(
             "flex flex-col gap-1 rounded-xl border p-4 transition-colors hover:bg-accent/50",
             align,
