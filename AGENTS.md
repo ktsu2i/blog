@@ -31,6 +31,7 @@ pnpm knip           # 未使用ファイル・export・依存の検出（CI で�
 pnpm exec lefthook run pre-commit --all-files  # pre-commit フックを全ファイルに実行
 jactionlint         # ワークフローの lint（actionlint のフォーク、aqua で導入: aqua i -l）
 ghalint run         # ワークフローのセキュリティポリシーチェック（aqua で導入）
+gh actions-lock --no-narrow  # Action の SHA を変えたら .github/workflows/actions.lock を更新（--no-narrow を付けないと SHA ピンがタグに書き換わる。CI は --verify）
 ```
 
 ## Project Structure

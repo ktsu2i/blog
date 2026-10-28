@@ -56,6 +56,25 @@ jobs:
         env:
           GHALINT_LOG_COLOR: always
 
+  actions-lock:
+    name: actions-lock
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - run: gh extension install github/gh-actions-lock --pin v0.4.0
+        env:
+          GH_TOKEN: ${{ github.token }}
+
+      - run: gh actions-lock --verify
+        env:
+          GH_TOKEN: ${{ github.token }}
+
   zizmor:
     name: zizmor
     runs-on: ubuntu-latest
