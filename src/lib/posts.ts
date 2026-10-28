@@ -52,13 +52,11 @@ export async function listPublishedEntries<C extends PostCollection>(
 }
 
 export async function listLocalPosts(locale: Locale = "ja"): Promise<Post[]> {
-  const collectionName = locale === "ja" ? "postsJa" : "postsEn";
-  const entries = await getCollection(collectionName);
+  const entries = await listPublishedEntries(
+    locale === "ja" ? "postsJa" : "postsEn",
+  );
 
-  const toPost = (
-    entry: (typeof entries)[number],
-    postLocale: Locale,
-  ): Post => ({
+  const posts: Post[] = entries.map((entry) => ({
     id: entry.id,
     source: POST_SOURCES.BLOG,
     slug: entry.id,
@@ -66,23 +64,8 @@ export async function listLocalPosts(locale: Locale = "ja"): Promise<Post[]> {
     date: entry.data.date,
     description: getPostDescription(entry),
     draft: entry.data.draft,
-    ogImage: getLocalePath(`/og/${entry.id}.png`, postLocale),
-    locale: postLocale,
-  });
-
-  const posts: Post[] = entries
-    .filter(isPublished)
-    .map((entry) => toPost(entry, locale));
-
-  // For English pages, also include Japanese-only posts (no English version)
-  if (locale === "en") {
-    const jaEntries = await getCollection("postsJa");
-    const enSlugs = new Set(entries.map((e) => e.id));
-    const jaOnly = jaEntries
-      .filter((entry) => isPublished(entry) && !enSlugs.has(entry.id))
-      .map((entry) => toPost(entry, "ja"));
-    posts.push(...jaOnly);
-  }
+    ogImage: getLocalePath(`/og/${entry.id}.png`, locale),
+  }));
 
   posts.sort(compareByDateDesc);
 

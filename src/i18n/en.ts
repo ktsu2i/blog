@@ -23,7 +23,6 @@ export const en: Translations = {
   "blog.description": "Posts from this site and external sources in one place.",
   "blog.filter.all": "All",
   "blog.filter.label": "Filter posts by source",
-  "blog.japaneseOnly": "Japanese only",
 
   "post.nav.label": "Adjacent posts",
   "post.newer": "Newer post",

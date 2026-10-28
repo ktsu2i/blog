@@ -31,7 +31,6 @@ export interface Translations {
   "blog.description": string;
   "blog.filter.all": string;
   "blog.filter.label": string;
-  "blog.japaneseOnly": string;
 
   // Post
   "post.nav.label": string;
