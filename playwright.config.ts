@@ -5,7 +5,7 @@ import { version } from "@playwright/test/package.json";
 const browserPort = 3001;
 // Pinned by digest because the tag gets re-pushed and changes rendering
 const browserImageDigest =
-  "sha256:47b510dd9230bf0b9bfc9b20102241e577ea7a99334ab4c3ca19f19770e9b8ea";
+  "sha256:2f05f8a734509a7b3f26a912639488ee08f58a7b292d14d62271bcff9038768f";
 
 const desktop = { width: 1280, height: 800 };
 const mobile = { width: 375, height: 667 };
