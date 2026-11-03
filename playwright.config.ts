@@ -3,6 +3,9 @@ import { version } from "@playwright/test/package.json";
 
 // The browser runs in the official Docker image so screenshots match on any host
 const browserPort = 3001;
+// Pinned by digest because the tag gets re-pushed and changes rendering
+const browserImageDigest =
+  "sha256:47b510dd9230bf0b9bfc9b20102241e577ea7a99334ab4c3ca19f19770e9b8ea";
 
 const desktop = { width: 1280, height: 800 };
 const mobile = { width: 375, height: 667 };
@@ -36,7 +39,7 @@ export default defineConfig({
       timeout: 180_000,
     },
     {
-      command: `docker run --rm --init -p ${browserPort}:3000 --user pwuser --workdir /home/pwuser mcr.microsoft.com/playwright:v${version}-noble /bin/sh -c "npx -y playwright@${version} run-server --port 3000 --host 0.0.0.0"`,
+      command: `docker run --rm --init -p ${browserPort}:3000 --user pwuser --workdir /home/pwuser mcr.microsoft.com/playwright:v${version}-noble@${browserImageDigest} /bin/sh -c "npx -y playwright@${version} run-server --port 3000 --host 0.0.0.0"`,
       url: `http://127.0.0.1:${browserPort}/`,
       reuseExistingServer: !process.env.CI,
       timeout: 300_000,
