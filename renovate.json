@@ -1,5 +1,36 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["config:best-practices", "group:allNonMajor", "schedule:weekly"],
-  "timezone": "Asia/Tokyo"
+  "timezone": "Asia/Tokyo",
+  "packageRules": [
+    {
+      "description": "astro check does not support TypeScript 7 yet",
+      "matchPackageNames": ["typescript"],
+      "allowedVersions": "<7"
+    },
+    {
+      "description": "lefthook 2.2.2 lacks npm provenance and is blocked by trustPolicy: no-downgrade",
+      "matchPackageNames": ["lefthook"],
+      "allowedVersions": "!/^2\\.2\\.2$/"
+    },
+    {
+      "description": "Node majors are chosen by hand to match the Cloudflare build image; @types/node follows .node-version",
+      "matchDepNames": ["node", "@types/node"],
+      "matchUpdateTypes": ["major"],
+      "enabled": false
+    },
+    {
+      "description": "The VRT browser image digest in playwright.config.ts must be bumped in the same PR",
+      "matchPackageNames": ["@playwright/test"],
+      "groupName": "playwright",
+      "prBodyNotes": [
+        "Update `browserImageDigest` in `playwright.config.ts` to the multi-arch index digest of `mcr.microsoft.com/playwright:v{{{newVersion}}}-noble` (`docker manifest inspect`) and rerun VRT."
+      ]
+    },
+    {
+      "description": "SHA bumps need `gh actions-lock --no-narrow` before CI passes, so keep them out of the npm group",
+      "matchManagers": ["github-actions"],
+      "groupName": "github actions"
+    }
+  ]
 }
