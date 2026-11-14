@@ -69,6 +69,31 @@ describe("initMobileNavs", () => {
     expect(dialog.open).toBe(true);
   });
 
+  describe("with native closedby", () => {
+    beforeEach(() => {
+      Object.defineProperty(HTMLDialogElement.prototype, "closedBy", {
+        configurable: true,
+        value: "any",
+      });
+    });
+
+    afterEach(() => {
+      Reflect.deleteProperty(HTMLDialogElement.prototype, "closedBy");
+    });
+
+    it("leaves backdrop clicks to the browser", () => {
+      const dialog = setup();
+      clickAt(dialog, 50, 300);
+      expect(dialog.open).toBe(true);
+    });
+
+    it("still closes when a link inside is clicked", () => {
+      const dialog = setup();
+      clickAt(dialog.querySelector("span") as Element, 150, 50);
+      expect(dialog.open).toBe(false);
+    });
+  });
+
   it("ignores a dialog without a trigger", () => {
     document.body.innerHTML = `<dialog id="orphan" data-mobile-nav></dialog>`;
     expect(() => initMobileNavs()).not.toThrow();
