@@ -3,6 +3,29 @@ import type { Locale, Localized } from "../i18n/config";
 
 const talks: Localized<Talk, "title" | "description">[] = [
   {
+    id: "levtech-meetup-improvement-loop-engineering",
+    event: "レバテックMeetup Claude Code×開発",
+    date: "2026-11-16",
+    speakerdeckUrl:
+      "https://speakerdeck.com/bengo4com/20261116-levtech-meetup-improvement-loop-engineering",
+    embedUrl:
+      "https://speakerdeck.com/player/671cbffe6b964d6e855ddb58a2cd8394?title=false",
+    thumbnailUrl:
+      "https://files.speakerdeck.com/presentations/671cbffe6b964d6e855ddb58a2cd8394/slide_0.jpg",
+    localized: {
+      ja: {
+        title: "業務の傍らで進める改善ループエンジニアリング",
+        description:
+          "Claude Code を活用し、日々の業務と並行して開発の改善ループを回していく取り組みについて発表しました。",
+      },
+      en: {
+        title: "Improvement Loop Engineering Alongside Daily Work",
+        description:
+          "Presented on running improvement loops for development alongside daily work with Claude Code.",
+      },
+    },
+  },
+  {
     id: "cloudsign-go-conference-mini-2026-sendai",
     event: "Go Conference mini in Sendai 2026",
     date: "2026-02-21",
