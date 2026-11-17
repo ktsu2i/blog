@@ -16,13 +16,13 @@ const talks: Localized<Talk, "title" | "event" | "description">[] = [
         event: "レバテックMeetup Claude Code×開発",
         title: "業務の傍らで進める改善ループエンジニアリング",
         description:
-          "AI エージェントが改善点を見つけ、修正し、レビューを経て取り込む。このループを業務と並行して回し続ける仕組みを作った取り組みについて発表しました。",
+          "AI エージェントが改善点を見つけ、修正し、レビューを経て取り込むループを、業務と並行して回し続ける仕組みを作った取り組みについて発表しました。",
       },
       en: {
         event: "Levtech Meetup Claude Code x Development",
         title: "Improvement Loop Engineering Alongside Daily Work",
         description:
-          "AI agents find improvements, fix them, and merge them after review. Presented how I built a system that keeps this loop running alongside my daily work.",
+          "Presented how I built a system that keeps a loop of AI agents finding improvements, fixing them, and merging them after review running alongside my daily work.",
       },
     },
   },
