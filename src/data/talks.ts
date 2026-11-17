@@ -22,7 +22,7 @@ const talks: Localized<Talk, "title" | "event" | "description">[] = [
         event: "Levtech Meetup Claude Code x Development",
         title: "Improvement Loop Engineering Alongside Daily Work",
         description:
-          "Presented how I built a system that keeps an improvement loop running alongside my daily work: AI agents find improvements, fix them, and merge them after review.",
+          "AI agents find improvements, fix them, and merge them after review. Presented how I built a system that keeps this loop running alongside my daily work.",
       },
     },
   },
