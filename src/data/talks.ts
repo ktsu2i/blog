@@ -13,13 +13,13 @@ const talks: Localized<Talk, "title" | "event" | "description">[] = [
       "https://files.speakerdeck.com/presentations/671cbffe6b964d6e855ddb58a2cd8394/slide_0.jpg",
     localized: {
       ja: {
-        event: "レバテックMeetup Claude Code×開発",
+        event: "レバテックMeetup",
         title: "業務の傍らで進める改善ループエンジニアリング",
         description:
           "日々の業務と並行して、AI エージェントがコードベースを改善し続けるループを作った取り組みについて発表しました。",
       },
       en: {
-        event: "Levtech Meetup Claude Code x Development",
+        event: "Levtech Meetup",
         title: "Improvement Loop Engineering Alongside Daily Work",
         description:
           "Presented my work on building a loop in which AI agents keep improving the codebase alongside my daily work.",
