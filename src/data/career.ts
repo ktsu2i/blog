@@ -89,12 +89,12 @@ const career: (
     localized: {
       ja: {
         company: "IT-Deutschland Global Business Solutions 株式会社",
-        period: "2024年6月 - 2024年7月 (1ヶ月)",
+        period: "2024年6月 - 2024年7月 (2ヶ月)",
         description: "",
       },
       en: {
         company: "IT-Deutschland Global Business Solutions, K.K.",
-        period: "Jun 2024 - Jul 2024 (1 month)",
+        period: "Jun 2024 - Jul 2024 (2 months)",
         description: "",
       },
     },
