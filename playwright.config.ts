@@ -1,5 +1,7 @@
 import { defineConfig } from "@playwright/test";
-import { version } from "@playwright/test/package.json";
+import playwrightPackage from "@playwright/test/package.json" with { type: "json" };
+
+const { version } = playwrightPackage;
 
 // The browser runs in the official Docker image so screenshots match on any host
 const browserPort = 3001;
