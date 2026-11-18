@@ -2,7 +2,7 @@
 
 ktsu2i.dev — Kaito Tsutsui's personal blog and portfolio (https://ktsu2i.dev). It merges posts from three sources (local MDX, Zenn, Bengo4) into one feed.
 
-Stack: Astro 7 + React 19, Tailwind CSS v4 + shadcn/ui, pnpm, deployed to Cloudflare Workers.
+Stack: Astro 7 + React 19, Tailwind CSS v4 + shadcn/ui, pnpm, deployed to Cloudflare Workers with the `cf` CLI (config: `cloudflare.config.ts`).
 
 ## Commands
 
@@ -10,6 +10,7 @@ Stack: Astro 7 + React 19, Tailwind CSS v4 + shadcn/ui, pnpm, deployed to Cloudf
 pnpm dev               # Dev server on port 3000
 pnpm build             # Build; the prebuild hook fetches Bengo4 posts first (CI skips it and runs `astro build`)
 pnpm preview           # Serve the build output
+pnpm run deploy        # Deploy dist/ as an assets-only Worker with the cf CLI (`pnpm deploy` is a pnpm built-in)
 pnpm fetch:bengo4      # Fetch Bengo4 posts manually
 pnpm test              # Vitest
 pnpm test:coverage     # 100% coverage required on src/**/*.{ts,tsx}, excluding components/ui

@@ -1,10 +1,10 @@
 {
   "$schema": "https://unpkg.com/knip@6/schema.json",
+  "entry": ["cloudflare.config.ts"],
   "ignore": ["src/components/ui/**"],
   "ignoreDependencies": [
     "@fontsource/geist-sans",
     "@fontsource/noto-sans-jp",
-    "shadcn",
-    "wrangler"
+    "shadcn"
   ]
 }
